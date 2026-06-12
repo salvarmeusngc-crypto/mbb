@@ -310,13 +310,32 @@ body::after {
     body { background:linear-gradient(to bottom, #fff8e8 50%, #d6eef9 50%); }
     body::after { display:none; }
     body::before { display:none; }
-    .title-area h1 { font-size:2.3rem; }
+
+    /* título: cor sólida no mobile — gradiente split não funciona em coluna */
+    .title-area h1 {
+        font-size:2.3rem;
+        background:none;
+        -webkit-background-clip:unset;
+        -webkit-text-fill-color:#6f4425;
+        background-clip:unset;
+        color:#6f4425;
+    }
+
+    /* footer: cor sólida no mobile */
+    .selector-footer {
+        background:none;
+        -webkit-background-clip:unset;
+        -webkit-text-fill-color:#6f4425;
+        background-clip:unset;
+        color:#6f4425;
+        opacity:.7;
+    }
+
     .versions-grid { flex-direction:column; align-items:center; gap:20px; }
     .card-1mes, .card-valentines {
         width:min(340px, 90vw);
         border-radius:30px !important;
         border:4px dashed currentColor !important;
-        /* garantir cores corretas independente do fundo */
     }
     .card-1mes {
         background:rgba(255,247,218,.96) !important;
