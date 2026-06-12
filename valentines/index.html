@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#b8d8f0">
+<title>valentines day com a minha bebe</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600&family=Pacifico&display=swap" rel="stylesheet">
+
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+:root{
+    --blue:       #4a9eca;
+    --blue-mid:   #6db8e0;
+    --blue-light: #c8e8f8;
+    --blue-pale:  #eaf6fd;
+    --white-t:    rgba(255,255,255,.82);
+    --text:       #1a4a6b;
+    --text-soft:  #3a7aa0;
+    --border:     rgba(74,158,202,.35);
+}
+
+html { scroll-behavior:smooth; }
+
+body {
+    font-family:'Fredoka', sans-serif;
+    background:#daeef9;
+    color:var(--text);
+    overflow-x:hidden;
+    min-height:100vh;
+}
+
+/* ══════════════════════════════════════════
+   MOSAICO CORAÇÃO — fundo fixo
+══════════════════════════════════════════ */
+.heart-bg {
+    position:fixed;
+    inset:0;
+    z-index:0;
+    pointer-events:none;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+}
+
+/*
+  Grade 7×6 que forma coração.
+  Células visíveis (com foto): marcadas abaixo.
+  Layout baseado na silhueta clássica de coração em pixel art:
+
+  Linha 1:  _ X X _ X X _
+  Linha 2:  X X X X X X X
+  Linha 3:  X X X X X X X
+  Linha 4:  _ X X X X X _
+  Linha 5:  _ _ X X X _ _
+  Linha 6:  _ _ _ X _ _ _
+*/
+.heart-grid {
+    display:grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows:    repeat(6, 1fr);
+    gap:4px;
+    /* tamanho total do coração no fundo */
+    width:  min(96vw, 700px);
+    height: min(72vh, 540px);
+    opacity:0;
+    transition:opacity 1.4s ease;
+}
+.heart-grid.visible { opacity:1; }
+
+/* célula base — invisível por padrão */
+.hc {
+    border-radius:6px;
+    overflow:hidden;
+    background:transparent;
+    opacity:0;
+}
+/* célula ativa com foto */
+.hc.on {
+    opacity:1;
+    box-shadow:
+        0 3px 12px rgba(74,158,202,.25),
+        0 1px 4px  rgba(0,0,0,.12);
+    /* borda branca fina estilo print */
+    outline:3px solid rgba(255,255,255,.7);
+    outline-offset:-1px;
+}
+.hc.on img {
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center 15%; /* puxa o rosto para cima — evita cortar na testa */
+    display:block;
+    filter:saturate(.88) brightness(1.04);
+    transition:transform .4s ease, filter .4s ease;
+}
+/* hover sutil nas células */
+.hc.on:hover img {
+    transform:scale(1.06);
+    filter:saturate(1.05) brightness(1.08);
+}
+
+/* overlay azul muito leve — deixa as fotos vivas */
+.overlay {
+    position:fixed;
+    inset:0;
+    z-index:1;
+    background:linear-gradient(
+        150deg,
+        rgba(200,232,248,.52) 0%,
+        rgba(180,220,245,.48) 45%,
+        rgba(210,238,252,.55) 100%
+    );
+    pointer-events:none;
+}
+
+/* ══ PARTÍCULAS ══ */
+.particles {
+    position:fixed;
+    inset:0;
+    z-index:1;
+    pointer-events:none;
+    overflow:hidden;
+}
+.particle {
+    position:absolute;
+    animation:particleUp linear infinite;
+    opacity:0;
+}
+@keyframes particleUp {
+    0%   { bottom:-5%; opacity:0;   transform:translateX(0) rotate(0deg);    }
+    10%  {              opacity:.55; }
+    90%  {              opacity:.2;  }
+    100% { bottom:106%; opacity:0;  transform:translateX(25px) rotate(360deg);}
+}
+
+/* ══ PAGE ══ */
+.page { position:relative; z-index:2; }
+
+/* ══ TOP BAR ══ */
+.top-banner {
+    width:100%;
+    padding:16px 0 8px;
+    text-align:center;
+    position:relative;
+}
+.back-link {
+    position:absolute;
+    left:18px;
+    top:50%;
+    transform:translateY(-50%);
+    background:var(--white-t);
+    border:2px solid var(--blue-mid);
+    border-radius:30px;
+    padding:6px 16px;
+    font-size:.9rem;
+    color:var(--text);
+    text-decoration:none;
+    backdrop-filter:blur(8px);
+    transition:background .2s;
+}
+.back-link:hover { background:var(--blue-light); }
+.top-label {
+    display:inline-block;
+    background:var(--white-t);
+    border:2px solid var(--blue-mid);
+    border-radius:30px;
+    padding:6px 22px;
+    font-size:.9rem;
+    backdrop-filter:blur(8px);
+    letter-spacing:.4px;
+}
+
+/* ══ HERO ══ */
+.hero {
+    text-align:center;
+    padding:36px 20px 10px;
+    position:relative;
+}
+.cinna-hero-left,
+.cinna-hero-right {
+    position:absolute;
+    top:10px;
+    width:185px;
+    pointer-events:none;
+    filter:drop-shadow(0 5px 16px rgba(74,158,202,.35));
+}
+.cinna-hero-left  { left:20px;  transform:scaleX(-1) rotate(-4deg); }
+.cinna-hero-right { right:20px; transform:rotate(4deg); }
+
+.hero-title {
+    font-family:'Pacifico', cursive;
+    font-size:3.8rem;
+    line-height:1.22;
+    color:var(--text);
+    text-shadow:0 3px 18px rgba(74,158,202,.4);
+    margin-bottom:14px;
+}
+.hero-subtitle {
+    font-size:1.2rem;
+    color:var(--text-soft);
+    line-height:1.75;
+}
+.hero-hearts {
+    display:flex;
+    justify-content:center;
+    gap:14px;
+    margin:22px 0 10px;
+    font-size:1.9rem;
+}
+.hero-hearts span {
+    display:inline-block;
+    animation:hpulse .9s ease-in-out infinite alternate;
+}
+.hero-hearts span:nth-child(2){ animation-delay:.18s; }
+.hero-hearts span:nth-child(3){ animation-delay:.36s; }
+.hero-hearts span:nth-child(4){ animation-delay:.54s; }
+.hero-hearts span:nth-child(5){ animation-delay:.72s; }
+@keyframes hpulse {
+    from{ transform:scale(1);    }
+    to  { transform:scale(1.28); }
+}
+.hero-gif {
+    display:block;
+    width:110px;
+    margin:6px auto 0;
+    filter:drop-shadow(0 4px 14px rgba(74,158,202,.3));
+    animation:floatB 3.2s ease-in-out infinite;
+}
+@keyframes floatB {
+    0%,100%{ transform:translateY(0)     rotate(-2deg); }
+    50%    { transform:translateY(-10px) rotate(2deg);  }
+}
+
+/* ══ CONTAINER ══ */
+.container {
+    width:min(880px,94%);
+    margin:0 auto;
+    padding-bottom:80px;
+}
+
+/* ══ GLASS CARD ══ */
+.glass-card {
+    background:rgba(255,255,255,.45);
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+    border:2px solid rgba(255,255,255,.55);
+    border-radius:32px;
+    padding:40px 44px;
+    margin-top:42px;
+    box-shadow:0 8px 32px rgba(74,158,202,.12);
+    position:relative;
+    overflow:hidden;
+}
+.glass-card::before {
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(135deg,rgba(255,255,255,.18),transparent 60%);
+    border-radius:inherit;
+    pointer-events:none;
+}
+
+/* ══ SECTION TITLE ══ */
+.section-title {
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    font-size:1.45rem;
+    margin-bottom:28px;
+    text-align:center;
+}
+.section-title img {
+    width:42px;
+    filter:drop-shadow(0 2px 8px rgba(74,158,202,.35));
+}
+
+/* ══ ÁREA TEXTO — destacada ══ */
+.text-area-wrapper {
+    background:var(--blue-pale);
+    border:3px dashed var(--blue-mid);
+    border-radius:22px;
+    padding:30px 34px;
+    position:relative;
+    margin-top:8px;
+}
+.text-area-wrapper::before {
+    content:"✏️do meu coração pra voce amor";
+    position:absolute;
+    top:-16px;
+    left:50%;
+    transform:translateX(-50%);
+    background:var(--blue-mid);
+    color:#fff;
+    font-size:.82rem;
+    font-family:'Fredoka',sans-serif;
+    padding:4px 16px;
+    border-radius:20px;
+    white-space:nowrap;
+    letter-spacing:.3px;
+}
+.big-text-content {
+    font-size:1.15rem;
+    line-height:2.25;
+    color:var(--text);
+    white-space:pre-wrap;
+}
+.cinna-text-deco {
+    position:absolute;
+    width:110px;
+    right:14px;
+    bottom:10px;
+    opacity:.18;
+    pointer-events:none;
+}
+
+/* ══ VÍDEO — destacado ══ */
+.video-section { overflow:visible !important; }
+.video-area-wrapper {
+    background:var(--blue-pale);
+    border:3px dashed var(--blue-mid);
+    border-radius:22px;
+    padding:20px;
+    position:relative;
+    margin-top:8px;
+}
+.video-area-wrapper::before {
+    content:"🎬 eu + voce jogadas ";
+    position:absolute;
+    top:-16px;
+    left:50%;
+    transform:translateX(-50%);
+    background:var(--blue-mid);
+    color:#fff;
+    font-size:.82rem;
+    font-family:'Fredoka',sans-serif;
+    padding:4px 16px;
+    border-radius:20px;
+    white-space:nowrap;
+    letter-spacing:.3px;
+}
+.video-wrap {
+    border-radius:18px;
+    overflow:hidden;
+    background:#000;
+}
+.video-wrap iframe {
+    width:100%;
+    aspect-ratio:16/9;
+    border:none;
+    display:block;
+}
+.video-placeholder {
+    aspect-ratio:16/9;
+    background:linear-gradient(135deg,var(--blue-light),#fff);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:14px;
+    color:var(--text-soft);
+    font-size:1.1rem;
+    text-align:center;
+    padding:30px;
+    border-radius:18px;
+}
+.video-placeholder .play-icon { font-size:3.5rem; opacity:.5; }
+
+.cinna-video-left,
+.cinna-video-right {
+    position:absolute;
+    bottom:-28px;
+    width:125px;
+    pointer-events:none;
+    filter:drop-shadow(0 5px 12px rgba(74,158,202,.3));
+}
+.cinna-video-left  { left:-35px;  transform:scaleX(-1); }
+.cinna-video-right { right:-35px; }
+
+.video-gif {
+    display:block;
+    width:90px;
+    margin:18px auto 0;
+    filter:drop-shadow(0 3px 10px rgba(74,158,202,.3));
+}
+
+/* ══ QUOTE ══ */
+.quote-card {
+    text-align:center;
+    background:transparent !important;
+    backdrop-filter:none !important;
+    -webkit-backdrop-filter:none !important;
+    border-color:transparent !important;
+    box-shadow:none !important;
+}
+.quote-text {
+    font-family:'Pacifico', cursive;
+    font-size:1.38rem;
+    line-height:1.95;
+    color:var(--text);
+    padding:8px 0;
+}
+.quote-author { margin-top:18px; font-size:1rem; color:var(--text-soft); }
+.quote-img {
+    width:80px;
+    margin:18px auto 0;
+    display:block;
+    filter:drop-shadow(0 3px 10px rgba(74,158,202,.3));
+    animation:floatB 4s ease-in-out infinite;
+}
+
+/* ══ FOOTER ══ */
+.footer-section {
+    text-align:center;
+    padding:50px 20px 80px;
+    position:relative;
+    z-index:2;
+}
+.footer-section p { font-size:1.2rem; line-height:2; color:var(--text-soft); }
+.footer-gif {
+    width:120px;
+    margin:22px auto 0;
+    display:block;
+    filter:drop-shadow(0 5px 14px rgba(74,158,202,.3));
+    animation:floatB 3s ease-in-out infinite;
+}
+
+/* ══ RESPONSIVO ══ */
+@media(max-width:780px){
+    .hero-title{ font-size:2.5rem; }
+    .cinna-hero-left,
+    .cinna-hero-right{ width:100px; top:5px; }
+    .cinna-hero-left { left:4px;  }
+    .cinna-hero-right{ right:4px; }
+    .glass-card{ padding:26px 20px; }
+    .text-area-wrapper,
+    .video-area-wrapper{ padding:20px 16px; }
+    .big-text-content{ font-size:1rem; line-height:2; }
+    .quote-text{ font-size:1.15rem; }
+    .cinna-video-left,
+    .cinna-video-right{ width:80px; }
+    .cinna-video-left { left:-10px; }
+    .cinna-video-right{ right:-10px; }
+    .text-area-wrapper::before,
+    .video-area-wrapper::before{ font-size:.72rem; white-space:normal; text-align:center; width:82%; top:-22px; }
+    .heart-grid{ width:96vw; height:64vw; gap:3px; }
+}
+@media(max-width:480px){
+    .back-link{ font-size:.8rem; padding:5px 11px; }
+    .cinna-hero-left,
+    .cinna-hero-right{ display:none; }
+    .hero-title{ font-size:2rem; }
+    .heart-grid{ display:none; } /* mobile: esconde coração, fundo sólido */
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════
+     MOSAICO CORAÇÃO — fundo
+     
+     Grade 7 colunas × 6 linhas
+     Silhueta:
+     _ ■ ■ _ ■ ■ _   ← linha 1
+     ■ ■ ■ ■ ■ ■ ■   ← linha 2
+     ■ ■ ■ ■ ■ ■ ■   ← linha 3
+     _ ■ ■ ■ ■ ■ _   ← linha 4
+     _ _ ■ ■ ■ _ _   ← linha 5
+     _ _ _ ■ _ _ _   ← linha 6
+
+     28 células ativas no total.
+     Fotos: 7 imagens (4 dele + 3 dela), repetidas.
+══════════════════════════════════════ -->
+<div class="heart-bg">
+<div class="heart-grid" id="heartGrid">
+
+  <!-- Linha 1: cols 2,3 e 5,6 -->
+  <div class="hc"></div>
+  <div class="hc on"><img src="../fotos nossas/ela/1/20260220164953457_00000.png"                                                          alt=""></div>
+  <div class="hc on"><img src="../fotos nossas/eu/1/image_00000.png"                                                                      alt=""></div>
+  <div class="hc"></div>
+  <div class="hc on"><img src="../fotos nossas/ela/1/20260403164518474_00000.png"                                                          alt=""></div>
+  <div class="hc on"><img src="../fotos nossas/eu/1/image (1)_00000.png"                                                                  alt=""></div>
+  <div class="hc"></div>
+
+  <!-- Linha 2: todas as 7 -->
+  <div class="hc on"><img src="../fotos nossas/ela/1/26666c081747a12ff6a3398fdaa4a280_0_00000.png"                                         alt=""></div>
+  <div class="hc on"><img src="../fotos nossas/eu/1/testeWhatsApp Image 2026-05-08 at 16.18.54 (1)_00000.png"                             alt=""></div>
+  <div class="hc on"><img src="../fotos nossas/ela/1/Unconfirmed_download_https___www.instagram.com_stories_v1lrxq_3881963208118033189(MP4)_00000.png" alt=""></div>
+  <div class="hc on"><img src="../fotos nossas/eu/1/testeWhatsApp Image 2026-05-08 at 16.18.54-_00000.png"                                alt=""></div>
+  <div class="hc on"><img src="../fotos nossas/ela/1/v1lrxq - highlight_18365051296081747(MP4)_00000.png"                                 alt=""></div>
+  <div class="hc on"><img src="../fotos nossas/eu/1/matheusxcy_1774830998_highlight18326366872180252_00000.png"                            alt=""></div>
+  <div class="hc on"><img src="../fotos nossas/ela/1/20260220164953457_00000.png"                                                          alt=""></div>
+
+  <!-- Linha 3: todas as 7 -->
+  <div class="hc on"><img src="../fotos nossas/eu/1/image_00000.png"                                                                      alt=""></div>
+  <div class="hc on"><img src="../fotos nossas/ela/1/20260403164518474_00000.png"                                                          alt=""></div>
+  <div class="hc on"><img src="../fotos nossas/eu/1/image (1)_00000.png"                                                                  alt=""></div>
+  <div class="hc on"><img src="../fotos nossas/ela/1/26666c081747a12ff6a3398fdaa4a280_0_00000.png"                                         alt=""></div>
+  <div class="hc on"><img src="../fotos nossas/eu/1/testeWhatsApp Image 2026-05-08 at 16.18.54 (1)_00000.png"                             alt=""></div>
+  <div class="hc on"><img src="../fotos nossas/ela/1/Unconfirmed_download_https___www.instagram.com_stories_v1lrxq_3881963208118033189(MP4)_00000.png" alt=""></div>
+  <div class="hc on"><img src="../fotos nossas/eu/1/testeWhatsApp Image 2026-05-08 at 16.18.54-_00000.png"                                alt=""></div>
+
+  <!-- Linha 4: cols 2–6 -->
+  <div class="hc"></div>
+  <div class="hc on"><img src="../fotos nossas/ela/1/v1lrxq - highlight_18365051296081747(MP4)_00000.png"                                 alt=""></div>
+  <div class="hc on"><img src="../fotos nossas/eu/1/matheusxcy_1774830998_highlight18326366872180252_00000.png"                            alt=""></div>
+  <div class="hc on"><img src="../fotos nossas/ela/1/20260220164953457_00000.png"                                                          alt=""></div>
+  <div class="hc on"><img src="../fotos nossas/eu/1/image_00000.png"                                                                      alt=""></div>
+  <div class="hc on"><img src="../fotos nossas/ela/1/20260403164518474_00000.png"                                                          alt=""></div>
+  <div class="hc"></div>
+
+  <!-- Linha 5: cols 3–5 -->
+  <div class="hc"></div>
+  <div class="hc"></div>
+  <div class="hc on"><img src="../fotos nossas/eu/1/image (1)_00000.png"                                                                  alt=""></div>
+  <div class="hc on"><img src="../fotos nossas/ela/1/26666c081747a12ff6a3398fdaa4a280_0_00000.png"                                         alt=""></div>
+  <div class="hc on"><img src="../fotos nossas/eu/1/testeWhatsApp Image 2026-05-08 at 16.18.54 (1)_00000.png"                             alt=""></div>
+  <div class="hc"></div>
+  <div class="hc"></div>
+
+  <!-- Linha 6: col 4 -->
+  <div class="hc"></div>
+  <div class="hc"></div>
+  <div class="hc"></div>
+  <div class="hc on"><img src="../fotos nossas/ela/1/v1lrxq - highlight_18365051296081747(MP4)_00000.png"                                 alt=""></div>
+  <div class="hc"></div>
+  <div class="hc"></div>
+  <div class="hc"></div>
+
+</div>
+</div>
+
+<div class="overlay"></div>
+
+<!-- loading screen — voltar -->
+<div id="loadingScreen" style="
+    position:fixed;inset:0;z-index:9999;
+    background:radial-gradient(ellipse at center,#eaf6fd 0%,#c8e8f8 100%);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;
+    opacity:0;pointer-events:none;transition:opacity .35s;">
+    <img src="../cinnamoroll/everything cinnamoroll.gif"
+         style="width:120px;filter:drop-shadow(0 6px 18px rgba(0,0,0,.15));animation:loadB 1s ease-in-out infinite alternate;"
+         alt="">
+    <div style="font-family:'Fredoka',sans-serif;font-size:1.3rem;color:#1a4a6b;animation:loadP 1.2s ease-in-out infinite alternate;">voltando...</div>
+    <div>
+        <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#6db8e0;margin:0 4px;animation:dotJ .7s ease-in-out infinite alternate;"></span>
+        <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#6db8e0;margin:0 4px;animation:dotJ .7s .15s ease-in-out infinite alternate;"></span>
+        <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#6db8e0;margin:0 4px;animation:dotJ .7s .3s ease-in-out infinite alternate;"></span>
+    </div>
+</div>
+<style>
+@keyframes loadB { from{transform:translateY(0) scale(1)}   to{transform:translateY(-10px) scale(1.06)} }
+@keyframes loadP { from{opacity:.6}                          to{opacity:1} }
+@keyframes dotJ  { from{transform:translateY(0);opacity:.5}  to{transform:translateY(-8px);opacity:1} }
+</style>
+
+<!-- partículas -->
+<div class="particles" id="particles"></div>
+
+<!-- ══ CONTEÚDO ══ -->
+<div class="page">
+
+    <div class="top-banner">
+        <a class="back-link" href="#" id="backBtn">← voltar</a>
+        <span class="top-label">💙 dia dos namorados 2026</span>
+    </div>
+
+    <section class="hero">
+        <img src="../cinnamoroll/pngwing.com (1).png" class="cinna-hero-left"  alt="">
+        <img src="../cinnamoroll/pngwing.com (1).png" class="cinna-hero-right" alt="">
+        <h1 class="hero-title">feliz dia dos namorados,<br>nay ♡</h1>
+        <p class="hero-subtitle">
+            um dia especial para celebrar o que a gente tem ♡<br>
+            feito com todo amor pra você, minha bebê
+        </p>
+        <div class="hero-hearts">
+            <span>🌸</span><span>💙</span><span>🐾</span><span>💙</span><span>🌸</span>
+        </div>
+        <img src="../cinnamoroll/everything cinnamoroll.gif" class="hero-gif" alt="">
+    </section>
+
+    <div class="container">
+
+        <!-- CARTA -->
+        <div class="glass-card" id="carta">
+            <div class="section-title">
+                <img src="../cinnamoroll/pngwing.com.png" alt="">
+                uma carta pra você amor ♡
+            </div>
+            <!-- ╔══════════════════════════════════════════════════╗
+                 ║  ✏️  SUBSTITUA PELO SEU TEXTO AQUI              ║
+                 ║  Use <br><br> para pular parágrafo              ║
+                 ╚══════════════════════════════════════════════════╝ -->
+            <div class="text-area-wrapper">
+                <div class="big-text-content">feliz dia dos namorados meu amor, eu quero te escrever algumas palavras porque hoje é um dia muito especial pra mim, nao apenas por ser dia dos namorados, mas tambem por ser o meu primeiro dia dos namorados tendo alguem tao especial ao meu lado, antes de voce, eu nunca tinha vivido isso, nunca tinha tido alguem pra compartilhar meu dia, meus bons momentos e maus momentos, minhas conquistas, minhas preocupações diarias e os pequenos momentos que acabam se tornando os mais importantes, eu falei pra voce esses dias que eu amo ficar com voce, ouvir sua voz, escutar voce dormindo enquanto trabalho, de verdade, eu fico muito feliz que minha primeira experiencia esteja sendo com voce, eu amo a sua companhia, amo acordar sabendo que vou falar com voce, amo nossas conversas, amo quando passamos horas juntos sem nem perceber o tempo passar, sempre entro na call com voce e pisco, ja é de madrugada, amo quando jogamos distrito juntos, mesmo quando passamos raiva com nosso time, que sempre é horrivel, ou quando os killers parecem ter escolhido a gente como alvo, acho engraçado quando começa a partida e voce sempre fala "me fudikkkkk", ate os momentos de raiva ficam divertidos porque estou vivendo eles com voce, voce transformou coisas simples em momentos que eu guardo com muito carinho, uma callzinha, uma partida, uma conversa aleatoria que temos do nada, uma mensagem sua durante o dia, tipo quando voce tava comendo pastel ou pipoca e veio me falar toda fofinha, tudo isso faz parte da minha felicidade, eu queria que voce soubesse que sou muito grato por ter voce na minha vida, cada dia que passa eu me apaixono mais pelo seu jeito, voce estressada é a coisa mais fofinha e engraçada que temkkkk, sou grato pela sua companhia e pela pessoa incrivel que voce é, obrigado por fazer parte da minha vida, por me fazer sorrir tanto e por tornar esse primeiro dia dos namorados algo que vou lembrar pra sempre, amo muuito voce amor ❤</div>
+            </div>
+            <img src="../cinnamoroll/pngwing.com (2).png" class="cinna-text-deco" alt="">
+        </div>
+
+        <!-- VÍDEO -->
+        <div class="glass-card video-section">
+            <div class="section-title">
+                <img src="../cinnamoroll/pngwing.com.png" alt="">
+              mais um video especial pra voce amor, mais um de nossas memorias ♡
+            </div>
+            <!-- ╔═══════════════════════════════════════════════════════════╗
+                 ║  🎬  PARA ADICIONAR SEU VÍDEO:                           ║
+                 ║  1. Apague o bloco <div class="video-placeholder">       ║
+                 ║  2. Descomente o <iframe> abaixo                         ║
+                 ║  3. Troque SEU_ID_AQUI pelo ID do vídeo no YouTube       ║
+                 ╚═══════════════════════════════════════════════════════════╝ -->
+            <div class="video-area-wrapper">
+                <div class="video-wrap">
+                    <iframe
+                        src="https://www.youtube.com/embed/IqhDfGYwcrc"
+                        title="Vídeo especial dia dos namorados"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+            <img src="../cinnamoroll/62479586fa237d932487c8684b776161.gif" class="video-gif" alt="">
+            <img src="../cinnamoroll/pngwing.com (2).png" class="cinna-video-left"  alt="">
+            <img src="../cinnamoroll/pngwing.com (2).png" class="cinna-video-right" alt="">
+        </div>
+
+        <!-- FRASE -->
+        <div class="glass-card quote-card">
+            <div class="section-title">💙</div>
+            <div class="quote-text">
+                "voce e a coisa mais fofa e mais especial que entrou na minha vida. cada momento com voce deixa meus dias mais leves e mais felizes, e eu sou muito grato por ter alguem tao incrivel ao meu lado.
+
+—<br>
+               eu nao troco seu carinho, sua companhia e o jeito que voce me faz sentir por nada nesse mundo. com todo amor, sempre ♡ 
+            </div>
+            <p class="quote-author"style=</p>>— com todo amor, sempre ♡</p>
+            <img src="../cinnamoroll/pngwing.com.png" class="quote-img" alt="">
+        </div>
+
+    </div>
+
+    <footer class="footer-section">
+        <p>
+            feliz dia dos namorados, minha bebê 🌸<br>
+            eu te amo mais do que consigo colocar em palavras ♡
+        </p>
+        <img src="../cinnamoroll/everything cinnamoroll.gif" class="footer-gif" alt="">
+    </footer>
+
+</div>
+
+<script>
+// botão voltar
+document.getElementById('backBtn').addEventListener('click',function(e){
+    e.preventDefault();
+    const ls = document.getElementById('loadingScreen');
+    ls.style.opacity='1';
+    ls.style.pointerEvents='all';
+    setTimeout(()=>{ window.location.href='../index.html'; }, 1400);
+});
+
+// fade-in do coração após load
+window.addEventListener('load', ()=>{
+    setTimeout(()=>{
+        document.getElementById('heartGrid').classList.add('visible');
+    }, 200);
+});
+
+// anima células do coração em cascata
+const cells = document.querySelectorAll('.hc.on');
+cells.forEach((c, i)=>{
+    c.style.opacity = '0';
+    c.style.transform = 'scale(.88)';
+    c.style.transition = `opacity .6s ease ${i*45}ms, transform .6s ease ${i*45}ms`;
+    window.addEventListener('load', ()=>{
+        setTimeout(()=>{
+            c.style.opacity = '1';
+            c.style.transform = 'scale(1)';
+        }, 300 + i*45);
+    });
+});
+
+// partículas
+const pc = document.getElementById('particles');
+const em = ['🌸','💙','✿','🫧','💙','⭐','🐾','💫','🎀','❄️'];
+for(let i=0;i<28;i++){
+    const p = document.createElement('span');
+    p.className='particle';
+    p.textContent=em[Math.floor(Math.random()*em.length)];
+    p.style.left             =Math.random()*100+'vw';
+    p.style.fontSize         =(.65+Math.random()*1.1)+'rem';
+    p.style.animationDuration=(9+Math.random()*13)+'s';
+    p.style.animationDelay   =(Math.random()*16)+'s';
+    pc.appendChild(p);
+}
+
+// imagens quebradas ficam invisíveis
+document.querySelectorAll('img').forEach(img=>{
+    img.addEventListener('error',function(){ this.style.display='none'; });
+});
+</script>
+</body>
+</html>

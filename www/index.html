@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#fff1b8">
+
+<title>completamente viciado nela ♡</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+body{
+    background:#fff8e8;
+    font-family:'Fredoka',sans-serif;
+    overflow-x:hidden;
+    color:#6f4425;
+}
+/* FUNDO */
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background-image: radial-gradient(#f2d383 1px, transparent 1px);
+    background-size:35px 35px;
+    opacity:.2;
+    z-index:-1;
+}
+/* TOPO */
+.top-wave{
+    width:100%;
+    height:70px;
+    border-bottom:4px dashed #efcb73;
+    background:linear-gradient(90deg,#fff1b8,#fff6d6,#fff1b8);
+}
+/* CONTAINER */
+.container{
+    width:min(1200px,92%);
+    margin:auto;
+    padding:40px 0 100px;
+}
+/* HERO */
+.hero{
+    text-align:center;
+    position:relative;
+}
+.hero h1{
+    font-size:5rem;
+    color:#6f4425;
+}
+.hero p{
+    margin-top:10px;
+    font-size:1.4rem;
+}
+/* POMPOMPURIN TOPO */
+.purin-left{
+    position:absolute;
+    left:0;
+    top:40px;
+    width:180px;
+}
+.purin-right{
+    position:absolute;
+    right:0;
+    top:0;
+    width:230px;
+}
+/* TIMER */
+.timer-box{
+    margin:50px auto 0;
+    width:min(700px,100%);
+    background:#fff7db;
+    border:4px dashed #efcb73;
+    border-radius:35px;
+    padding:30px;
+    box-shadow:0 10px 30px rgba(0,0,0,.05);
+}
+.timer-title{
+    text-align:center;
+    margin-bottom:25px;
+    font-size:1.2rem;
+}
+.timer{
+    display:flex;
+    justify-content:center;
+    gap:18px;
+    flex-wrap:wrap;
+}
+.time{
+    background:#fff1c2;
+    border:3px solid #efcb73;
+    border-radius:20px;
+    width:120px;
+    padding:18px 10px;
+}
+.time h2{
+    font-size:4rem;
+}
+.time p{
+    margin-top:5px;
+    font-size:1rem;
+}
+/* TEXTO GRANDE */
+.big-text{
+    margin-top:60px;
+    background:#fff6d7;
+    border:4px dashed #efcb73;
+    border-radius:35px;
+    padding:45px;
+    line-height:2.2;
+    font-size:1.15rem;
+    position:relative;
+}
+.big-text img{
+    position:absolute;
+    width:120px;
+    right:20px;
+    bottom:10px;
+    opacity:.2;
+}
+/* VIDEO CARROSSEL */
+.video-section{
+    margin-top:50px;
+    background:#fff6d7;
+    border:4px dashed #efcb73;
+    border-radius:35px;
+    padding:35px;
+    position:relative;
+}
+.video-title{
+    text-align:center;
+    font-size:1.3rem;
+    margin-bottom:25px;
+}
+.carousel {
+    position: relative;
+    overflow: hidden;
+    border-radius: 25px;
+    margin-bottom: 15px;
+}
+.slides {
+    display: flex;
+    transition: transform 0.5s ease;
+}
+.slide {
+    min-width: 100%;
+    flex-shrink: 0;
+}
+.video-frame iframe{
+    width:100%;
+    aspect-ratio:16/9;
+    border:none;
+    border-radius:25px;
+}
+.carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 15px;
+}
+.dot {
+    width: 12px;
+    height: 12px;
+    background: #efcb73;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+.dot.active {
+    background: #6f4425;
+    transform: scale(1.3);
+}
+/* POMPOMPURIN DO VIDEO */
+.video-purin-left{
+    position:absolute;
+    left:-40px;
+    bottom:-40px;
+    width:170px;
+}
+.video-purin-right{
+    position:absolute;
+    right:-40px;
+    bottom:-30px;
+    width:170px;
+}
+/* CARDS */
+.cards{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:30px;
+    margin-top:50px;
+}
+.card{
+    background:#fff6d7;
+    border:4px dashed #efcb73;
+    border-radius:35px;
+    padding:35px;
+    position:relative;
+    min-height:420px;
+}
+.card-title{
+    background:#fff0b8;
+    border:2px solid #efcb73;
+    border-radius:20px;
+    padding:15px;
+    text-align:center;
+    margin-bottom:30px;
+    font-size:1.2rem;
+}
+.card ul{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+    font-size:1.1rem;
+}
+.card li{
+    list-style:none;
+}
+.quote{
+    text-align:center;
+    line-height:2;
+    font-size:1.3rem;
+    margin-top:40px;
+}
+.card-purin{
+    position:absolute;
+    width:140px;
+    right:10px;
+    bottom:10px;
+    opacity:.95;
+}
+/* FOOTER */
+.footer{
+    text-align:center;
+    margin-top:70px;
+    font-size:1.3rem;
+    line-height:2;
+}
+/* RESPONSIVO */
+/* RESPONSIVO */
+@media(max-width:900px){
+
+body{
+    overflow-x:hidden;
+}
+
+.container{
+    width:94%;
+    padding:25px 0 70px;
+}
+
+.hero h1{
+    font-size:2.2rem;
+    line-height:1.2;
+    padding:0 10px;
+}
+
+.hero p{
+    font-size:1rem;
+    padding:0 15px;
+}
+
+.purin-left,
+.purin-right{
+    display:none;
+}
+
+.timer-box{
+    padding:20px 12px;
+    border-radius:25px;
+    margin-top:35px;
+}
+
+.timer{
+    gap:10px;
+}
+
+.time{
+    width:calc(50% - 10px);
+    padding:14px 8px;
+    border-radius:18px;
+}
+
+.time h2{
+    font-size:2.2rem;
+}
+
+.time p{
+    font-size:.8rem;
+}
+
+.big-text{
+    padding:25px 20px;
+    font-size:1rem;
+    line-height:1.9;
+    border-radius:25px;
+    margin-top:40px;
+}
+
+.big-text img{
+    width:80px;
+    right:10px;
+    bottom:10px;
+    opacity:.12;
+}
+
+.video-section{
+    padding:22px 15px 40px;
+    border-radius:25px;
+}
+
+.video-title{
+    font-size:1.05rem;
+}
+
+.carousel{
+    border-radius:18px;
+}
+
+.video-frame iframe{
+    border-radius:18px;
+}
+
+.video-purin-left,
+.video-purin-right{
+    width:85px;
+    opacity:.9;
+}
+
+.video-purin-left{
+    left:-5px;
+    bottom:-15px;
+}
+
+.video-purin-right{
+    right:-5px;
+    bottom:-10px;
+}
+
+.cards{
+    grid-template-columns:1fr;
+    gap:22px;
+    margin-top:35px;
+}
+
+.card{
+    min-height:auto;
+    padding:25px 20px 80px;
+    border-radius:25px;
+}
+
+.card-title{
+    font-size:1rem;
+    padding:12px;
+    margin-bottom:20px;
+}
+
+.card ul{
+    gap:14px;
+    font-size:1rem;
+}
+
+.quote{
+    font-size:1.05rem;
+    line-height:1.8;
+    margin-top:10px;
+}
+
+.card-purin{
+    width:90px;
+    opacity:.95;
+}
+
+.footer{
+    font-size:1rem;
+    line-height:1.8;
+    margin-top:45px;
+    padding:0 10px;
+}
+</style>
+</head>
+<body>
+<div class="top-wave"></div>
+<div class="container">
+<section class="hero">
+    <img src="pngwing.com.png" class="purin-left">           <!-- Coração -->
+    <img src="pngwing.com (1).png" class="purin-right">      <!-- Donut + Gato -->
+    <h1>amo voce nayara♡</h1>
+    <p>desde que voce virou minha paz ♡</p>
+    
+    <div class="timer-box">
+        <div class="timer-title">nosso tempo juntos:</div>
+        <div class="timer">
+            <div class="time"><h2 id="days">0</h2><p>DIAS</p></div>
+            <div class="time"><h2 id="hours">0</h2><p>HORAS</p></div>
+            <div class="time"><h2 id="minutes">0</h2><p>MINUTOS</p></div>
+            <div class="time"><h2 id="seconds">0</h2><p>SEGUNDOS</p></div>
+        </div>
+    </div>
+</section>
+
+<!-- TEXTO GRANDE -->
+<section class="big-text">
+Às vezes eu paro pra pensar em como tudo começou do jeito mais aleatorio possivel, e mesmo assim voce se tornou uma das coisas mais importantes da minha vida, nos conhecemos no mush, é muito louco imaginar que entrei sem pretensão so pra testar a pesca magnetica e do nada encontrei voce, entre tantas pessoas, tantas conversas e tanto kaos em minha mente, voce ficou, e eu acho incrivelmente lindo como, sem perceber, nos fomos nos conhecendo e nos permitindo cada vez mais até chegar no que somos hoje, apenas eu e voce fomos suficientes um para o outro, sem estresse das pessoas ao redor ou incentivos de terceiros, apenas eu e voce meu amor, fomos o que bastou pra estarmos como estamos hoje, eu amo cada detalhe seu, amo seu jeito fofo, seu carinho, o jeito que voce consegue deixar meus dias melhores e mais leves sem nem tentar, voce me passa um conforto que nunca senti, a minha vontade é sempre ficar perto de voce, assim me sinto bem, e eu tambem admiro tanto voce meu bem, pelo que faz, nunca menti pra voce quando falei que voce é a melhor designer que conheço, vendo suas artes, consigo ver o carinho e esforço que voce tem com cada uma, sua criatividade e o carinho que voce poe nos seus trabalhos me deixam admirado, fico ate bobo as vezes, é notavel o seu talento bebe, vou continuar me esforçando nos estudos com voce, eu acho engraçado e fofo o quanto voce ama pompompurin, combina muito contigo essa energia fofa que ele passa, quando voce falou que o pompompurin era engraçado e fofo e mostrava o cu eu ri demais kkkkkk, pequenos detalhes assim fazem eu gostar ainda mais de voce e de quem voce é, eu tambem amo o fato de que, mesmo vivendo em mundos diferentes, voce, minha designer fofa do maranhao, e eu, editor de videos virando noites no pc, a gente conseguiu criar algo só nosso, algo confortavel, leve e verdadeiro, obrigado por ter aparecido na minha vida desse jeito tao inesperado, porque hoje eu nao consigo mais imaginar meus dias sem voce, te amo muito bebezinha
+<br><br>
+e se um dia me perguntarem qual foi a melhor coisa que aconteceu na minha vida, eu vou olhar pra voce e perceber que a resposta sempre foi a mesma desde o dia em que te encontrei 🤎
+    <img src="pngwing.com (2).png">
+</section>
+
+<!-- VIDEO CARROSSEL -->
+<section class="video-section">
+    <div class="video-title">memórias nossas em vídeo ♡</div>
+   
+    <div class="carousel">
+        <div class="slides" id="slides">
+            <div class="slide">
+                <div class="video-frame">
+                    <iframe src="https://www.youtube.com/embed/SXOXLFqQu0M" 
+                            title="Pedido de namoro" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen></iframe>
+                </div>
+            </div>
+            <div class="slide">
+                <div class="video-frame">
+                    <iframe src="https://www.youtube.com/embed/vYvGwwvMIQU" 
+                            title="Um mês juntos" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="carousel-dots">
+        <span class="dot active" data-slide="0"></span>
+        <span class="dot" data-slide="1"></span>
+    </div>
+
+    <img src="pngwing.com.png" class="video-purin-left">
+    <img src="pngwing.com (2).png" class="video-purin-right">
+</section>
+
+<!-- CARDS -->
+<section class="cards">
+<div class="card">
+<div class="card-title">coisas que eu mais amo em você ♡</div>
+<ul>
+<li>♡ seu jeito fofo e carinhoso</li>
+<li>♡ seu talento incrível como designer</li>
+<li>♡ o jeito que voce alegra meu dia</li>
+<li>♡ como você se importa comigo</li>
+<li>♡ a mulher deliciosa que voce é</li>
+<li>♡ o fato de você amar pompompurin ♡</li>
+</ul>
+<img src="pngwing.com (1).png" class="card-purin">
+</div>
+<div class="card">
+<div class="card-title">frase que define a gente ♡</div>
+<div class="quote">
+“duas pessoas que se encontraram por acaso, eu perdido no meu proprio caos e voce aparecendo devagarinho pra virar minha paz, meu conforto e a melhor parte dos meus dias 🤎.”
+</div>
+<img src="pngwing.com.png" class="card-purin">
+</div>
+</section>
+
+<div class="footer">
+obrigado por existir e deixar tudo mais leve.<br>
+eu te amo mais do que palavras podem dizer ♡
+</div>
+</div>
+
+<script>
+// Timer
+const namoro = new Date(2026, 3, 26, 21, 28, 0);
+function atualizarTempo(){
+    const agora = new Date();
+    const diff = agora - namoro;
+    const segundosTotal = Math.floor(diff / 1000);
+    const dias = Math.floor(segundosTotal / 86400);
+    const horas = Math.floor((segundosTotal % 86400) / 3600);
+    const minutos = Math.floor((segundosTotal % 3600) / 60);
+    const segundos = segundosTotal % 60;
+   
+    document.getElementById("days").innerText = dias;
+    document.getElementById("hours").innerText = horas;
+    document.getElementById("minutes").innerText = minutos;
+    document.getElementById("seconds").innerText = segundos;
+}
+setInterval(atualizarTempo, 1000);
+atualizarTempo();
+
+// Carrossel
+const slidesContainer = document.getElementById('slides');
+const dots = document.querySelectorAll('.dot');
+let currentSlide = 0;
+function goToSlide(slide) {
+    currentSlide = slide;
+    slidesContainer.style.transform = `translateX(-${slide * 100}%)`;
+    dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === slide);
+    });
+}
+dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => goToSlide(index));
+});
+</script>
+</body>
+</html>

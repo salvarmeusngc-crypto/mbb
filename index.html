@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#fff1b8">
+<title>nay, voce é meu vicio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600&family=Pacifico&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+/* ── FUNDO DIVIDIDO: esquerda amarelo, direita azul ── */
+body {
+    font-family:'Fredoka', sans-serif;
+    min-height:100vh;
+    overflow-x:hidden;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding:50px 20px 60px;
+    position:relative;
+    /* fundo split */
+    background:linear-gradient(to right, #fff8e8 50%, #d6eef9 50%);
+}
+
+/* pontilhado lado amarelo */
+body::before {
+    content:"";
+    position:fixed;
+    inset:0;
+    background-image:
+        radial-gradient(#f2d383 1.2px, transparent 1.2px),
+        radial-gradient(#7ec8e3 1.2px, transparent 1.2px);
+    background-size: 35px 35px, 35px 35px;
+    background-position: 0 0, 17.5px 17.5px;
+    /* máscara split: amarelo esq, azul dir */
+    -webkit-mask-image: linear-gradient(to right, black 50%, transparent 50%),
+                        linear-gradient(to right, transparent 50%, black 50%);
+    -webkit-mask-composite: source-over;
+    mask-image: linear-gradient(to right, black 50%, transparent 50%),
+                linear-gradient(to right, transparent 50%, black 50%);
+    mask-composite: add;
+    opacity:.22;
+    z-index:0;
+    pointer-events:none;
+}
+
+/* linha divisória central */
+body::after {
+    content:"";
+    position:fixed;
+    top:0; bottom:0;
+    left:50%;
+    transform:translateX(-50%);
+    width:3px;
+    background:linear-gradient(to bottom,
+        transparent 0%,
+        rgba(180,160,100,.25) 15%,
+        rgba(120,190,220,.4) 50%,
+        rgba(180,160,100,.25) 85%,
+        transparent 100%);
+    z-index:0;
+    pointer-events:none;
+}
+
+/* partículas flutuantes */
+.floats-bg {
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:0;
+    overflow:hidden;
+}
+.float-item {
+    position:absolute;
+    animation:floatUp linear infinite;
+    opacity:0;
+}
+@keyframes floatUp {
+    0%   { transform:translateY(100vh) rotate(-10deg); opacity:0; }
+    10%  { opacity:.45; }
+    90%  { opacity:.2; }
+    100% { transform:translateY(-100px) rotate(10deg); opacity:0; }
+}
+
+/* ── CONTEÚDO ── */
+.page { position:relative; z-index:1; width:100%; display:flex; flex-direction:column; align-items:center; }
+
+.title-area {
+    text-align:center;
+    margin-bottom:46px;
+}
+.title-area h1 {
+    font-size:3.4rem;
+    line-height:1.18;
+    /* split de cor no título */
+    background:linear-gradient(to right, #6f4425 50%, #1a5a8a 50%);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    background-clip:text;
+}
+.title-area p {
+    margin-top:10px;
+    font-size:1.15rem;
+    color:#7a6050;
+    opacity:.8;
+}
+
+/* ── GRID DE CARDS ── */
+.versions-grid {
+    display:flex;
+    flex-wrap:wrap;
+    gap:0;          /* sem gap — os cards se encostam no centro */
+    justify-content:center;
+    max-width:800px;
+    width:100%;
+}
+
+/* ── CARD BASE ── */
+.version-card {
+    width:340px;
+    padding:38px 30px 34px;
+    text-align:center;
+    cursor:pointer;
+    text-decoration:none;
+    position:relative;
+    overflow:hidden;
+    transition:transform .28s cubic-bezier(.34,1.56,.64,1), box-shadow .28s;
+    border-radius:0;
+}
+.version-card:hover {
+    transform:translateY(-8px) scale(1.03);
+    z-index:5;
+}
+
+/* ── CARD 1 MÊS — amarelo/purin ── */
+.card-1mes {
+    background:rgba(255,247,218,.92);
+    border:4px dashed #efcb73;
+    border-radius:35px 0 0 35px;
+    border-right:2px solid #e8c866;
+    box-shadow: 4px 0 20px rgba(239,203,115,.3),
+                0 8px 30px rgba(0,0,0,.07);
+    color:#6f4425;
+}
+.card-1mes:hover {
+    box-shadow: 6px 0 30px rgba(239,203,115,.4),
+                0 18px 50px rgba(0,0,0,.1);
+}
+
+/* ── CARD VALENTINES — azul/cinnamoroll ── */
+.card-valentines {
+    background:rgba(220,240,252,.92);
+    border:4px dashed #6db8e0;
+    border-radius:0 35px 35px 0;
+    border-left:2px solid #5aacda;
+    box-shadow: -4px 0 20px rgba(109,184,224,.3),
+                 0 8px 30px rgba(0,0,0,.07);
+    color:#1a4a6b;
+}
+.card-valentines:hover {
+    box-shadow: -6px 0 30px rgba(109,184,224,.4),
+                  0 18px 50px rgba(0,0,0,.1);
+}
+
+/* badge */
+.badge {
+    position:absolute;
+    top:14px;
+    right:14px;
+    font-size:.75rem;
+    font-weight:600;
+    padding:4px 12px;
+    border-radius:20px;
+    letter-spacing:.4px;
+}
+.card-1mes      .badge { background:#efcb73; color:#6f4425; }
+.card-valentines .badge { background:#6db8e0; color:#fff; }
+
+/* gif/emoji central */
+.card-gif {
+    width:90px;
+    display:block;
+    margin:0 auto 16px;
+    filter:drop-shadow(0 4px 10px rgba(0,0,0,.12));
+}
+.card-emoji {
+    font-size:4.2rem;
+    display:block;
+    margin:0 auto 16px;
+    filter:drop-shadow(0 4px 8px rgba(0,0,0,.1));
+}
+
+.version-card h2 {
+    font-size:1.5rem;
+    margin-bottom:8px;
+    line-height:1.3;
+}
+
+.divider {
+    width:48px;
+    height:3px;
+    border-radius:10px;
+    margin:12px auto;
+}
+.card-1mes      .divider { background:#efcb73; }
+.card-valentines .divider { background:#6db8e0; }
+
+.version-card p {
+    font-size:.98rem;
+    line-height:1.72;
+    opacity:.85;
+}
+
+.card-btn {
+    display:inline-block;
+    margin-top:22px;
+    padding:10px 30px;
+    border-radius:50px;
+    font-family:'Fredoka',sans-serif;
+    font-size:1rem;
+    font-weight:500;
+    border:none;
+    cursor:pointer;
+    transition:filter .2s, transform .15s;
+}
+.card-btn:hover { filter:brightness(.92); transform:scale(1.05); }
+.card-1mes      .card-btn { background:#efcb73; color:#6f4425; }
+.card-valentines .card-btn { background:#4a9eca; color:#fff; }
+
+/* ── FOOTER ── */
+.selector-footer {
+    margin-top:50px;
+    font-size:1rem;
+    text-align:center;
+    line-height:1.85;
+    background:linear-gradient(to right, #6f4425 50%, #1a5a8a 50%);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    background-clip:text;
+    opacity:.6;
+}
+
+/* ── LOADING SCREEN ── */
+.loading-screen {
+    position:fixed;
+    inset:0;
+    z-index:9999;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:22px;
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .35s;
+}
+.loading-screen.active {
+    opacity:1;
+    pointer-events:all;
+}
+/* fundo do loading 1mes — amarelo */
+.loading-screen.tipo-1mes {
+    background:radial-gradient(ellipse at center, #fff8e8 0%, #fff1c2 100%);
+}
+/* fundo do loading valentines — azul */
+.loading-screen.tipo-valentines {
+    background:radial-gradient(ellipse at center, #eaf6fd 0%, #c8e8f8 100%);
+}
+.loading-gif {
+    width:120px;
+    filter:drop-shadow(0 6px 18px rgba(0,0,0,.15));
+    animation:loadBounce 1s ease-in-out infinite alternate;
+}
+@keyframes loadBounce {
+    from { transform:translateY(0)    scale(1);    }
+    to   { transform:translateY(-10px) scale(1.06); }
+}
+.loading-text {
+    font-size:1.3rem;
+    font-family:'Fredoka',sans-serif;
+    animation:loadPulse 1.2s ease-in-out infinite alternate;
+}
+.tipo-1mes      .loading-text { color:#6f4425; }
+.tipo-valentines .loading-text { color:#1a4a6b; }
+@keyframes loadPulse {
+    from { opacity:.6; }
+    to   { opacity:1; }
+}
+.loading-dots span {
+    display:inline-block;
+    width:10px; height:10px;
+    border-radius:50%;
+    margin:0 4px;
+    animation:dotJump .7s ease-in-out infinite alternate;
+}
+.loading-dots span:nth-child(2) { animation-delay:.15s; }
+.loading-dots span:nth-child(3) { animation-delay:.3s; }
+.tipo-1mes      .loading-dots span { background:#efcb73; }
+.tipo-valentines .loading-dots span { background:#6db8e0; }
+@keyframes dotJump {
+    from { transform:translateY(0);   opacity:.5; }
+    to   { transform:translateY(-8px); opacity:1; }
+}
+
+/* ── RESPONSIVO ── */
+@media(max-width:720px){
+    body { background:linear-gradient(to bottom, #fff8e8 50%, #d6eef9 50%); }
+    body::after { display:none; }
+    .title-area h1 { font-size:2.3rem; }
+    .versions-grid { flex-direction:column; align-items:center; gap:20px; }
+    .card-1mes, .card-valentines {
+        width:min(340px, 90vw);
+        border-radius:30px !important;
+        border:4px dashed currentColor !important;
+    }
+    .card-1mes { border-color:#efcb73 !important; }
+    .card-valentines { border-color:#6db8e0 !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── LOADING 1MÊS ── -->
+<div class="loading-screen tipo-1mes" id="load1mes">
+    <img src="src/73b0ea4d4bb31426c173754d20228246.gif" class="loading-gif" alt="pompompurin">
+    <div class="loading-text">carregando...</div>
+    <div class="loading-dots"><span></span><span></span><span></span></div>
+</div>
+
+<!-- ── LOADING VALENTINES ── -->
+<div class="loading-screen tipo-valentines" id="loadValentines">
+    <img src="cinnamoroll/62479586fa237d932487c8684b776161.gif" class="loading-gif" alt="cinnamoroll">
+    <div class="loading-text">carregando...</div>
+    <div class="loading-dots"><span></span><span></span><span></span></div>
+</div>
+
+<!-- partículas flutuantes -->
+<div class="floats-bg" id="floatsBg"></div>
+
+<div class="page">
+
+    <div class="title-area">
+        <h1>amo voce nayara♡</h1>
+        <p>escolha um momento especial ↓</p>
+    </div>
+
+    <div class="versions-grid">
+
+        <!-- CARD 1 MÊS -->
+        <a class="version-card card-1mes" href="#" data-dest="1mes/index.html" data-load="load1mes">
+            <span class="badge">✓ ao vivo</span>
+            <img src="src/73b0ea4d4bb31426c173754d20228246.gif" class="card-gif" alt="pompompurin">
+            <h2>1 mês de namoro</h2>
+            <div class="divider"></div>
+            <p>o começo de tudo, o primeiro mês com você do meu lado ♡</p>
+            <button class="card-btn">ver agora</button>
+        </a>
+
+        <!-- CARD DIA DOS NAMORADOS -->
+        <a class="version-card card-valentines" href="#" data-dest="valentines/index.html" data-load="loadValentines">
+            <span class="badge">� novo</span>
+            <img src="cinnamoroll/62479586fa237d932487c8684b776161.gif" class="card-gif" alt="cinnamoroll">
+            <h2>dia dos namorados</h2>
+            <div class="divider"></div>
+            <p>especial cinnamoroll — feito com todo amor pra você �</p>
+            <button class="card-btn">ver agora</button>
+        </a>
+
+    </div>
+
+    <div class="selector-footer">
+        cada página é um momento que é só nosso ♡<br>
+        mais por vir...
+    </div>
+
+</div>
+
+<script>
+// ── PARTÍCULAS SPLIT: esq=amarelo, dir=azul
+const bg = document.getElementById('floatsBg');
+const leftEmojis  = ['♡','🌼','✿','�','�','⭐'];
+const rightEmojis = ['♡','�🌸','�','❄️','🫧','✦'];
+for(let i=0;i<28;i++){
+    const el = document.createElement('span');
+    el.className = 'float-item';
+    const isRight = Math.random() > .5;
+    el.textContent = isRight
+        ? rightEmojis[Math.floor(Math.random()*rightEmojis.length)]
+        : leftEmojis [Math.floor(Math.random()*leftEmojis.length)];
+    el.style.left             = Math.random()*100+'vw';
+    el.style.fontSize         = (.9+Math.random()*1.2)+'rem';
+    el.style.animationDuration= (10+Math.random()*13)+'s';
+    el.style.animationDelay   = (Math.random()*14)+'s';
+    bg.appendChild(el);
+}
+
+// ── LOADING SCREEN ao clicar no card
+document.querySelectorAll('.version-card').forEach(card=>{
+    card.addEventListener('click', function(e){
+        e.preventDefault();
+        const dest   = this.dataset.dest;
+        const loadId = this.dataset.load;
+        const screen = document.getElementById(loadId);
+
+        screen.classList.add('active');
+
+        // redireciona após animação
+        setTimeout(()=>{ window.location.href = dest; }, 1400);
+    });
+});
+</script>
+</body>
+</html>
