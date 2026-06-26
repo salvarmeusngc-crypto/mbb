@@ -3,674 +3,884 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#1a0a2e">
-<title>2 meses com você ♡</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600&family=Pacifico&display=swap" rel="stylesheet">
+<title>2 meses ♡</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Pacifico&display=swap" rel="stylesheet">
 <style>
-/* ===================== RESET ===================== */
-*{ margin:0; padding:0; box-sizing:border-box; }
+  /* ===== RESET & BASE ===== */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: #1a0a2e;
+    font-family: 'Fredoka', sans-serif;
+    color: #f472b6;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
 
-/* ===================== BODY ===================== */
-body{
-    background:linear-gradient(135deg,#1a0a2e 0%,#2d1b4e 60%,#1e0e38 100%);
-    min-height:100vh;
-    font-family:'Fredoka',sans-serif;
-    overflow-x:hidden;
-    color:#e9d5ff;
-}
+  /* ===== FLOATING HEARTS ===== */
+  .hearts-container {
+    position: fixed; top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .heart {
+    position: absolute;
+    bottom: -40px;
+    font-size: 18px;
+    animation: floatUp linear infinite;
+    opacity: 0;
+    user-select: none;
+  }
+  @keyframes floatUp {
+    0%   { transform: translateY(0) scale(1);   opacity: 0; }
+    10%  { opacity: .6; }
+    90%  { opacity: .3; }
+    100% { transform: translateY(-105vh) scale(.6); opacity: 0; }
+  }
 
-/* ===================== ESTRELAS ===================== */
-.stars-bg{
-    position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden;
-}
-.star{
-    position:absolute; border-radius:50%; background:#c4b5fd;
-    animation:twinkle var(--dur,3s) ease-in-out infinite alternate; opacity:0;
-}
-@keyframes twinkle{
-    0%  { opacity:0;   transform:scale(.7); }
-    50% { opacity:.85; transform:scale(1.2); }
-    100%{ opacity:.2;  transform:scale(.9); }
-}
-.particle{
-    position:absolute; border-radius:50%;
-    animation:floatUp var(--fdur,8s) linear infinite; opacity:0;
-}
-@keyframes floatUp{
-    0%   { transform:translateY(0) scale(1);   opacity:0; }
-    10%  { opacity:.6; }
-    90%  { opacity:.3; }
-    100% { transform:translateY(-100vh) scale(.5); opacity:0; }
-}
+  /* ===== TOP BAR ===== */
+  .topbar {
+    position: relative; z-index: 10;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 24px;
+    background: rgba(26,10,46,.85);
+    border-bottom: 1px solid rgba(196,181,253,.18);
+    backdrop-filter: blur(6px);
+  }
+  .topbar-back {
+    text-decoration: none;
+    color: #c4b5fd;
+    font-size: 15px;
+    font-weight: 600;
+    display: flex; align-items: center; gap: 6px;
+    transition: color .2s;
+  }
+  .topbar-back:hover { color: #f472b6; }
+  .topbar-title {
+    font-family: 'Pacifico', cursive;
+    font-size: 20px;
+    color: #f472b6;
+    text-shadow: 0 0 12px #f472b680;
+  }
+  .music-btn {
+    background: rgba(196,181,253,.15);
+    border: 1px solid rgba(196,181,253,.35);
+    border-radius: 50px;
+    color: #c4b5fd;
+    font-size: 15px;
+    padding: 6px 16px;
+    cursor: pointer;
+    transition: all .2s;
+    display: flex; align-items: center; gap: 6px;
+    font-family: 'Fredoka', sans-serif;
+  }
+  .music-btn:hover { background: rgba(196,181,253,.28); }
+  .music-btn.playing { color: #f472b6; border-color: #f472b6; animation: musicPulse 1.4s ease-in-out infinite; }
+  @keyframes musicPulse {
+    0%,100% { box-shadow: 0 0 0 0 rgba(244,114,182,.4); }
+    50%      { box-shadow: 0 0 0 8px rgba(244,114,182,0); }
+  }
+  .music-note { display: inline-block; }
+  .music-btn.playing .music-note { animation: noteBounce .5s ease-in-out infinite alternate; }
+  @keyframes noteBounce { from { transform: translateY(0); } to { transform: translateY(-3px); } }
 
-/* ===================== LOADING SCREEN ===================== */
-#loadingScreen{
-    position:fixed; inset:0; z-index:9999;
-    background:radial-gradient(ellipse at center,#2d1b4e 0%,#1a0a2e 100%);
-    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:22px;
-    opacity:0; pointer-events:none; transition:opacity .35s;
-}
-#loadingScreen img{ width:110px; animation:loadB 1s ease-in-out infinite alternate; }
-#loadingScreen .load-txt{ font-size:1.3rem; color:#c4b5fd; animation:loadP 1.2s ease-in-out infinite alternate; }
-.load-dots span{
-    display:inline-block; width:11px; height:11px; border-radius:50%;
-    background:#c4b5fd; margin:0 5px;
-}
-.load-dots span:nth-child(1){ animation:dotJ .7s ease-in-out infinite alternate; }
-.load-dots span:nth-child(2){ animation:dotJ .7s .15s ease-in-out infinite alternate; }
-.load-dots span:nth-child(3){ animation:dotJ .7s .3s  ease-in-out infinite alternate; }
-@keyframes loadB{ from{transform:translateY(0) scale(1)} to{transform:translateY(-10px) scale(1.07)} }
-@keyframes loadP{ from{opacity:.5} to{opacity:1} }
-@keyframes dotJ{ from{transform:translateY(0);opacity:.4} to{transform:translateY(-9px);opacity:1} }
+  /* ===== LOADING OVERLAY ===== */
+  #loading-overlay {
+    position: fixed; inset: 0; z-index: 9999;
+    background: #1a0a2e;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 16px;
+    transition: opacity .5s;
+  }
+  #loading-overlay.hidden { opacity: 0; pointer-events: none; }
+  .loading-text { font-family: 'Pacifico', cursive; font-size: 22px; color: #c4b5fd; }
+  .loading-bar {
+    width: 200px; height: 6px;
+    background: rgba(196,181,253,.2);
+    border-radius: 10px; overflow: hidden;
+  }
+  .loading-bar-inner {
+    height: 100%;
+    background: linear-gradient(90deg,#f472b6,#7c3aed);
+    border-radius: 10px;
+    animation: loadBar 1.2s ease-out forwards;
+  }
+  @keyframes loadBar { from { width: 0; } to { width: 100%; } }
 
-/* ===================== BOTÃO VOLTAR ===================== */
-.back-btn{
-    position:fixed; top:18px; left:18px; z-index:998;
-    background:rgba(26,10,46,.88); border:2px solid #7c3aed;
-    border-radius:30px; padding:7px 18px;
-    font-family:'Fredoka',sans-serif; font-size:.95rem; color:#e9d5ff;
-    text-decoration:none; backdrop-filter:blur(8px);
-    box-shadow:0 0 12px rgba(124,58,237,.4);
-    transition:background .2s,transform .15s,box-shadow .2s;
-}
-.back-btn:hover{
-    background:rgba(124,58,237,.55); transform:translateY(-2px);
-    box-shadow:0 0 22px rgba(244,114,182,.5);
-}
+  /* ===== WELCOME POPUP ===== */
+  #welcome-overlay {
+    position: fixed; inset: 0; z-index: 1000;
+    background: rgba(0,0,0,.72);
+    display: flex; align-items: center; justify-content: center;
+    padding: 16px;
+  }
+  #welcome-overlay.hidden { display: none; }
+  .welcome-card {
+    background: linear-gradient(145deg, rgba(124,58,237,.92), rgba(244,114,182,.82));
+    border: 2px solid rgba(244,114,182,.6);
+    border-radius: 28px;
+    padding: 36px 32px 28px;
+    max-width: 380px; width: 100%;
+    text-align: center;
+    box-shadow: 0 0 60px rgba(244,114,182,.45), 0 0 120px rgba(124,58,237,.3);
+    animation: popIn .5s cubic-bezier(.34,1.56,.64,1);
+  }
+  @keyframes popIn {
+    from { transform: scale(.7); opacity: 0; }
+    to   { transform: scale(1);  opacity: 1; }
+  }
+  .welcome-melody {
+    width: 110px; height: 110px; object-fit: contain;
+    margin-bottom: 12px;
+    filter: drop-shadow(0 0 12px rgba(244,114,182,.7));
+    animation: floatMelody 3s ease-in-out infinite;
+  }
+  @keyframes floatMelody {
+    0%,100% { transform: translateY(0); }
+    50%      { transform: translateY(-8px); }
+  }
+  .welcome-title {
+    font-family: 'Pacifico', cursive;
+    font-size: 22px; color: #fff;
+    text-shadow: 0 0 14px rgba(244,114,182,.9);
+    margin-bottom: 8px;
+  }
+  .welcome-sub {
+    font-size: 16px; color: rgba(255,255,255,.85);
+    margin-bottom: 24px;
+  }
+  .welcome-btn {
+    background: linear-gradient(135deg,#f472b6,#7c3aed);
+    border: none; border-radius: 50px;
+    color: #fff; font-size: 16px;
+    font-family: 'Fredoka', sans-serif; font-weight: 600;
+    padding: 12px 32px;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(244,114,182,.5);
+    transition: transform .15s, box-shadow .15s;
+  }
+  .welcome-btn:hover { transform: scale(1.05); box-shadow: 0 6px 28px rgba(244,114,182,.7); }
 
-/* ===================== GIF FLUTUANTE FIXO ===================== */
-.sanrio-gif{
-    position:fixed; bottom:22px; right:22px; z-index:990;
-    width:80px;
-    filter:drop-shadow(0 0 10px rgba(244,114,182,.6));
-    animation:gifFloat 3s ease-in-out infinite alternate;
-    cursor:pointer;
-}
-@keyframes gifFloat{
-    from{ transform:translateY(0)   scale(1); }
-    to  { transform:translateY(-12px) scale(1.05); }
-}
+  /* ===== MAIN SCENE ===== */
+  .scene-wrapper {
+    position: relative; z-index: 1;
+    width: 100%; max-width: 1200px;
+    margin: 20px auto 0;
+    border-radius: 18px; overflow: hidden;
+    box-shadow: 0 0 60px rgba(244,114,182,.25);
+  }
+  .scene-bg {
+    display: block; width: 100%; height: auto;
+    user-select: none; pointer-events: none;
+  }
+  .hotspots-layer {
+    position: absolute; inset: 0;
+  }
 
-/* ===================== INTRO / HERO ===================== */
-#intro{
-    position:relative; z-index:1;
-    min-height:100vh;
-    display:flex; flex-direction:column; align-items:center; justify-content:center;
-    padding:100px 20px 60px;
-    overflow:hidden;
-}
+  /* ===== HOTSPOTS — só o badge clicável ===== */
+  .hs-wrap { position: absolute; }
+  .hs-aura { display: none; }
+  .hs-btn  { display: none; }
 
-/* Melody cantos intro */
-.melody-intro-left{
-    position:absolute; left:0; top:50%; transform:translateY(-50%);
-    width:220px;
-    filter:drop-shadow(0 0 18px rgba(244,114,182,.7));
-    animation:melodyFloat 4s ease-in-out infinite alternate;
-    pointer-events:none;
-}
-.melody-intro-right{
-    position:absolute; right:0; top:50%; transform:translateY(-50%);
-    width:220px;
-    filter:drop-shadow(0 0 18px rgba(196,181,253,.7));
-    animation:melodyFloat 4.5s ease-in-out infinite alternate-reverse;
-    pointer-events:none;
-}
-@keyframes melodyFloat{
-    from{ transform:translateY(-50%) rotate(-3deg); }
-    to  { transform:translateY(calc(-50% - 14px)) rotate(3deg); }
-}
+  .hs-label {
+    position: absolute;
+    background: rgba(80, 40, 160, 0.90);
+    border: 2px solid rgba(244,114,182,.85);
+    border-radius: 50px;
+    padding: 6px 16px;
+    font-family: 'Fredoka', sans-serif;
+    font-size: clamp(11px, 1.2vw, 14px);
+    font-weight: 600;
+    color: #fff;
+    white-space: nowrap;
+    backdrop-filter: blur(6px);
+    box-shadow: 0 2px 14px rgba(124,58,237,.4);
+    cursor: pointer;
+    user-select: none;
+    z-index: 10;
+    transition: background .15s, box-shadow .15s;
+  }
+  .hs-label:hover {
+    background: rgba(124, 58, 237, 0.98);
+    box-shadow: 0 4px 22px rgba(244,114,182,.6);
+  }
+  .hs-label:active {
+    opacity: .85;
+  }
+    to   { transform: translateY(-3px); }
+  }
+  /* linha pontilhada conectando label ao objeto */
+  .hs-line {
+    position: absolute;
+    border-left: 1.5px dashed rgba(244,114,182,.4);
+    pointer-events: none;
+    width: 0;
+  }
 
-/* Texto intro */
-.intro-text{ text-align:center; position:relative; z-index:2; margin-bottom:48px; }
-.intro-text h1{
-    font-family:'Pacifico',cursive;
-    font-size:4.5rem; line-height:1.15;
-    background:linear-gradient(135deg,#f472b6,#c4b5fd,#f472b6);
-    -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
-    filter:drop-shadow(0 0 22px rgba(244,114,182,.55));
-}
-.intro-text .sub{
-    margin-top:14px; font-size:1.4rem; color:#c4b5fd; letter-spacing:.06em;
-}
+  /* ===== LIGHTBOX (foto/flores tela cheia) ===== */
+  #lightbox {
+    position: fixed; inset: 0; z-index: 800;
+    background: rgba(0,0,0,.92);
+    display: none;
+    align-items: center; justify-content: center;
+    padding: 20px;
+    cursor: zoom-out;
+  }
+  #lightbox.open { display: flex; animation: fadeIn .25s ease; }
+  #lightbox img {
+    max-width: 92vw; max-height: 90vh;
+    border-radius: 18px;
+    box-shadow: 0 0 60px rgba(244,114,182,.4);
+    object-fit: contain;
+    cursor: default;
+    animation: modalIn .3s cubic-bezier(.34,1.56,.64,1);
+  }
+  #lightbox-close {
+    position: fixed; top: 18px; right: 22px;
+    background: rgba(44,16,80,.85);
+    border: 1.5px solid rgba(244,114,182,.6);
+    border-radius: 50%;
+    width: 38px; height: 38px;
+    color: #f9a8d4; font-size: 20px;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    z-index: 801;
+    font-family: sans-serif;
+    transition: all .2s;
+  }
+  #lightbox-close:hover { background: rgba(124,58,237,.8); color: #fff; }
 
-/* ===================== MOSAICO DE FOTOS ===================== */
-.photos-mosaic{
-    position:relative; z-index:2;
-    display:grid;
-    grid-template-columns:repeat(2, 200px);
-    grid-template-rows:repeat(2, 200px);
-    gap:16px;
-    margin-bottom:52px;
-}
-.mosaic-photo{
-    border-radius:20px; overflow:hidden; position:relative;
-    border:3px solid transparent;
-    background:
-        linear-gradient(rgba(30,14,56,1),rgba(30,14,56,1)) padding-box,
-        linear-gradient(135deg,#f472b6,#7c3aed,#c4b5fd,#f472b6) border-box;
-    box-shadow:0 0 28px rgba(244,114,182,.45), 0 0 56px rgba(124,58,237,.25);
-    animation:photoGlow 3s ease-in-out infinite alternate;
-    transition:transform .3s;
-}
-.mosaic-photo:nth-child(2){ animation-delay:.7s; }
-.mosaic-photo:nth-child(3){ animation-delay:1.4s; }
-.mosaic-photo:nth-child(4){ animation-delay:2.1s; }
-.mosaic-photo:hover{ transform:scale(1.05) rotate(1deg); }
-.mosaic-photo img{
-    width:100%; height:100%; object-fit:cover; display:block;
-    filter:brightness(1.05) saturate(1.15);
-}
-@keyframes photoGlow{
-    from{ box-shadow:0 0 22px rgba(244,114,182,.4), 0 0 44px rgba(124,58,237,.2); }
-    to  { box-shadow:0 0 38px rgba(244,114,182,.7), 0 0 70px rgba(196,181,253,.35); }
-}
+  /* ===== MODAIS ===== */
+  .modal-overlay {
+    position: fixed; inset: 0; z-index: 500;
+    background: rgba(0,0,0,.75);
+    display: none;
+    align-items: center; justify-content: center;
+    padding: 16px;
+  }
+  .modal-overlay.open {
+    display: flex;
+    animation: fadeIn .25s ease;
+  }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  .modal-card {
+    background: rgba(44,16,80,.92);
+    border: 2px solid rgba(244,114,182,.5);
+    border-radius: 28px;
+    padding: 28px;
+    max-width: min(600px, 92vw);
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    animation: modalIn .35s cubic-bezier(.34,1.56,.64,1);
+    box-shadow: 0 0 60px rgba(124,58,237,.5), 0 0 120px rgba(244,114,182,.2);
+    scrollbar-width: thin;
+    scrollbar-color: #7c3aed #1a0a2e;
+  }
+  @keyframes modalIn {
+    from { transform: scale(.8); opacity: 0; }
+    to   { transform: scale(1);  opacity: 1; }
+  }
+  .modal-close {
+    position: absolute; top: 14px; right: 16px;
+    background: rgba(196,181,253,.15);
+    border: 1px solid rgba(196,181,253,.3);
+    border-radius: 50%;
+    width: 34px; height: 34px;
+    color: #c4b5fd; font-size: 18px;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: all .2s;
+    font-family: sans-serif;
+  }
+  .modal-close:hover { background: rgba(244,114,182,.3); color: #fff; }
+  .modal-title {
+    font-family: 'Pacifico', cursive;
+    font-size: 20px; color: #f472b6;
+    text-shadow: 0 0 10px rgba(244,114,182,.6);
+    margin-bottom: 18px;
+    padding-right: 40px;
+  }
 
-/* Botão entrar */
-.enter-btn{
-    position:relative; z-index:2;
-    display:inline-block;
-    font-family:'Pacifico',cursive; font-size:1.2rem;
-    color:#f9a8d4; text-decoration:none;
-    background:rgba(44,16,80,.8);
-    border:2px solid rgba(244,114,182,.6);
-    border-radius:50px; padding:14px 42px;
-    backdrop-filter:blur(12px);
-    box-shadow:0 0 24px rgba(244,114,182,.3), 0 0 50px rgba(124,58,237,.2);
-    cursor:pointer; transition:all .3s;
-    animation:btnPulse 2.5s ease-in-out infinite alternate;
-}
-.enter-btn:hover{
-    background:rgba(124,58,237,.6); transform:translateY(-4px);
-    box-shadow:0 0 40px rgba(244,114,182,.55), 0 0 80px rgba(124,58,237,.35);
-}
-@keyframes btnPulse{
-    from{ box-shadow:0 0 20px rgba(244,114,182,.3); }
-    to  { box-shadow:0 0 40px rgba(244,114,182,.55), 0 0 70px rgba(196,181,253,.2); }
-}
+  /* modal — vídeo */
+  .video-wrap {
+    position: relative; width: 100%; padding-bottom: 56.25%;
+    border-radius: 14px; overflow: hidden;
+    background: #000;
+  }
+  .video-wrap iframe {
+    position: absolute; inset: 0; width: 100%; height: 100%; border: none;
+  }
 
-/* ===================== SEÇÃO PRINCIPAL ===================== */
-#main-section{
-    position:relative; z-index:1;
-    width:min(1100px,92%); margin:auto; padding:60px 0 120px;
-}
+  /* modal — carta */
+  .carta-texto {
+    background: rgba(196,181,253,.08);
+    border: 1px solid rgba(196,181,253,.2);
+    border-radius: 16px;
+    padding: 20px;
+    font-size: 16px; line-height: 1.8;
+    color: rgba(255,255,255,.9);
+    white-space: pre-wrap;
+    /* CARTA: substitua o texto abaixo pelo seu texto */
+  }
 
-/* ===================== TIMER HERO ===================== */
-.timer-box{
-    margin:0 auto 70px;
-    width:min(720px,100%);
-    background:rgba(44,16,80,.75);
-    border:2px solid rgba(124,58,237,.5);
-    border-radius:32px; padding:32px;
-    backdrop-filter:blur(16px);
-    box-shadow:0 0 30px rgba(124,58,237,.25), inset 0 1px 0 rgba(196,181,253,.2);
-}
-.timer-title{
-    text-align:center; margin-bottom:24px;
-    font-family:'Pacifico',cursive; font-size:1.3rem; color:#f9a8d4;
-}
-.timer{ display:flex; justify-content:center; gap:16px; flex-wrap:wrap; }
-.time{
-    background:rgba(124,58,237,.22);
-    border:2px solid rgba(244,114,182,.45);
-    border-radius:20px; width:130px; padding:18px 10px; text-align:center;
-    box-shadow:0 0 14px rgba(244,114,182,.18);
-    transition:transform .2s,box-shadow .2s;
-}
-.time:hover{ transform:translateY(-3px); box-shadow:0 0 22px rgba(244,114,182,.38); }
-.time h2{ font-size:3.6rem; color:#f9a8d4; line-height:1; }
-.time p { font-size:.85rem; color:#c4b5fd; margin-top:6px; letter-spacing:.1em; }
+  /* modal — galeria fotos */
+  .foto-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .foto-grid img {
+    width: 100%; aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 14px;
+    border: 2px solid rgba(244,114,182,.35);
+    transition: transform .2s, box-shadow .2s;
+  }
+  .foto-grid img:hover {
+    transform: scale(1.04);
+    box-shadow: 0 0 16px rgba(244,114,182,.5);
+  }
 
-/* ===================== GRID DE OBJETOS ===================== */
-.objetos-titulo{
-    text-align:center; margin-bottom:32px;
-    font-size:1.5rem; color:#c4b5fd;
-}
-.objetos-titulo::before,.objetos-titulo::after{ content:" ✦ "; color:#f472b6; }
+  /* modal — timer */
+  .timer-wrap { text-align: center; }
+  .timer-date {
+    font-size: 15px; color: #c4b5fd; margin-bottom: 18px;
+  }
+  .timer-grid {
+    display: flex; justify-content: center; gap: 14px; flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+  .timer-box {
+    background: rgba(196,181,253,.1);
+    border: 1px solid rgba(196,181,253,.25);
+    border-radius: 14px;
+    padding: 14px 18px;
+    min-width: 72px;
+  }
+  .timer-num {
+    font-family: 'Pacifico', cursive;
+    font-size: 32px; color: #f472b6;
+    display: block; line-height: 1;
+  }
+  .timer-label { font-size: 12px; color: #c4b5fd; }
+  .timer-msg { font-size: 15px; color: rgba(255,255,255,.8); }
 
-.objetos-grid{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:20px;
-}
+  /* modal — surpresas */
+  .surpresa-grid {
+    display: flex; flex-direction: column; gap: 16px;
+  }
+  .surpresa-grid img {
+    width: 100%; border-radius: 16px;
+    border: 2px solid rgba(124,58,237,.5);
+    box-shadow: 0 0 20px rgba(124,58,237,.3);
+  }
 
-/* card */
-.obj-card{
-    background:rgba(44,16,80,.75);
-    border:2px solid rgba(124,58,237,.4);
-    border-radius:24px; padding:28px 16px;
-    text-align:center; cursor:pointer;
-    backdrop-filter:blur(16px);
-    transition:transform .25s,box-shadow .25s,border-color .25s;
-    position:relative; overflow:hidden;
-}
-.obj-card::before{
-    content:''; position:absolute; inset:0; border-radius:24px;
-    background:linear-gradient(135deg,rgba(244,114,182,.07),rgba(124,58,237,.07));
-    opacity:0; transition:opacity .3s;
-}
-.obj-card:hover{ transform:translateY(-5px); border-color:rgba(244,114,182,.7); }
-.obj-card:hover{ box-shadow:0 0 28px rgba(244,114,182,.38), 0 8px 24px rgba(0,0,0,.3); }
-.obj-card:hover::before{ opacity:1; }
-.obj-card.active{ border-color:#f472b6; box-shadow:0 0 34px rgba(244,114,182,.5); }
-.obj-icon{ font-size:2.8rem; margin-bottom:12px; display:block; }
-.obj-name{ font-size:1.1rem; font-weight:600; color:#f9a8d4; margin-bottom:4px; }
-.obj-desc{ font-size:.82rem; color:#a78bfa; }
+  /* modal — easter egg */
+  .easter-wrap { text-align: center; }
+  .easter-gif {
+    width: 140px; height: 140px; object-fit: contain;
+    margin: 0 auto 14px; display: block;
+  }
+  .easter-msg {
+    font-family: 'Pacifico', cursive;
+    font-size: 19px; color: #f472b6;
+    text-shadow: 0 0 12px rgba(244,114,182,.7);
+    margin-bottom: 18px;
+    line-height: 1.5;
+  }
+  .stars-row { font-size: 28px; letter-spacing: 6px; animation: starSpin 2s linear infinite; display: inline-block; }
+  @keyframes starSpin { 0%,100% { letter-spacing: 6px; } 50% { letter-spacing: 12px; } }
 
-/* ===================== PAINÉIS ===================== */
-.section-panel{
-    display:none;
-    margin-top:28px;
-    background:rgba(44,16,80,.75);
-    border:2px solid rgba(124,58,237,.45);
-    border-radius:28px; padding:38px;
-    backdrop-filter:blur(16px);
-    box-shadow:0 0 30px rgba(124,58,237,.18);
-    animation:panelIn .35s ease;
-}
-.section-panel.open{ display:block; }
-@keyframes panelIn{
-    from{ opacity:0; transform:translateY(14px); }
-    to  { opacity:1; transform:translateY(0); }
-}
-.panel-title{
-    font-size:1.4rem; color:#f9a8d4; margin-bottom:26px;
-    display:flex; align-items:center; gap:10px;
-    font-family:'Pacifico',cursive;
-}
+  /* ===== MOBILE GRID ===== */
+  .mobile-btns {
+    display: none;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    padding: 16px;
+  }
+  .mobile-btn {
+    background: rgba(124,58,237,.25);
+    border: 1px solid rgba(196,181,253,.3);
+    border-radius: 16px;
+    color: #c4b5fd; font-size: 14px;
+    font-family: 'Fredoka', sans-serif; font-weight: 600;
+    padding: 14px 10px;
+    cursor: pointer;
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
+    transition: all .2s;
+  }
+  .mobile-btn:hover { background: rgba(244,114,182,.25); color: #f472b6; }
+  .mobile-btn .icon { font-size: 26px; }
 
-/* ---- VÍDEO ---- */
-.video-frame iframe{
-    width:100%; aspect-ratio:16/9; border:none; border-radius:18px;
-    box-shadow:0 0 28px rgba(124,58,237,.45);
-}
+  /* ===== SANRIO CORNER ===== */
+  .sanrio-corner {
+    position: fixed; bottom: 20px; right: 20px; z-index: 20;
+    pointer-events: none;
+  }
+  .sanrio-corner img {
+    width: 72px; height: 72px; object-fit: contain;
+    animation: floatCorner 3s ease-in-out infinite;
+    filter: drop-shadow(0 0 8px rgba(244,114,182,.5));
+  }
+  @keyframes floatCorner {
+    0%,100% { transform: translateY(0); }
+    50%      { transform: translateY(-8px); }
+  }
 
-/* ---- DIÁRIO ---- */
-.diary-display{
-    width:100%; min-height:300px;
-    background:rgba(124,58,237,.12);
-    border:2px solid rgba(196,181,253,.3);
-    border-radius:18px; padding:24px 28px;
-    font-family:'Fredoka',sans-serif; font-size:1.08rem; color:#e9d5ff;
-    line-height:2; white-space:pre-wrap;
-    box-shadow:inset 0 0 20px rgba(124,58,237,.1);
-}
-.diary-placeholder{ color:#7c3aed; font-style:italic; }
+  /* ===== FOOTER ===== */
+  footer {
+    position: relative; z-index: 1;
+    text-align: center;
+    padding: 24px 16px 32px;
+    font-size: 15px; color: rgba(196,181,253,.7);
+  }
+  footer span { color: #f472b6; }
 
-/* ---- CALENDÁRIO ---- */
-.cal-timer{ display:flex; justify-content:center; gap:16px; flex-wrap:wrap; margin-top:10px; }
-.cal-time{
-    background:rgba(124,58,237,.22); border:2px solid rgba(244,114,182,.45);
-    border-radius:20px; width:130px; padding:18px 10px; text-align:center;
-    box-shadow:0 0 14px rgba(244,114,182,.18);
-}
-.cal-time h2{ font-size:3.2rem; color:#f9a8d4; line-height:1; }
-.cal-time p { font-size:.82rem; color:#c4b5fd; margin-top:6px; letter-spacing:.1em; }
-.cal-date-info{
-    text-align:center; margin-top:24px;
-    font-size:1.05rem; color:#a78bfa; line-height:2;
-}
-
-/* ---- SURPRESAS ---- */
-.surpresas-grid{
-    display:flex; gap:28px; justify-content:center; flex-wrap:wrap;
-}
-.surpresa-frame{
-    border:4px solid transparent;
-    background:
-        linear-gradient(rgba(44,16,80,1),rgba(44,16,80,1)) padding-box,
-        linear-gradient(135deg,#f472b6,#7c3aed,#c4b5fd,#f472b6) border-box;
-    border-radius:22px; padding:12px;
-    box-shadow:0 0 36px rgba(244,114,182,.4), 0 0 72px rgba(124,58,237,.2);
-    max-width:340px; width:100%;
-    transition:transform .3s,box-shadow .3s;
-}
-.surpresa-frame:hover{
-    transform:translateY(-6px) scale(1.02);
-    box-shadow:0 0 52px rgba(244,114,182,.6), 0 0 90px rgba(124,58,237,.35);
-}
-.surpresa-frame img{
-    width:100%; border-radius:14px; display:block;
-    filter:brightness(1.05) saturate(1.1);
-}
-
-/* ===================== FOOTER ===================== */
-.footer{
-    text-align:center; margin-top:80px;
-    font-size:1.2rem; line-height:2.2; color:#c4b5fd;
-}
-.footer span{ color:#f472b6; }
-
-/* ===================== RESPONSIVO ===================== */
-@media(max-width:900px){
-    .melody-intro-left,.melody-intro-right{ width:120px; }
-    .intro-text h1{ font-size:2.8rem; padding:0 40px; }
-    .intro-text .sub{ font-size:1.1rem; }
-    .photos-mosaic{
-        grid-template-columns:repeat(2,160px);
-        grid-template-rows:repeat(2,160px);
-        gap:12px;
-    }
-    .objetos-grid{ grid-template-columns:repeat(2,1fr); gap:14px; }
-    .timer-box{ padding:22px 14px; }
-    .time,.cal-time{ width:calc(50% - 10px); }
-    .time h2,.cal-time h2{ font-size:2.6rem; }
-    .section-panel{ padding:24px 18px; }
-    .sanrio-gif{ width:62px; bottom:14px; right:14px; }
-}
-@media(max-width:480px){
-    .melody-intro-left,.melody-intro-right{ display:none; }
-    .intro-text h1{ font-size:2rem; padding:0 10px; }
-    .photos-mosaic{
-        grid-template-columns:repeat(2,140px);
-        grid-template-rows:repeat(2,140px);
-        gap:10px;
-    }
-    .objetos-grid{ grid-template-columns:repeat(2,1fr); gap:12px; }
-    .obj-icon{ font-size:2.2rem; }
-    .back-btn{ font-size:.82rem; padding:6px 14px; }
-    .surpresas-grid{ flex-direction:column; align-items:center; }
-}
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 600px) {
+    .scene-wrapper { margin: 12px 8px 0; border-radius: 12px; }
+    .hotspots-layer { display: none; }
+    .mobile-btns { display: grid; }
+    .topbar-title { font-size: 16px; }
+    .sanrio-corner img { width: 52px; height: 52px; }
+  }
 </style>
 </head>
 <body>
 
-<!-- ========== LOADING SCREEN ========== -->
-<div id="loadingScreen">
-    <img src="sanrio STICKER.gif" alt="sanrio" onerror="this.style.display='none'">
-    <div class="load-txt">voltando...</div>
-    <div class="load-dots"><span></span><span></span><span></span></div>
+<!-- MÚSICA DE FUNDO -->
+<audio id="bg-music" loop preload="auto" muted>
+  <source src="msc de fundo/SpotiDownloader.com - blissful lights - voi.wav" type="audio/wav">
+</audio>
+
+<!-- ===== LOADING OVERLAY ===== -->
+<div id="loading-overlay">
+  <div class="loading-text">carregando ♡</div>
+  <div class="loading-bar"><div class="loading-bar-inner"></div></div>
 </div>
 
-<!-- ========== BOTÃO VOLTAR ========== -->
-<a class="back-btn" href="#" id="backBtn">← voltar</a>
+<!-- ===== FLOATING HEARTS ===== -->
+<div class="hearts-container" id="hearts"></div>
 
-<!-- ========== ESTRELAS / PARTÍCULAS ========== -->
-<div class="stars-bg" id="starsBg"></div>
-
-<!-- ========== GIF FLUTUANTE FIXO ========== -->
-<img class="sanrio-gif" src="sanrio STICKER.gif" alt="sanrio gif"
-     onerror="this.style.display='none'">
-
-<!-- ================================================================ -->
-<!--  SEÇÃO 1 — INTRO / HERO COM FOTOS                               -->
-<!-- ================================================================ -->
-<section id="intro">
-
-    <!-- My Melody cantos -->
-    <img class="melody-intro-left" src="My-Melody-PNG-Images-HD.png" alt="My Melody"
+<!-- ===== WELCOME POPUP ===== -->
+<div id="welcome-overlay">
+  <div class="welcome-card">
+    <img src="My-Melody-PNG-Images-HD.png" alt="My Melody" class="welcome-melody"
          onerror="this.style.display='none'">
-    <img class="melody-intro-right" src="My-Melody-PNG-Photos.png" alt="My Melody"
-         onerror="this.style.display='none'">
+    <div class="welcome-title">bem-vinda ao nosso cantinho ♡</div>
+    <div class="welcome-sub">2 meses com você 🌙</div>
+    <button class="welcome-btn" onclick="closeWelcome()">começar a explorar ✨</button>
+  </div>
+</div>
 
-    <!-- Texto principal -->
-    <div class="intro-text">
-        <h1>2 meses com você ♡</h1>
-        <p class="sub">do nosso cantinho 🌙</p>
+<!-- ===== TOP BAR ===== -->
+<div class="topbar">
+  <a href="../index.html" class="topbar-back" id="back-btn">← voltar</a>
+  <div class="topbar-title">2 meses ♡</div>
+  <button class="music-btn" id="music-btn" onclick="toggleMusic()">
+    <span class="music-note">🎵</span>
+    <span class="music-label">música</span>
+  </button>
+</div>
+
+<!-- ===== MAIN SCENE ===== -->
+<div class="scene-wrapper">
+  <!-- Imagem de fundo do quarto kawaii -->
+  <img src="quero essa.png" alt="quarto kawaii" class="scene-bg" id="scene-bg"
+       onerror="this.style.display='none'">
+
+  <!-- Camada de hotspots com aura + label -->
+  <div class="hotspots-layer">
+
+    <!-- MONITOR -->
+    <div class="hs-wrap" style="top:12%;left:28%;width:32%;height:48%">
+      <div class="hs-label" style="top:42%;left:50%;transform:translate(-50%,-50%)" onclick="openModal('modal-monitor')">▶ vídeo</div>
     </div>
 
-    <!-- Mosaico 2×2 com fotos do casal no roblox -->
-    <div class="photos-mosaic">
-        <div class="mosaic-photo">
-            <img src="pre retrato/image.png" alt="foto 1"
-                 onerror="this.style.display='none'">
-        </div>
-        <div class="mosaic-photo">
-            <img src="pre retrato/imagee.png" alt="foto 2"
-                 onerror="this.style.display='none'">
-        </div>
-        <div class="mosaic-photo">
-            <img src="pre retrato/imageee.png" alt="foto 3"
-                 onerror="this.style.display='none'">
-        </div>
-        <div class="mosaic-photo">
-            <img src="pre retrato/imageeee.png" alt="foto 4"
-                 onerror="this.style.display='none'">
-        </div>
+    <!-- PORTA-RETRATO -->
+    <div class="hs-wrap" style="top:47%;left:5%;width:13%;height:28%">
+      <div class="hs-label" style="bottom:-28px;left:50%;transform:translateX(-50%)" onclick="openModal('modal-retrato')">🖼 fotos</div>
     </div>
 
-    <!-- Botão entrar -->
-    <a class="enter-btn" id="enterBtn">↓ entrar no cantinho</a>
-
-</section>
-
-<!-- ================================================================ -->
-<!--  SEÇÃO 2 — QUARTO PRINCIPAL                                      -->
-<!-- ================================================================ -->
-<div id="main-section">
-
-    <!-- TIMER HERO -->
-    <div class="timer-box">
-        <div class="timer-title">nosso tempo juntos ♡</div>
-        <div class="timer">
-            <div class="time"><h2 id="hDays">0</h2><p>DIAS</p></div>
-            <div class="time"><h2 id="hHours">0</h2><p>HORAS</p></div>
-            <div class="time"><h2 id="hMins">0</h2><p>MINUTOS</p></div>
-            <div class="time"><h2 id="hSecs">0</h2><p>SEGUNDOS</p></div>
-        </div>
+    <!-- DIÁRIO -->
+    <div class="hs-wrap" style="top:68%;left:3%;width:18%;height:26%">
+      <div class="hs-label" style="top:-28px;left:50%;transform:translateX(-50%)" onclick="openModal('modal-diario')">📓 diário</div>
     </div>
 
-    <!-- TÍTULO OBJETOS -->
-    <div class="objetos-titulo">nosso quartinho</div>
-
-    <!-- GRID DE OBJETOS (4 itens) -->
-    <div class="objetos-grid">
-
-        <!-- 1. COMPUTADOR -->
-        <div class="obj-card" onclick="toggleSection('sec-computador', this)">
-            <span class="obj-icon">💻</span>
-            <div class="obj-name">computador</div>
-            <div class="obj-desc">nosso vídeo especial ♡</div>
-        </div>
-
-        <!-- 2. DIÁRIO -->
-        <div class="obj-card" onclick="toggleSection('sec-diario', this)">
-            <span class="obj-icon">📓</span>
-            <div class="obj-name">diário</div>
-            <div class="obj-desc">cartinha pra você ♡</div>
-        </div>
-
-        <!-- 3. CALENDÁRIO -->
-        <div class="obj-card" onclick="toggleSection('sec-cal', this)">
-            <span class="obj-icon">📅</span>
-            <div class="obj-name">calendário</div>
-            <div class="obj-desc">tempo juntos ♡</div>
-        </div>
-
-        <!-- 4. SURPRESAS -->
-        <div class="obj-card" onclick="toggleSection('sec-surpresas', this)">
-            <span class="obj-icon">✨</span>
-            <div class="obj-name">surpresas</div>
-            <div class="obj-desc">algo especial pra você ♡</div>
-        </div>
-
-    </div><!-- /objetos-grid -->
-
-    <!-- ============================================================ -->
-    <!--  PAINEL 1 — COMPUTADOR: VÍDEO                               -->
-    <!-- ============================================================ -->
-    <div class="section-panel" id="sec-computador">
-        <div class="panel-title">💻 nosso vídeo especial</div>
-        <!--
-            ╔══════════════════════════════════════════════════════════════╗
-            ║  YOUTUBE — substitua o ID abaixo pelo ID do vídeo           ║
-            ║  Exemplo: youtube.com/watch?v=dQw4w9WgXcQ                   ║
-            ║  → use: https://www.youtube.com/embed/dQw4w9WgXcQ           ║
-            ╚══════════════════════════════════════════════════════════════╝
-        -->
-        <div class="video-frame">
-            <iframe
-                src="https://www.youtube.com/embed/ID_AQUI"
-                title="vídeo especial ♡"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen>
-            </iframe>
-        </div>
+    <!-- CARTA -->
+    <div class="hs-wrap" style="top:70%;left:34%;width:13%;height:20%">
+      <div class="hs-label" style="top:-28px;left:50%;transform:translateX(-50%)" onclick="openModal('modal-envelope')">✉ carta</div>
     </div>
 
-    <!-- ============================================================ -->
-    <!--  PAINEL 2 — DIÁRIO: CARTA                                   -->
-    <!-- ============================================================ -->
-    <div class="section-panel" id="sec-diario">
-        <div class="panel-title">📓 cartinha pra você</div>
-        <!--
-            ╔══════════════════════════════════════════════════════════════╗
-            ║  CARTA — substitua o texto dentro da div .diary-display     ║
-            ║  abaixo pelo texto da sua carta.                            ║
-            ║  Apague o conteúdo padrão e escreva o que quiser ♡          ║
-            ╚══════════════════════════════════════════════════════════════╝
-        -->
-        <div class="diary-display">
-<!-- ↓ COLOQUE AQUI O TEXTO DA CARTA ↓ -->
-<span class="diary-placeholder">escreva sua carta aqui ♡</span>
-<!-- ↑ COLOQUE AQUI O TEXTO DA CARTA ↑ -->
-        </div>
+    <!-- MY MELODY -->
+    <div class="hs-wrap" style="top:35%;left:52%;width:13%;height:40%">
+      <div class="hs-label" style="top:-28px;left:50%;transform:translateX(-50%)" onclick="openModal('modal-melody')">🐰 my melody</div>
     </div>
 
-    <!-- ============================================================ -->
-    <!--  PAINEL 3 — CALENDÁRIO: TEMPO JUNTOS                        -->
-    <!-- ============================================================ -->
-    <div class="section-panel" id="sec-cal">
-        <div class="panel-title">📅 tempo juntos</div>
-        <div class="cal-timer">
-            <div class="cal-time"><h2 id="cDays">0</h2><p>DIAS</p></div>
-            <div class="cal-time"><h2 id="cHours">0</h2><p>HORAS</p></div>
-            <div class="cal-time"><h2 id="cMins">0</h2><p>MINUTOS</p></div>
-            <div class="cal-time"><h2 id="cSecs">0</h2><p>SEGUNDOS</p></div>
-        </div>
-        <div class="cal-date-info">
-            desde 26 de abril de 2026 às 21:28 ♡<br>
-            cada segundo com você é especial 🌙
-        </div>
+    <!-- CALENDÁRIO -->
+    <div class="hs-wrap" style="top:35%;left:68%;width:12%;height:40%">
+      <div class="hs-label" style="bottom:-28px;left:50%;transform:translateX(-50%)" onclick="openModal('modal-calendario')">📅 calendário</div>
     </div>
 
-    <!-- ============================================================ -->
-    <!--  PAINEL 4 — SURPRESAS                                       -->
-    <!-- ============================================================ -->
-    <div class="section-panel" id="sec-surpresas">
-        <div class="panel-title">✨ algo especial pra você</div>
-        <div class="surpresas-grid">
-            <div class="surpresa-frame">
-                <img src="surpresas/1010858636391747705.webp" alt="surpresa 1"
-                     onerror="this.style.display='none'">
-            </div>
-            <div class="surpresa-frame">
-                <img src="surpresas/image.png" alt="surpresa 2"
-                     onerror="this.style.display='none'">
-            </div>
+    <!-- FLORES -->
+    <div class="hs-wrap" style="top:62%;left:54%;width:14%;height:32%">
+      <div class="hs-label" style="top:-28px;left:50%;transform:translateX(-50%)" onclick="openLightbox('flores')">🌸 flores</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== LIGHTBOX ===== -->
+<div id="lightbox" onclick="closeLightbox()">
+  <button id="lightbox-close" onclick="closeLightbox()">✕</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<!-- ===== MOBILE GRID DE BOTÕES ===== -->
+<div class="mobile-btns">
+  <button class="mobile-btn" onclick="openModal('modal-monitor')">
+    <span class="icon">💻</span> monitor
+  </button>
+  <button class="mobile-btn" onclick="openModal('modal-diario')">
+    <span class="icon">📓</span> diário
+  </button>
+  <button class="mobile-btn" onclick="openModal('modal-envelope')">
+    <span class="icon">✉️</span> carta
+  </button>
+  <button class="mobile-btn" onclick="openModal('modal-flores')">
+    <span class="icon">🌸</span> flores
+  </button>
+  <button class="mobile-btn" onclick="openModal('modal-calendario')">
+    <span class="icon">📅</span> calendário
+  </button>
+  <button class="mobile-btn" onclick="openModal('modal-retrato')">
+    <span class="icon">🖼️</span> porta-retrato
+  </button>
+  <button class="mobile-btn" onclick="openModal('modal-melody')" style="grid-column:span 2">
+    <span class="icon">🐰</span> my melody
+  </button>
+</div>
+
+<!-- ===================================================== -->
+<!--                     MODAIS                            -->
+<!-- ===================================================== -->
+
+<!-- MODAL A: Monitor — Vídeo YouTube -->
+<div class="modal-overlay" id="modal-monitor">
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeModal('modal-monitor')">✕</button>
+    <div class="modal-title">💻 nossa playlist ♡</div>
+    <div class="video-wrap">
+      <!-- YOUTUBE: troque ID_AQUI pelo ID do vídeo (ex: dQw4w9WgXcQ) -->
+      <iframe
+        src="https://www.youtube.com/embed/cUBbzH7xc-E?autoplay=0&rel=0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+      </iframe>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL B: Diário — Carta -->
+<div class="modal-overlay" id="modal-diario">
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeModal('modal-diario')">✕</button>
+    <div class="modal-title">📓 carta pra você ♡</div>
+    <!-- CARTA: substitua o texto abaixo pelo seu texto -->
+    <div class="carta-texto">meu amor, hoje fazem dois messes que a gente escolheu um ao outro, e é engraçado parecendo pouco tempo, eu sinto que vivi tanta coisa ao seu lado que parece que voce sempre esteve aqui. nao me vejo mais sem voce meu bem, nesses dois meses eu fui descobrindo versões suas que me admirar cada vez mais, eu amo conhecer seus detalhes, suas manias e seus jeitos, as piadas que fazemos do nada, jeito que voce fica fofinha quando ta feliz com alguma coisa, ou ate quando voce fica estressadinha eu acho tao engraçado kkkk, eu gosto de tudo isso por que sei que é so voce sendo voce, eu também queria te dizer o quanto eu amo quando a gente joga. pode parecer bobeira, mas eu fiquei impressionado ver voce ganhando de mim com a sniper, voce é bem potente mesmo, toda vez que voce me matava eu pensava "essa é minha mulher" ta aprendendo comigo, vou treinar pra bater de frente com voce meu bem, e tambem uma das coisas que mais me deixou feliz nesses últimos dias foi ver você voltando a fazer os seus designers, eu sei que voce ama isso e ver voltando a fazer, trabalhando com equipe me deixou muito feliz, julguei mal o server na hora que voce falou, parece ser "tranquilo", como eu disse voce é a melhor designer que eu conheço, entao voce simplesmente vai reinar onde pisar pode ficar tranquila, e me desculpa tambem porque nesses ultimos dias a gente acabou estudando menos do que eu queria, eu sinto falta dos nossos momentos aprendendo juntos, mas eu sei que nem sempre as coisas acontecem do jeito que a gente planeja, o importante é que eu continuo querendo construir isso com voce, sem pressa, um passo de cada vez, tem outra coisa que eu queria te falar, eu me preocupo muito com voce, principalmente quando vejo que você não ta comendo direito, eu sei que as vezes você nao quer, ou simplesmente não sente vontade, mas eu queria que você tentasse se cuidar um pouquinho mais. eu quero voce bem, saudável, com energia pra viver tudo o que ainda vamos viver juntos, entao, por favor, quando eu ficar perguntando se voce comeu, nao pensa que é so porque eu to insistindo é porque eu amo voce, e cuidar de voce é uma das formas que eu encontrei de demonstrar esse amor, mesmo estando tão longe, eu gosto muito do que a gente construiu nesses dois meses, gosto das nossas calls que varam a madrugada, das nossas partidas, das conversas aleatorias, dos momentos em silêncio, de ouvir sua voz, de ouvir voce rindo, de ver voce feliz. gosto porque é com voce, obrigado por fazer meus dias serem mais leves, por confiar em mim, por me permitir fazer parte da sua vida e por me mostrar que o amor pode ser tranquilo, confortável e verdadeiro, eu espero que esse seja só o começo, quero continuar comemorando cada mes ao seu lado, vendo voce conquistar seus sonhos, acompanhando seu crescimento, estudando com voce, jogando com voce, rindo com voce e, principalmente, amando voce cada vez mais, feliz dois meses, minha princesa, eu te amo mais do que qualquer texto consegue explicar, e se daqui muitos anos alguem me perguntar quando eu comecei a encontrar paz em outra pessoa, eu vou lembrar de uma pescaria magnetica no mush... porque foi ali, no momento mais improvavel possivel, que eu encontrei o lugar onde meu coração decidiu ficar, amo muito voce meu amor</div>
+  </div>
+</div>
+
+<!-- MODAL C: Envelope — Mensagem -->
+<div class="modal-overlay" id="modal-envelope">
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeModal('modal-envelope')">✕</button>
+    <div class="modal-title">✉️ mensagem especial ♡</div>
+    <!-- ENVELOPE: coloque sua mensagem aqui -->
+    <div class="carta-texto" style="text-align:center;font-size:18px;">dois meses não parecem suficientes para explicar o tamanho do que eu sinto por voce, amo voce nayara</div>
+  </div>
+</div>
+
+<!-- MODAL D: Flores — Galeria fotos do casal -->
+<div class="modal-overlay" id="modal-flores">
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeModal('modal-flores')">✕</button>
+    <div class="modal-title">🌸 nosso pré-retrato ♡</div>
+    <p style="font-size:13px;color:#c4b5fd;margin-bottom:12px;text-align:center;">toque em uma foto para ver em tela cheia ✨</p>
+    <div class="foto-grid">
+      <img src="pre retrato/image.png"    alt="foto 1" onerror="this.style.display='none'" style="cursor:zoom-in" onclick="openLightboxImg(this.src)">
+      <img src="pre retrato/imagee.png"   alt="foto 2" onerror="this.style.display='none'" style="cursor:zoom-in" onclick="openLightboxImg(this.src)">
+      <img src="pre retrato/imageee.png"  alt="foto 3" onerror="this.style.display='none'" style="cursor:zoom-in" onclick="openLightboxImg(this.src)">
+      <img src="pre retrato/imageeee.png" alt="foto 4" onerror="this.style.display='none'" style="cursor:zoom-in" onclick="openLightboxImg(this.src)">
+    </div>
+  </div>
+</div>
+
+<!-- MODAL E: Calendário — Timer -->
+<div class="modal-overlay" id="modal-calendario">
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeModal('modal-calendario')">✕</button>
+    <div class="modal-title">📅 nosso tempo juntos ♡</div>
+    <div class="timer-wrap">
+      <div class="timer-date">desde 26 de abril de 2026 às 21:28 ♡</div>
+      <div class="timer-grid">
+        <div class="timer-box">
+          <span class="timer-num" id="t-dias">00</span>
+          <span class="timer-label">dias</span>
         </div>
+        <div class="timer-box">
+          <span class="timer-num" id="t-horas">00</span>
+          <span class="timer-label">horas</span>
+        </div>
+        <div class="timer-box">
+          <span class="timer-num" id="t-min">00</span>
+          <span class="timer-label">minutos</span>
+        </div>
+        <div class="timer-box">
+          <span class="timer-num" id="t-seg">00</span>
+          <span class="timer-label">segundos</span>
+        </div>
+      </div>
+      <div class="timer-msg">cada segundo com você é especial 🌙✨</div>
     </div>
+  </div>
+</div>
 
-    <!-- FOOTER -->
-    <div class="footer">
-        dois meses sendo a melhor parte dos meus dias 🌙<br>
-        <span>eu te amo sempre ♡</span>
+<!-- MODAL F: Porta-retrato — Surpresas -->
+<div class="modal-overlay" id="modal-retrato">
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeModal('modal-retrato')">✕</button>
+    <div class="modal-title">🖼️ nós ♡</div>
+    <p style="font-size:13px;color:#c4b5fd;margin-bottom:12px;text-align:center;">toque em uma foto para ver em tela cheia ✨</p>
+    <div class="surpresa-grid">
+      <img src="surpresas/image.png"                alt="surpresa 1" onerror="this.style.display='none'" style="cursor:zoom-in" onclick="openLightboxImg(this.src)">
+      <img src="surpresas/1010858636391747705.webp" alt="surpresa 2" onerror="this.style.display='none'" style="cursor:zoom-in" onclick="openLightboxImg(this.src)">
+      <img src="ela.png" alt="ela e eu" onerror="this.style.display='none'" style="cursor:zoom-in" onclick="openLightboxImg(this.src)">
+      <img src="eu.jpg"  alt="ela e eu" onerror="this.style.display='none'" style="cursor:zoom-in" onclick="openLightboxImg(this.src)">
     </div>
+  </div>
+</div>
 
-</div><!-- /main-section -->
+<!-- MODAL G: My Melody — Easter Egg -->
+<div class="modal-overlay" id="modal-melody">
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeModal('modal-melody')">✕</button>
+    <div class="modal-title">🐰 easter egg encontrado! ♡</div>
+    <div class="easter-wrap">
+      <img src="sanrio STICKER.gif" alt="sanrio gif" class="easter-gif"
+           onerror="this.style.display='none'">
+      <div class="easter-msg">sou viciado em voce meu amor 😋</div>
+      <div class="stars-row">⭐🌟✨💫⭐</div>
+      <br><br>
+      <img src="My-Melody-PNG-Photos.png" alt="my melody" style="width:90px;margin:0 auto;display:block;
+           filter:drop-shadow(0 0 10px rgba(244,114,182,.8));animation:floatMelody 3s ease-in-out infinite;"
+           onerror="this.style.display='none'">
+    </div>
+  </div>
+</div>
 
-<!-- ================================================================ -->
-<!--  JAVASCRIPT                                                       -->
-<!-- ================================================================ -->
+<!-- ===== SANRIO GIF CANTO ===== -->
+<div class="sanrio-corner">
+  <img src="sanrio STICKER.gif" alt="sanrio" onerror="this.style.display='none'">
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer>feito com muito <span>amor</span> ♡</footer>
+
+<!-- ===== JAVASCRIPT ===== -->
 <script>
-/* ---- Gera estrelas e partículas ---- */
-(function(){
-    const bg = document.getElementById('starsBg');
-    const colors = ['#c4b5fd','#f9a8d4','#ffffff','#a78bfa','#f472b6'];
+  // ── LOADING ─────────────────────────────────────────────
+  window.addEventListener('load', () => {
+    const overlay = document.getElementById('loading-overlay');
+    setTimeout(() => {
+      overlay.classList.add('hidden');
+      setTimeout(() => overlay.remove(), 500);
+    }, 1300);
+  });
 
-    for(let i = 0; i < 100; i++){
-        const s = document.createElement('div');
-        s.className = 'star';
-        const size = Math.random() * 3 + 1;
-        s.style.cssText = `
-            width:${size}px; height:${size}px;
-            left:${Math.random()*100}%;
-            top:${Math.random()*100}%;
-            background:${colors[Math.floor(Math.random()*colors.length)]};
-            --dur:${(Math.random()*4+2).toFixed(1)}s;
-            animation-delay:${(Math.random()*6).toFixed(1)}s;
-        `;
-        bg.appendChild(s);
+  // ── WELCOME POPUP ────────────────────────────────────────
+  function closeWelcome() {
+    document.getElementById('welcome-overlay').classList.add('hidden');
+  }
+
+  // ── MODAL OPEN / CLOSE ───────────────────────────────────
+  function openModal(id) {
+    const m = document.getElementById(id);
+    if (!m) return;
+    m.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    // inicia o timer se for o modal do calendário
+    if (id === 'modal-calendario') startTimer();
+  }
+
+  function closeModal(id) {
+    const m = document.getElementById(id);
+    if (!m) return;
+    m.classList.remove('open');
+    document.body.style.overflow = '';
+    // para o timer
+    if (id === 'modal-calendario') stopTimer();
+    // pausa YouTube ao fechar
+    if (id === 'modal-monitor') {
+      const iframe = m.querySelector('iframe');
+      if (iframe) iframe.src = iframe.src; // reset iframe
     }
+  }
 
-    for(let i = 0; i < 26; i++){
-        const p = document.createElement('div');
-        p.className = 'particle';
-        const size = Math.random() * 5 + 2;
-        p.style.cssText = `
-            width:${size}px; height:${size}px;
-            left:${Math.random()*100}%;
-            top:${100 + Math.random()*20}%;
-            background:${colors[Math.floor(Math.random()*colors.length)]};
-            --fdur:${(Math.random()*10+7).toFixed(1)}s;
-            animation-delay:${(Math.random()*12).toFixed(1)}s;
-        `;
-        bg.appendChild(p);
+  // Fecha ao clicar no overlay
+  document.querySelectorAll('.modal-overlay').forEach(overlay => {
+    overlay.addEventListener('click', e => {
+      if (e.target === overlay) closeModal(overlay.id);
+    });
+  });
+
+  // Fecha com ESC
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.modal-overlay.open').forEach(m => closeModal(m.id));
     }
-})();
+  });
 
-/* ---- Timer ---- */
-// Data de início: 26/04/2026 às 21:28
-const startDate = new Date(2026, 3, 26, 21, 28, 0);
+  // ── TIMER ────────────────────────────────────────────────
+  let timerInterval = null;
+  const startDate = new Date('2026-04-26T21:28:00');
 
-function calcTime(){
-    const diff = Math.max(0, new Date() - startDate);
-    const totalSec = Math.floor(diff / 1000);
-    return {
-        dias    : Math.floor(totalSec / 86400),
-        horas   : Math.floor((totalSec % 86400) / 3600),
-        minutos : Math.floor((totalSec % 3600) / 60),
-        segundos: totalSec % 60
-    };
-}
+  function startTimer() {
+    updateTimer();
+    timerInterval = setInterval(updateTimer, 1000);
+  }
+  function stopTimer() {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+  function pad(n) { return String(n).padStart(2, '0'); }
+  function updateTimer() {
+    const now  = new Date();
+    let diff   = Math.max(0, now - startDate);
+    const dias  = Math.floor(diff / 86400000);      diff -= dias  * 86400000;
+    const horas = Math.floor(diff /  3600000);      diff -= horas *  3600000;
+    const min   = Math.floor(diff /    60000);      diff -= min   *    60000;
+    const seg   = Math.floor(diff /     1000);
+    document.getElementById('t-dias').textContent  = pad(dias);
+    document.getElementById('t-horas').textContent = pad(horas);
+    document.getElementById('t-min').textContent   = pad(min);
+    document.getElementById('t-seg').textContent   = pad(seg);
+  }
 
-function updateTimers(){
-    const t = calcTime();
-    document.getElementById('hDays').innerText   = t.dias;
-    document.getElementById('hHours').innerText  = t.horas;
-    document.getElementById('hMins').innerText   = t.minutos;
-    document.getElementById('hSecs').innerText   = t.segundos;
-    document.getElementById('cDays').innerText   = t.dias;
-    document.getElementById('cHours').innerText  = t.horas;
-    document.getElementById('cMins').innerText   = t.minutos;
-    document.getElementById('cSecs').innerText   = t.segundos;
-}
-setInterval(updateTimers, 1000);
-updateTimers();
+  // ── MÚSICA ──────────────────────────────────────────────
+  let musicPlaying = false;
+  function toggleMusic() {
+    musicPlaying = !musicPlaying;
+    const btn   = document.getElementById('music-btn');
+    const label = btn.querySelector('.music-label');
+    const audio = document.getElementById('bg-music');
+    btn.classList.toggle('playing', musicPlaying);
+    label.textContent = musicPlaying ? 'tocando' : 'música';
+    if (musicPlaying) {
+        audio.volume = 0.35;
+        audio.play().catch(() => {});
+    } else {
+        audio.pause();
+    }
+  }
 
-/* ---- Botão entrar (scroll suave) ---- */
-document.getElementById('enterBtn').addEventListener('click', function(e){
+  // ── AUTOPLAY: inicia muted ao carregar, desmuta na 1ª interação ──
+  (function() {
+    const audio = document.getElementById('bg-music');
+    audio.volume = 0.35;
+    audio.muted = true;
+    audio.play().catch(() => {});
+
+    // desmuta assim que o usuário tocar/clicar em qualquer lugar
+    function unmuteOnInteract() {
+      audio.muted = false;
+      musicPlaying = true;
+      const btn = document.getElementById('music-btn');
+      if (btn) {
+        btn.classList.add('playing');
+        const label = btn.querySelector('.music-label');
+        if (label) label.textContent = 'tocando';
+      }
+      document.removeEventListener('click',     unmuteOnInteract);
+      document.removeEventListener('touchstart', unmuteOnInteract);
+      document.removeEventListener('keydown',    unmuteOnInteract);
+    }
+    document.addEventListener('click',      unmuteOnInteract, { once: true });
+    document.addEventListener('touchstart', unmuteOnInteract, { once: true });
+    document.addEventListener('keydown',    unmuteOnInteract, { once: true });
+  })();
+
+  // ── VOLTAR COM LOADING ───────────────────────────────────
+  document.getElementById('back-btn').addEventListener('click', e => {
     e.preventDefault();
-    document.getElementById('main-section').scrollIntoView({ behavior:'smooth' });
-});
+    const href = e.currentTarget.href;
+    // mostra loading roxo
+    const div = document.createElement('div');
+    div.style.cssText = `position:fixed;inset:0;z-index:9999;background:#1a0a2e;
+      display:flex;align-items:center;justify-content:center;`;
+    div.innerHTML = `<span style="font-family:'Pacifico',cursive;color:#c4b5fd;font-size:22px;">voltando ♡</span>`;
+    document.body.appendChild(div);
+    setTimeout(() => { window.location.href = href; }, 700);
+  });
 
-/* ---- Toggle seções ---- */
-function toggleSection(id, card){
-    const panel     = document.getElementById(id);
-    const allPanels = document.querySelectorAll('.section-panel');
-    const allCards  = document.querySelectorAll('.obj-card');
-    const isOpen    = panel.classList.contains('open');
+  // ── FLOATING HEARTS ─────────────────────────────────────
+  const heartsContainer = document.getElementById('hearts');
+  const heartChars = ['♡', '♥', '💕', '💖', '💗'];
 
-    allPanels.forEach(p => p.classList.remove('open'));
-    allCards.forEach(c  => c.classList.remove('active'));
+  function spawnHeart() {
+    const h = document.createElement('span');
+    h.className = 'heart';
+    h.textContent = heartChars[Math.floor(Math.random() * heartChars.length)];
+    const left = Math.random() * 98;
+    const dur  = 8 + Math.random() * 10;
+    const size = 10 + Math.random() * 14;
+    h.style.left      = `${left}%`;
+    h.style.fontSize  = `${size}px`;
+    h.style.animationDuration = `${dur}s`;
+    h.style.animationDelay   = `${Math.random() * 3}s`;
+    heartsContainer.appendChild(h);
+    // remove após animação
+    setTimeout(() => h.remove(), (dur + 3) * 1000);
+  }
 
-    if(!isOpen){
-        panel.classList.add('open');
-        card.classList.add('active');
-        setTimeout(() => {
-            panel.scrollIntoView({ behavior:'smooth', block:'nearest' });
-        }, 50);
+  // Gera corações periodicamente
+  for (let i = 0; i < 12; i++) spawnHeart();
+  setInterval(spawnHeart, 2200);
+
+  // ── LIGHTBOX ─────────────────────────────────────────────
+  // flores abre a galeria de fotos no modal
+  function openLightbox(tipo) {
+    if (tipo === 'flores') {
+      openModal('modal-flores');
     }
-}
+  }
 
-/* ---- Botão voltar com loading screen ---- */
-document.getElementById('backBtn').addEventListener('click', function(e){
-    e.preventDefault();
-    const ls = document.getElementById('loadingScreen');
-    ls.style.opacity = '1';
-    ls.style.pointerEvents = 'all';
-    setTimeout(() => { window.location.href = '../index.html'; }, 1500);
-});
+  // imagem individual abre em tela cheia
+  function openLightboxImg(src) {
+    const lb  = document.getElementById('lightbox');
+    const img = document.getElementById('lightbox-img');
+    if (!lb || !img) return;
+    img.src = src;
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    const lb = document.getElementById('lightbox');
+    if (!lb) return;
+    lb.classList.remove('open');
+    document.body.style.overflow = '';
+    setTimeout(() => {
+      document.getElementById('lightbox-img').src = '';
+    }, 300);
+  }
+
+  // fecha lightbox com ESC
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeLightbox();
+  });
 </script>
 </body>
 </html>
