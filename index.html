@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -164,6 +164,22 @@ body::after {
                   0 18px 50px rgba(0,0,0,.1);
 }
 
+/* ── CARD 2 MESES — roxo/my melody ── */
+.card-2meses {
+    background:rgba(44,16,80,.92);
+    border:4px dashed #a855f7;
+    border-radius:35px;
+    box-shadow: 0 8px 30px rgba(124,58,237,.25),
+                0 0 40px rgba(244,114,182,.15);
+    color:#e9d5ff;
+    margin-top:20px;
+    width:min(340px, 90vw) !important;
+}
+.card-2meses:hover {
+    box-shadow: 0 18px 50px rgba(124,58,237,.4),
+                0 0 60px rgba(244,114,182,.25);
+}
+
 /* badge */
 .badge {
     position:absolute;
@@ -228,6 +244,20 @@ body::after {
 .card-btn:hover { filter:brightness(.92); transform:scale(1.05); }
 .card-1mes      .card-btn { background:#efcb73; color:#6f4425; }
 .card-valentines .card-btn { background:#4a9eca; color:#fff; }
+.card-2meses    .card-btn { background:#a855f7; color:#fff; }
+.card-1mes      .badge { background:#efcb73; color:#6f4425; }
+.card-valentines .badge { background:#6db8e0; color:#fff; }
+.card-2meses    .badge { background:#f472b6; color:#fff; }
+.card-1mes      .divider { background:#efcb73; }
+.card-valentines .divider { background:#6db8e0; }
+.card-2meses    .divider { background:#a855f7; }
+
+/* loading tipo 2meses */
+.tipo-2meses {
+    background:radial-gradient(ellipse at center,#2d1b4e 0%,#1a0a2e 100%);
+}
+.tipo-2meses .loading-text { color:#c4b5fd; }
+.tipo-2meses .loading-dots span { background:#c4b5fd; }
 
 /* ── FOOTER ── */
 .selector-footer {
@@ -366,6 +396,13 @@ body::after {
     <div class="loading-dots"><span></span><span></span><span></span></div>
 </div>
 
+<!-- ── LOADING 2 MESES ── -->
+<div class="loading-screen tipo-2meses" id="load2meses">
+    <img src="2messes/sanrio STICKER.gif" class="loading-gif" alt="my melody" onerror="this.style.display='none'">
+    <div class="loading-text">carregando...</div>
+    <div class="loading-dots"><span></span><span></span><span></span></div>
+</div>
+
 <!-- partículas flutuantes -->
 <div class="floats-bg" id="floatsBg"></div>
 
@@ -399,6 +436,18 @@ body::after {
         </a>
 
     </div>
+    <!-- CARD 2 MESES - centralizado abaixo -->
+    <div style="display:flex;justify-content:center;margin-top:0;">
+        <a class="version-card card-2meses" href="#" data-dest="2messes/index.html" data-load="load2meses">
+            <span class="badge">novo</span>
+            <img src="2messes/sanrio STICKER.gif" class="card-gif" alt="my melody" onerror="this.style.display='none'">
+            <h2>2 meses de namoro</h2>
+            <div class="divider"></div>
+            <p>nosso cantinho - especial my melody pra voce</p>
+            <button class="card-btn">entrar no cantinho</button>
+        </a>
+    </div>
+
 
     <div class="selector-footer">
         cada página é um momento que é só nosso ♡<br>
@@ -443,3 +492,4 @@ document.querySelectorAll('.version-card').forEach(card=>{
 </script>
 </body>
 </html>
+

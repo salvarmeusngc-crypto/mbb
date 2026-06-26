@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1a0a2e">
+<title>2 meses com você ♡</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600&family=Pacifico&display=swap" rel="stylesheet">
+<style>
+/* ===================== RESET ===================== */
+*{ margin:0; padding:0; box-sizing:border-box; }
+
+/* ===================== BODY ===================== */
+body{
+    background:linear-gradient(135deg,#1a0a2e 0%,#2d1b4e 60%,#1e0e38 100%);
+    min-height:100vh;
+    font-family:'Fredoka',sans-serif;
+    overflow-x:hidden;
+    color:#e9d5ff;
+}
+
+/* ===================== ESTRELAS ===================== */
+.stars-bg{
+    position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden;
+}
+.star{
+    position:absolute; border-radius:50%; background:#c4b5fd;
+    animation:twinkle var(--dur,3s) ease-in-out infinite alternate; opacity:0;
+}
+@keyframes twinkle{
+    0%  { opacity:0;   transform:scale(.7); }
+    50% { opacity:.85; transform:scale(1.2); }
+    100%{ opacity:.2;  transform:scale(.9); }
+}
+.particle{
+    position:absolute; border-radius:50%;
+    animation:floatUp var(--fdur,8s) linear infinite; opacity:0;
+}
+@keyframes floatUp{
+    0%   { transform:translateY(0) scale(1);   opacity:0; }
+    10%  { opacity:.6; }
+    90%  { opacity:.3; }
+    100% { transform:translateY(-100vh) scale(.5); opacity:0; }
+}
+
+/* ===================== LOADING SCREEN ===================== */
+#loadingScreen{
+    position:fixed; inset:0; z-index:9999;
+    background:radial-gradient(ellipse at center,#2d1b4e 0%,#1a0a2e 100%);
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:22px;
+    opacity:0; pointer-events:none; transition:opacity .35s;
+}
+#loadingScreen img{ width:110px; animation:loadB 1s ease-in-out infinite alternate; }
+#loadingScreen .load-txt{ font-size:1.3rem; color:#c4b5fd; animation:loadP 1.2s ease-in-out infinite alternate; }
+.load-dots span{
+    display:inline-block; width:11px; height:11px; border-radius:50%;
+    background:#c4b5fd; margin:0 5px;
+}
+.load-dots span:nth-child(1){ animation:dotJ .7s ease-in-out infinite alternate; }
+.load-dots span:nth-child(2){ animation:dotJ .7s .15s ease-in-out infinite alternate; }
+.load-dots span:nth-child(3){ animation:dotJ .7s .3s  ease-in-out infinite alternate; }
+@keyframes loadB{ from{transform:translateY(0) scale(1)} to{transform:translateY(-10px) scale(1.07)} }
+@keyframes loadP{ from{opacity:.5} to{opacity:1} }
+@keyframes dotJ{ from{transform:translateY(0);opacity:.4} to{transform:translateY(-9px);opacity:1} }
+
+/* ===================== BOTÃO VOLTAR ===================== */
+.back-btn{
+    position:fixed; top:18px; left:18px; z-index:998;
+    background:rgba(26,10,46,.88); border:2px solid #7c3aed;
+    border-radius:30px; padding:7px 18px;
+    font-family:'Fredoka',sans-serif; font-size:.95rem; color:#e9d5ff;
+    text-decoration:none; backdrop-filter:blur(8px);
+    box-shadow:0 0 12px rgba(124,58,237,.4);
+    transition:background .2s,transform .15s,box-shadow .2s;
+}
+.back-btn:hover{
+    background:rgba(124,58,237,.55); transform:translateY(-2px);
+    box-shadow:0 0 22px rgba(244,114,182,.5);
+}
+
+/* ===================== GIF FLUTUANTE FIXO ===================== */
+.sanrio-gif{
+    position:fixed; bottom:22px; right:22px; z-index:990;
+    width:80px;
+    filter:drop-shadow(0 0 10px rgba(244,114,182,.6));
+    animation:gifFloat 3s ease-in-out infinite alternate;
+    cursor:pointer;
+}
+@keyframes gifFloat{
+    from{ transform:translateY(0)   scale(1); }
+    to  { transform:translateY(-12px) scale(1.05); }
+}
+
+/* ===================== INTRO / HERO ===================== */
+#intro{
+    position:relative; z-index:1;
+    min-height:100vh;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    padding:100px 20px 60px;
+    overflow:hidden;
+}
+
+/* Melody cantos intro */
+.melody-intro-left{
+    position:absolute; left:0; top:50%; transform:translateY(-50%);
+    width:220px;
+    filter:drop-shadow(0 0 18px rgba(244,114,182,.7));
+    animation:melodyFloat 4s ease-in-out infinite alternate;
+    pointer-events:none;
+}
+.melody-intro-right{
+    position:absolute; right:0; top:50%; transform:translateY(-50%);
+    width:220px;
+    filter:drop-shadow(0 0 18px rgba(196,181,253,.7));
+    animation:melodyFloat 4.5s ease-in-out infinite alternate-reverse;
+    pointer-events:none;
+}
+@keyframes melodyFloat{
+    from{ transform:translateY(-50%) rotate(-3deg); }
+    to  { transform:translateY(calc(-50% - 14px)) rotate(3deg); }
+}
+
+/* Texto intro */
+.intro-text{ text-align:center; position:relative; z-index:2; margin-bottom:48px; }
+.intro-text h1{
+    font-family:'Pacifico',cursive;
+    font-size:4.5rem; line-height:1.15;
+    background:linear-gradient(135deg,#f472b6,#c4b5fd,#f472b6);
+    -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+    filter:drop-shadow(0 0 22px rgba(244,114,182,.55));
+}
+.intro-text .sub{
+    margin-top:14px; font-size:1.4rem; color:#c4b5fd; letter-spacing:.06em;
+}
+
+/* ===================== MOSAICO DE FOTOS ===================== */
+.photos-mosaic{
+    position:relative; z-index:2;
+    display:grid;
+    grid-template-columns:repeat(2, 200px);
+    grid-template-rows:repeat(2, 200px);
+    gap:16px;
+    margin-bottom:52px;
+}
+.mosaic-photo{
+    border-radius:20px; overflow:hidden; position:relative;
+    border:3px solid transparent;
+    background:
+        linear-gradient(rgba(30,14,56,1),rgba(30,14,56,1)) padding-box,
+        linear-gradient(135deg,#f472b6,#7c3aed,#c4b5fd,#f472b6) border-box;
+    box-shadow:0 0 28px rgba(244,114,182,.45), 0 0 56px rgba(124,58,237,.25);
+    animation:photoGlow 3s ease-in-out infinite alternate;
+    transition:transform .3s;
+}
+.mosaic-photo:nth-child(2){ animation-delay:.7s; }
+.mosaic-photo:nth-child(3){ animation-delay:1.4s; }
+.mosaic-photo:nth-child(4){ animation-delay:2.1s; }
+.mosaic-photo:hover{ transform:scale(1.05) rotate(1deg); }
+.mosaic-photo img{
+    width:100%; height:100%; object-fit:cover; display:block;
+    filter:brightness(1.05) saturate(1.15);
+}
+@keyframes photoGlow{
+    from{ box-shadow:0 0 22px rgba(244,114,182,.4), 0 0 44px rgba(124,58,237,.2); }
+    to  { box-shadow:0 0 38px rgba(244,114,182,.7), 0 0 70px rgba(196,181,253,.35); }
+}
+
+/* Botão entrar */
+.enter-btn{
+    position:relative; z-index:2;
+    display:inline-block;
+    font-family:'Pacifico',cursive; font-size:1.2rem;
+    color:#f9a8d4; text-decoration:none;
+    background:rgba(44,16,80,.8);
+    border:2px solid rgba(244,114,182,.6);
+    border-radius:50px; padding:14px 42px;
+    backdrop-filter:blur(12px);
+    box-shadow:0 0 24px rgba(244,114,182,.3), 0 0 50px rgba(124,58,237,.2);
+    cursor:pointer; transition:all .3s;
+    animation:btnPulse 2.5s ease-in-out infinite alternate;
+}
+.enter-btn:hover{
+    background:rgba(124,58,237,.6); transform:translateY(-4px);
+    box-shadow:0 0 40px rgba(244,114,182,.55), 0 0 80px rgba(124,58,237,.35);
+}
+@keyframes btnPulse{
+    from{ box-shadow:0 0 20px rgba(244,114,182,.3); }
+    to  { box-shadow:0 0 40px rgba(244,114,182,.55), 0 0 70px rgba(196,181,253,.2); }
+}
+
+/* ===================== SEÇÃO PRINCIPAL ===================== */
+#main-section{
+    position:relative; z-index:1;
+    width:min(1100px,92%); margin:auto; padding:60px 0 120px;
+}
+
+/* ===================== TIMER HERO ===================== */
+.timer-box{
+    margin:0 auto 70px;
+    width:min(720px,100%);
+    background:rgba(44,16,80,.75);
+    border:2px solid rgba(124,58,237,.5);
+    border-radius:32px; padding:32px;
+    backdrop-filter:blur(16px);
+    box-shadow:0 0 30px rgba(124,58,237,.25), inset 0 1px 0 rgba(196,181,253,.2);
+}
+.timer-title{
+    text-align:center; margin-bottom:24px;
+    font-family:'Pacifico',cursive; font-size:1.3rem; color:#f9a8d4;
+}
+.timer{ display:flex; justify-content:center; gap:16px; flex-wrap:wrap; }
+.time{
+    background:rgba(124,58,237,.22);
+    border:2px solid rgba(244,114,182,.45);
+    border-radius:20px; width:130px; padding:18px 10px; text-align:center;
+    box-shadow:0 0 14px rgba(244,114,182,.18);
+    transition:transform .2s,box-shadow .2s;
+}
+.time:hover{ transform:translateY(-3px); box-shadow:0 0 22px rgba(244,114,182,.38); }
+.time h2{ font-size:3.6rem; color:#f9a8d4; line-height:1; }
+.time p { font-size:.85rem; color:#c4b5fd; margin-top:6px; letter-spacing:.1em; }
+
+/* ===================== GRID DE OBJETOS ===================== */
+.objetos-titulo{
+    text-align:center; margin-bottom:32px;
+    font-size:1.5rem; color:#c4b5fd;
+}
+.objetos-titulo::before,.objetos-titulo::after{ content:" ✦ "; color:#f472b6; }
+
+.objetos-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:20px;
+}
+
+/* card */
+.obj-card{
+    background:rgba(44,16,80,.75);
+    border:2px solid rgba(124,58,237,.4);
+    border-radius:24px; padding:28px 16px;
+    text-align:center; cursor:pointer;
+    backdrop-filter:blur(16px);
+    transition:transform .25s,box-shadow .25s,border-color .25s;
+    position:relative; overflow:hidden;
+}
+.obj-card::before{
+    content:''; position:absolute; inset:0; border-radius:24px;
+    background:linear-gradient(135deg,rgba(244,114,182,.07),rgba(124,58,237,.07));
+    opacity:0; transition:opacity .3s;
+}
+.obj-card:hover{ transform:translateY(-5px); border-color:rgba(244,114,182,.7); }
+.obj-card:hover{ box-shadow:0 0 28px rgba(244,114,182,.38), 0 8px 24px rgba(0,0,0,.3); }
+.obj-card:hover::before{ opacity:1; }
+.obj-card.active{ border-color:#f472b6; box-shadow:0 0 34px rgba(244,114,182,.5); }
+.obj-icon{ font-size:2.8rem; margin-bottom:12px; display:block; }
+.obj-name{ font-size:1.1rem; font-weight:600; color:#f9a8d4; margin-bottom:4px; }
+.obj-desc{ font-size:.82rem; color:#a78bfa; }
+
+/* ===================== PAINÉIS ===================== */
+.section-panel{
+    display:none;
+    margin-top:28px;
+    background:rgba(44,16,80,.75);
+    border:2px solid rgba(124,58,237,.45);
+    border-radius:28px; padding:38px;
+    backdrop-filter:blur(16px);
+    box-shadow:0 0 30px rgba(124,58,237,.18);
+    animation:panelIn .35s ease;
+}
+.section-panel.open{ display:block; }
+@keyframes panelIn{
+    from{ opacity:0; transform:translateY(14px); }
+    to  { opacity:1; transform:translateY(0); }
+}
+.panel-title{
+    font-size:1.4rem; color:#f9a8d4; margin-bottom:26px;
+    display:flex; align-items:center; gap:10px;
+    font-family:'Pacifico',cursive;
+}
+
+/* ---- VÍDEO ---- */
+.video-frame iframe{
+    width:100%; aspect-ratio:16/9; border:none; border-radius:18px;
+    box-shadow:0 0 28px rgba(124,58,237,.45);
+}
+
+/* ---- DIÁRIO ---- */
+.diary-display{
+    width:100%; min-height:300px;
+    background:rgba(124,58,237,.12);
+    border:2px solid rgba(196,181,253,.3);
+    border-radius:18px; padding:24px 28px;
+    font-family:'Fredoka',sans-serif; font-size:1.08rem; color:#e9d5ff;
+    line-height:2; white-space:pre-wrap;
+    box-shadow:inset 0 0 20px rgba(124,58,237,.1);
+}
+.diary-placeholder{ color:#7c3aed; font-style:italic; }
+
+/* ---- CALENDÁRIO ---- */
+.cal-timer{ display:flex; justify-content:center; gap:16px; flex-wrap:wrap; margin-top:10px; }
+.cal-time{
+    background:rgba(124,58,237,.22); border:2px solid rgba(244,114,182,.45);
+    border-radius:20px; width:130px; padding:18px 10px; text-align:center;
+    box-shadow:0 0 14px rgba(244,114,182,.18);
+}
+.cal-time h2{ font-size:3.2rem; color:#f9a8d4; line-height:1; }
+.cal-time p { font-size:.82rem; color:#c4b5fd; margin-top:6px; letter-spacing:.1em; }
+.cal-date-info{
+    text-align:center; margin-top:24px;
+    font-size:1.05rem; color:#a78bfa; line-height:2;
+}
+
+/* ---- SURPRESAS ---- */
+.surpresas-grid{
+    display:flex; gap:28px; justify-content:center; flex-wrap:wrap;
+}
+.surpresa-frame{
+    border:4px solid transparent;
+    background:
+        linear-gradient(rgba(44,16,80,1),rgba(44,16,80,1)) padding-box,
+        linear-gradient(135deg,#f472b6,#7c3aed,#c4b5fd,#f472b6) border-box;
+    border-radius:22px; padding:12px;
+    box-shadow:0 0 36px rgba(244,114,182,.4), 0 0 72px rgba(124,58,237,.2);
+    max-width:340px; width:100%;
+    transition:transform .3s,box-shadow .3s;
+}
+.surpresa-frame:hover{
+    transform:translateY(-6px) scale(1.02);
+    box-shadow:0 0 52px rgba(244,114,182,.6), 0 0 90px rgba(124,58,237,.35);
+}
+.surpresa-frame img{
+    width:100%; border-radius:14px; display:block;
+    filter:brightness(1.05) saturate(1.1);
+}
+
+/* ===================== FOOTER ===================== */
+.footer{
+    text-align:center; margin-top:80px;
+    font-size:1.2rem; line-height:2.2; color:#c4b5fd;
+}
+.footer span{ color:#f472b6; }
+
+/* ===================== RESPONSIVO ===================== */
+@media(max-width:900px){
+    .melody-intro-left,.melody-intro-right{ width:120px; }
+    .intro-text h1{ font-size:2.8rem; padding:0 40px; }
+    .intro-text .sub{ font-size:1.1rem; }
+    .photos-mosaic{
+        grid-template-columns:repeat(2,160px);
+        grid-template-rows:repeat(2,160px);
+        gap:12px;
+    }
+    .objetos-grid{ grid-template-columns:repeat(2,1fr); gap:14px; }
+    .timer-box{ padding:22px 14px; }
+    .time,.cal-time{ width:calc(50% - 10px); }
+    .time h2,.cal-time h2{ font-size:2.6rem; }
+    .section-panel{ padding:24px 18px; }
+    .sanrio-gif{ width:62px; bottom:14px; right:14px; }
+}
+@media(max-width:480px){
+    .melody-intro-left,.melody-intro-right{ display:none; }
+    .intro-text h1{ font-size:2rem; padding:0 10px; }
+    .photos-mosaic{
+        grid-template-columns:repeat(2,140px);
+        grid-template-rows:repeat(2,140px);
+        gap:10px;
+    }
+    .objetos-grid{ grid-template-columns:repeat(2,1fr); gap:12px; }
+    .obj-icon{ font-size:2.2rem; }
+    .back-btn{ font-size:.82rem; padding:6px 14px; }
+    .surpresas-grid{ flex-direction:column; align-items:center; }
+}
+</style>
+</head>
+<body>
+
+<!-- ========== LOADING SCREEN ========== -->
+<div id="loadingScreen">
+    <img src="sanrio STICKER.gif" alt="sanrio" onerror="this.style.display='none'">
+    <div class="load-txt">voltando...</div>
+    <div class="load-dots"><span></span><span></span><span></span></div>
+</div>
+
+<!-- ========== BOTÃO VOLTAR ========== -->
+<a class="back-btn" href="#" id="backBtn">← voltar</a>
+
+<!-- ========== ESTRELAS / PARTÍCULAS ========== -->
+<div class="stars-bg" id="starsBg"></div>
+
+<!-- ========== GIF FLUTUANTE FIXO ========== -->
+<img class="sanrio-gif" src="sanrio STICKER.gif" alt="sanrio gif"
+     onerror="this.style.display='none'">
+
+<!-- ================================================================ -->
+<!--  SEÇÃO 1 — INTRO / HERO COM FOTOS                               -->
+<!-- ================================================================ -->
+<section id="intro">
+
+    <!-- My Melody cantos -->
+    <img class="melody-intro-left" src="My-Melody-PNG-Images-HD.png" alt="My Melody"
+         onerror="this.style.display='none'">
+    <img class="melody-intro-right" src="My-Melody-PNG-Photos.png" alt="My Melody"
+         onerror="this.style.display='none'">
+
+    <!-- Texto principal -->
+    <div class="intro-text">
+        <h1>2 meses com você ♡</h1>
+        <p class="sub">do nosso cantinho 🌙</p>
+    </div>
+
+    <!-- Mosaico 2×2 com fotos do casal no roblox -->
+    <div class="photos-mosaic">
+        <div class="mosaic-photo">
+            <img src="pre retrato/image.png" alt="foto 1"
+                 onerror="this.style.display='none'">
+        </div>
+        <div class="mosaic-photo">
+            <img src="pre retrato/imagee.png" alt="foto 2"
+                 onerror="this.style.display='none'">
+        </div>
+        <div class="mosaic-photo">
+            <img src="pre retrato/imageee.png" alt="foto 3"
+                 onerror="this.style.display='none'">
+        </div>
+        <div class="mosaic-photo">
+            <img src="pre retrato/imageeee.png" alt="foto 4"
+                 onerror="this.style.display='none'">
+        </div>
+    </div>
+
+    <!-- Botão entrar -->
+    <a class="enter-btn" id="enterBtn">↓ entrar no cantinho</a>
+
+</section>
+
+<!-- ================================================================ -->
+<!--  SEÇÃO 2 — QUARTO PRINCIPAL                                      -->
+<!-- ================================================================ -->
+<div id="main-section">
+
+    <!-- TIMER HERO -->
+    <div class="timer-box">
+        <div class="timer-title">nosso tempo juntos ♡</div>
+        <div class="timer">
+            <div class="time"><h2 id="hDays">0</h2><p>DIAS</p></div>
+            <div class="time"><h2 id="hHours">0</h2><p>HORAS</p></div>
+            <div class="time"><h2 id="hMins">0</h2><p>MINUTOS</p></div>
+            <div class="time"><h2 id="hSecs">0</h2><p>SEGUNDOS</p></div>
+        </div>
+    </div>
+
+    <!-- TÍTULO OBJETOS -->
+    <div class="objetos-titulo">nosso quartinho</div>
+
+    <!-- GRID DE OBJETOS (4 itens) -->
+    <div class="objetos-grid">
+
+        <!-- 1. COMPUTADOR -->
+        <div class="obj-card" onclick="toggleSection('sec-computador', this)">
+            <span class="obj-icon">💻</span>
+            <div class="obj-name">computador</div>
+            <div class="obj-desc">nosso vídeo especial ♡</div>
+        </div>
+
+        <!-- 2. DIÁRIO -->
+        <div class="obj-card" onclick="toggleSection('sec-diario', this)">
+            <span class="obj-icon">📓</span>
+            <div class="obj-name">diário</div>
+            <div class="obj-desc">cartinha pra você ♡</div>
+        </div>
+
+        <!-- 3. CALENDÁRIO -->
+        <div class="obj-card" onclick="toggleSection('sec-cal', this)">
+            <span class="obj-icon">📅</span>
+            <div class="obj-name">calendário</div>
+            <div class="obj-desc">tempo juntos ♡</div>
+        </div>
+
+        <!-- 4. SURPRESAS -->
+        <div class="obj-card" onclick="toggleSection('sec-surpresas', this)">
+            <span class="obj-icon">✨</span>
+            <div class="obj-name">surpresas</div>
+            <div class="obj-desc">algo especial pra você ♡</div>
+        </div>
+
+    </div><!-- /objetos-grid -->
+
+    <!-- ============================================================ -->
+    <!--  PAINEL 1 — COMPUTADOR: VÍDEO                               -->
+    <!-- ============================================================ -->
+    <div class="section-panel" id="sec-computador">
+        <div class="panel-title">💻 nosso vídeo especial</div>
+        <!--
+            ╔══════════════════════════════════════════════════════════════╗
+            ║  YOUTUBE — substitua o ID abaixo pelo ID do vídeo           ║
+            ║  Exemplo: youtube.com/watch?v=dQw4w9WgXcQ                   ║
+            ║  → use: https://www.youtube.com/embed/dQw4w9WgXcQ           ║
+            ╚══════════════════════════════════════════════════════════════╝
+        -->
+        <div class="video-frame">
+            <iframe
+                src="https://www.youtube.com/embed/ID_AQUI"
+                title="vídeo especial ♡"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen>
+            </iframe>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--  PAINEL 2 — DIÁRIO: CARTA                                   -->
+    <!-- ============================================================ -->
+    <div class="section-panel" id="sec-diario">
+        <div class="panel-title">📓 cartinha pra você</div>
+        <!--
+            ╔══════════════════════════════════════════════════════════════╗
+            ║  CARTA — substitua o texto dentro da div .diary-display     ║
+            ║  abaixo pelo texto da sua carta.                            ║
+            ║  Apague o conteúdo padrão e escreva o que quiser ♡          ║
+            ╚══════════════════════════════════════════════════════════════╝
+        -->
+        <div class="diary-display">
+<!-- ↓ COLOQUE AQUI O TEXTO DA CARTA ↓ -->
+<span class="diary-placeholder">escreva sua carta aqui ♡</span>
+<!-- ↑ COLOQUE AQUI O TEXTO DA CARTA ↑ -->
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--  PAINEL 3 — CALENDÁRIO: TEMPO JUNTOS                        -->
+    <!-- ============================================================ -->
+    <div class="section-panel" id="sec-cal">
+        <div class="panel-title">📅 tempo juntos</div>
+        <div class="cal-timer">
+            <div class="cal-time"><h2 id="cDays">0</h2><p>DIAS</p></div>
+            <div class="cal-time"><h2 id="cHours">0</h2><p>HORAS</p></div>
+            <div class="cal-time"><h2 id="cMins">0</h2><p>MINUTOS</p></div>
+            <div class="cal-time"><h2 id="cSecs">0</h2><p>SEGUNDOS</p></div>
+        </div>
+        <div class="cal-date-info">
+            desde 26 de abril de 2026 às 21:28 ♡<br>
+            cada segundo com você é especial 🌙
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--  PAINEL 4 — SURPRESAS                                       -->
+    <!-- ============================================================ -->
+    <div class="section-panel" id="sec-surpresas">
+        <div class="panel-title">✨ algo especial pra você</div>
+        <div class="surpresas-grid">
+            <div class="surpresa-frame">
+                <img src="surpresas/1010858636391747705.webp" alt="surpresa 1"
+                     onerror="this.style.display='none'">
+            </div>
+            <div class="surpresa-frame">
+                <img src="surpresas/image.png" alt="surpresa 2"
+                     onerror="this.style.display='none'">
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+        dois meses sendo a melhor parte dos meus dias 🌙<br>
+        <span>eu te amo sempre ♡</span>
+    </div>
+
+</div><!-- /main-section -->
+
+<!-- ================================================================ -->
+<!--  JAVASCRIPT                                                       -->
+<!-- ================================================================ -->
+<script>
+/* ---- Gera estrelas e partículas ---- */
+(function(){
+    const bg = document.getElementById('starsBg');
+    const colors = ['#c4b5fd','#f9a8d4','#ffffff','#a78bfa','#f472b6'];
+
+    for(let i = 0; i < 100; i++){
+        const s = document.createElement('div');
+        s.className = 'star';
+        const size = Math.random() * 3 + 1;
+        s.style.cssText = `
+            width:${size}px; height:${size}px;
+            left:${Math.random()*100}%;
+            top:${Math.random()*100}%;
+            background:${colors[Math.floor(Math.random()*colors.length)]};
+            --dur:${(Math.random()*4+2).toFixed(1)}s;
+            animation-delay:${(Math.random()*6).toFixed(1)}s;
+        `;
+        bg.appendChild(s);
+    }
+
+    for(let i = 0; i < 26; i++){
+        const p = document.createElement('div');
+        p.className = 'particle';
+        const size = Math.random() * 5 + 2;
+        p.style.cssText = `
+            width:${size}px; height:${size}px;
+            left:${Math.random()*100}%;
+            top:${100 + Math.random()*20}%;
+            background:${colors[Math.floor(Math.random()*colors.length)]};
+            --fdur:${(Math.random()*10+7).toFixed(1)}s;
+            animation-delay:${(Math.random()*12).toFixed(1)}s;
+        `;
+        bg.appendChild(p);
+    }
+})();
+
+/* ---- Timer ---- */
+// Data de início: 26/04/2026 às 21:28
+const startDate = new Date(2026, 3, 26, 21, 28, 0);
+
+function calcTime(){
+    const diff = Math.max(0, new Date() - startDate);
+    const totalSec = Math.floor(diff / 1000);
+    return {
+        dias    : Math.floor(totalSec / 86400),
+        horas   : Math.floor((totalSec % 86400) / 3600),
+        minutos : Math.floor((totalSec % 3600) / 60),
+        segundos: totalSec % 60
+    };
+}
+
+function updateTimers(){
+    const t = calcTime();
+    document.getElementById('hDays').innerText   = t.dias;
+    document.getElementById('hHours').innerText  = t.horas;
+    document.getElementById('hMins').innerText   = t.minutos;
+    document.getElementById('hSecs').innerText   = t.segundos;
+    document.getElementById('cDays').innerText   = t.dias;
+    document.getElementById('cHours').innerText  = t.horas;
+    document.getElementById('cMins').innerText   = t.minutos;
+    document.getElementById('cSecs').innerText   = t.segundos;
+}
+setInterval(updateTimers, 1000);
+updateTimers();
+
+/* ---- Botão entrar (scroll suave) ---- */
+document.getElementById('enterBtn').addEventListener('click', function(e){
+    e.preventDefault();
+    document.getElementById('main-section').scrollIntoView({ behavior:'smooth' });
+});
+
+/* ---- Toggle seções ---- */
+function toggleSection(id, card){
+    const panel     = document.getElementById(id);
+    const allPanels = document.querySelectorAll('.section-panel');
+    const allCards  = document.querySelectorAll('.obj-card');
+    const isOpen    = panel.classList.contains('open');
+
+    allPanels.forEach(p => p.classList.remove('open'));
+    allCards.forEach(c  => c.classList.remove('active'));
+
+    if(!isOpen){
+        panel.classList.add('open');
+        card.classList.add('active');
+        setTimeout(() => {
+            panel.scrollIntoView({ behavior:'smooth', block:'nearest' });
+        }, 50);
+    }
+}
+
+/* ---- Botão voltar com loading screen ---- */
+document.getElementById('backBtn').addEventListener('click', function(e){
+    e.preventDefault();
+    const ls = document.getElementById('loadingScreen');
+    ls.style.opacity = '1';
+    ls.style.pointerEvents = 'all';
+    setTimeout(() => { window.location.href = '../index.html'; }, 1500);
+});
+</script>
+</body>
+</html>
