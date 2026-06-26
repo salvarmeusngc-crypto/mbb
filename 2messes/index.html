@@ -574,8 +574,8 @@
     <div class="modal-title">💻 nossa playlist ♡</div>
     <div class="video-wrap">
       <!-- YOUTUBE: troque ID_AQUI pelo ID do vídeo (ex: dQw4w9WgXcQ) -->
-      <iframe
-        src="https://www.youtube.com/embed/cUBbzH7xc-E?autoplay=0&rel=0"
+      <iframe id="yt-player"
+        src="https://www.youtube.com/embed/cUBbzH7xc-E?autoplay=0&rel=0&enablejsapi=1"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowfullscreen>
       </iframe>
@@ -843,6 +843,53 @@
     heartsContainer.appendChild(h);
     // remove após animação
     setTimeout(() => h.remove(), (dur + 3) * 1000);
+  }
+
+  // ── YOUTUBE iframe API — pausa música quando vídeo toca ────
+  var ytPlayer;
+  var ytReady = false;
+
+  // carrega a API do YouTube de forma assíncrona
+  (function() {
+    var tag = document.createElement('script');
+    tag.src = 'https://www.youtube.com/iframe_api';
+    document.head.appendChild(tag);
+  })();
+
+  // chamado automaticamente pela API quando carregada
+  function onYouTubeIframeAPIReady() {
+    ytReady = true;
+    var iframe = document.getElementById('yt-player');
+    if (!iframe) return;
+    ytPlayer = new YT.Player(iframe, {
+      events: {
+        onStateChange: function(e) {
+          var audio = document.getElementById('bg-music');
+          if (!audio) return;
+          if (e.data === YT.PlayerState.PLAYING) {
+            // vídeo começou → pausa música
+            audio.pause();
+            musicPlaying = false;
+            var btn = document.getElementById('music-btn');
+            if (btn) {
+              btn.classList.remove('playing');
+              var lbl = btn.querySelector('.music-label');
+              if (lbl) lbl.textContent = 'música';
+            }
+          } else if (e.data === YT.PlayerState.PAUSED || e.data === YT.PlayerState.ENDED) {
+            // vídeo pausou/terminou → retoma música
+            audio.play().catch(()=>{});
+            musicPlaying = true;
+            var btn = document.getElementById('music-btn');
+            if (btn) {
+              btn.classList.add('playing');
+              var lbl = btn.querySelector('.music-label');
+              if (lbl) lbl.textContent = 'tocando';
+            }
+          }
+        }
+      }
+    });
   }
 
   // Gera corações periodicamente
