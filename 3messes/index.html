@@ -1,540 +1,735 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#1a0a2e">
-<title>3 meses com você ♡</title>
+<title>3 Meses ao seu lado 💜 Nayara</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600&family=Pacifico&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Fredoka:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-    --roxo:      #7c3aed;
-    --roxo-mid:  #a855f7;
-    --lilas:     #c4b5fd;
-    --rosa:      #f472b6;
-    --rosa-soft: #fce7f3;
-    --preto:     #0f0a1e;
-    --escuro:    #1a0a2e;
-    --escuro2:   #2d1b4e;
-    --texto:     #e9d5ff;
-    --texto-soft:#c4b5fd;
-    --white-t:   rgba(255,255,255,.10);
-    --card:      rgba(44,16,80,.72);
+  --bg: #0f0a1e;
+  --purple: #7c3aed;
+  --purple2: #a855f7;
+  --pink: #f472b6;
+  --pink2: #ec4899;
+  --lilac: #c4b5fd;
+  --white: rgba(255,255,255,.88);
 }
 
-html { scroll-behavior:smooth; }
+html { scroll-behavior: smooth; }
+
 body {
-    font-family:'Fredoka',sans-serif;
-    background: var(--escuro);
-    color: var(--texto);
-    overflow-x:hidden;
-    min-height:100vh;
+  background: var(--bg);
+  color: var(--white);
+  font-family: 'Fredoka', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
-/* ── FUNDO COM ESTRELAS ── */
-body::before {
-    content:"";
-    position:fixed; inset:0; z-index:0;
-    background:
-        radial-gradient(ellipse at 20% 20%, rgba(124,58,237,.35) 0%, transparent 55%),
-        radial-gradient(ellipse at 80% 80%, rgba(244,114,182,.2)  0%, transparent 50%),
-        radial-gradient(ellipse at 50% 50%, rgba(196,181,253,.08) 0%, transparent 70%),
-        var(--escuro);
-    pointer-events:none;
+/* ── SPARKLES ── */
+.sparkles { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.sparkle {
+  position: absolute;
+  animation: sparkleAnim var(--d, 2s) ease-in-out infinite alternate;
+  opacity: 0;
+  user-select: none;
 }
-
-/* ── PARTÍCULAS ── */
-.stars { position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
-.star  {
-    position:absolute;
-    background:#c4b5fd;
-    border-radius:50%;
-    animation:twinkle var(--d,3s) ease-in-out infinite alternate;
-    opacity:0;
-}
-@keyframes twinkle {
-    0%   { opacity:0;   transform:scale(.5); }
-    50%  { opacity:.8;  transform:scale(1.2); }
-    100% { opacity:.15; transform:scale(.8); }
-}
-.particle {
-    position:absolute;
-    animation:particleUp var(--d,10s) linear infinite;
-    opacity:0;
-}
-@keyframes particleUp {
-    0%   { transform:translateY(0)     rotate(0deg);   opacity:0; }
-    8%   { opacity:.55; }
-    92%  { opacity:.2; }
-    100% { transform:translateY(-110vh) rotate(360deg); opacity:0; }
+@keyframes sparkleAnim {
+  0%   { opacity: 0;   transform: scale(.4) rotate(0deg); }
+  50%  { opacity: 1;   transform: scale(1.2) rotate(45deg); }
+  100% { opacity: .15; transform: scale(.6) rotate(90deg); }
 }
 
 /* ── LOADING ── */
-#loadingScreen {
-    position:fixed; inset:0; z-index:9999;
-    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:24px;
-    background:radial-gradient(ellipse at center, #2d1b4e 0%, #0f0a1e 100%);
-    transition:opacity .5s;
+#loading {
+  position: fixed; inset: 0; z-index: 9999;
+  background: radial-gradient(ellipse at center, #1a0835 0%, #0f0a1e 100%);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 20px;
 }
-#loadingScreen.hide { opacity:0; pointer-events:none; }
-.load-gif {
-    width:110px;
-    filter:drop-shadow(0 0 20px rgba(196,181,253,.8));
-    animation:floatY 2s ease-in-out infinite alternate;
+#loading img { width: 120px; }
+#loading p { font-family: 'Fredoka', sans-serif; font-size: 1.1rem; color: var(--lilac); letter-spacing: .05em; }
+.dots span {
+  display: inline-block;
+  animation: dotBounce 1.2s ease-in-out infinite;
+  color: var(--pink);
 }
-.load-txt {
-    font-family:'Pacifico',cursive;
-    font-size:1.3rem; color:var(--lilas);
-    animation:pulse 1.4s ease-in-out infinite alternate;
-}
-.load-dots span {
-    display:inline-block; width:10px; height:10px;
-    border-radius:50%; background:var(--lilas);
-    margin:0 5px;
-    animation:dotJ .7s ease-in-out infinite alternate;
-}
-.load-dots span:nth-child(2){ animation-delay:.15s; }
-.load-dots span:nth-child(3){ animation-delay:.3s; }
-@keyframes pulse   { from{opacity:.5} to{opacity:1} }
-@keyframes dotJ    { from{transform:translateY(0);opacity:.4} to{transform:translateY(-9px);opacity:1} }
-@keyframes floatY  { from{transform:translateY(0) rotate(-2deg)} to{transform:translateY(-12px) rotate(2deg)} }
-
-/* ── VOLTAR ── */
-.back-btn {
-    position:fixed; top:16px; left:16px; z-index:998;
-    background:rgba(44,16,80,.85);
-    border:2px solid var(--roxo);
-    border-radius:30px; padding:7px 18px;
-    font-family:'Fredoka',sans-serif; font-size:.92rem;
-    color:var(--lilas); text-decoration:none;
-    backdrop-filter:blur(8px);
-    box-shadow:0 0 14px rgba(124,58,237,.4);
-    transition:all .2s;
-}
-.back-btn:hover { background:rgba(124,58,237,.5); transform:translateY(-2px); }
-
-/* ── GIF KUROMI FIXO ── */
-.kuromi-corner {
-    position:fixed; bottom:18px; right:18px; z-index:997;
-    pointer-events:none;
-}
-.kuromi-corner img {
-    width:88px;
-    filter:drop-shadow(0 0 12px rgba(196,181,253,.7));
-    animation:floatY 3.2s ease-in-out infinite alternate;
+.dots span:nth-child(2) { animation-delay: .2s; }
+.dots span:nth-child(3) { animation-delay: .4s; }
+@keyframes dotBounce {
+  0%, 80%, 100% { transform: translateY(0); opacity: .4; }
+  40%            { transform: translateY(-6px); opacity: 1; }
 }
 
-/* ── CONTAINER ── */
-.page {
-    position:relative; z-index:1;
-    width:min(900px,94%); margin:0 auto;
-    padding:80px 0 120px;
+/* ── LANDING ── */
+#landing {
+  position: fixed; inset: 0; z-index: 100;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 20px;
+  transition: opacity .6s ease;
+}
+#landing.fade-out { opacity: 0; pointer-events: none; }
+
+.landing-title {
+  font-family: 'Pacifico', cursive;
+  font-size: clamp(2.4rem, 8vw, 4rem);
+  color: #fff;
+  text-shadow: 0 0 18px var(--pink), 0 0 40px var(--pink2);
+  line-height: 1.1;
+  text-align: center;
+}
+.landing-subtitle {
+  font-family: 'Pacifico', cursive;
+  font-size: clamp(1.4rem, 5vw, 2.5rem);
+  color: #fff;
+  text-align: center;
+  margin-top: 4px;
+}
+.landing-name {
+  font-family: 'Pacifico', cursive;
+  font-size: clamp(1.1rem, 4vw, 1.8rem);
+  color: var(--pink);
+  font-style: italic;
+  text-shadow: 0 0 14px rgba(244,114,182,.7);
+  text-align: center;
+  margin-top: 4px;
+}
+.kuromi-landing {
+  width: 250px; max-width: 70vw;
+  margin: 18px 0 12px;
+  filter: drop-shadow(0 0 16px rgba(168,85,247,.6)) drop-shadow(0 0 32px rgba(244,114,182,.4));
+  animation: floatAnim 3s ease-in-out infinite;
+}
+@keyframes floatAnim {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-12px); }
+}
+.landing-text {
+  font-size: 1rem; color: rgba(255,255,255,.8);
+  max-width: 320px; text-align: center;
+  line-height: 1.7; margin-bottom: 22px;
+}
+.btn-enter {
+  padding: 14px 36px;
+  background: linear-gradient(135deg, var(--pink), var(--purple));
+  border: none; border-radius: 50px;
+  color: #fff; font-family: 'Fredoka', sans-serif;
+  font-size: 1.1rem; font-weight: 600;
+  cursor: pointer; letter-spacing: .03em;
+  animation: glowPulse 2s ease-in-out infinite;
+  transition: transform .15s;
+  position: relative; z-index: 2;
+}
+.btn-enter:hover { transform: scale(1.06); }
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 16px rgba(244,114,182,.5), 0 0 32px rgba(124,58,237,.4); }
+  50%       { box-shadow: 0 0 28px rgba(244,114,182,.9), 0 0 56px rgba(124,58,237,.7); }
 }
 
-/* ── HERO ── */
+/* ── MAIN ── */
+#main { min-height: 100vh; display: none; padding-bottom: 40px; }
+
+/* HERO COUNTER */
 .hero {
-    text-align:center;
-    padding:20px 0 60px;
-    position:relative;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 60px 20px 30px;
+  text-align: center;
+  position: relative; z-index: 1;
 }
-.kuromi-hero {
-    display:block;
-    width:clamp(120px,22vw,180px);
-    margin:0 auto 20px;
-    filter:drop-shadow(0 0 24px rgba(196,181,253,.7));
-    animation:floatY 3s ease-in-out infinite alternate;
+.hero-label {
+  font-size: 1.15rem; color: rgba(255,255,255,.7);
+  margin-bottom: 2px;
 }
-.hero h1 {
-    font-family:'Pacifico',cursive;
-    font-size:clamp(2.2rem,6vw,3.8rem);
-    line-height:1.2;
-    background:linear-gradient(135deg, #f472b6, #c4b5fd, #f472b6);
-    -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-    background-clip:text;
-    filter:drop-shadow(0 0 20px rgba(244,114,182,.4));
-    margin-bottom:14px;
+.hero-number {
+  font-family: 'Pacifico', cursive;
+  font-size: clamp(5rem, 20vw, 8rem);
+  color: var(--pink);
+  line-height: 1;
+  text-shadow: 0 0 30px rgba(244,114,182,.8), 0 0 60px rgba(244,114,182,.4);
 }
-.hero p {
-    font-size:1.1rem; color:var(--texto-soft);
-    line-height:1.7; max-width:540px; margin:0 auto;
+.hero-unit {
+  font-family: 'Pacifico', cursive;
+  font-size: clamp(1.3rem, 4vw, 2rem);
+  color: #fff; margin-top: -6px; margin-bottom: 22px;
 }
-.hero-hearts {
-    display:flex; justify-content:center; gap:14px;
-    margin:22px 0 0; font-size:1.8rem;
+.counter-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: 12px; max-width: 340px; width: 100%; margin: 0 auto 24px;
 }
-.hero-hearts span {
-    display:inline-block;
-    animation:heartPulse .9s ease-in-out infinite alternate;
+.c-item {
+  background: rgba(255,255,255,.06);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 18px; padding: 16px 10px;
+  text-align: center;
 }
-.hero-hearts span:nth-child(2){ animation-delay:.2s; }
-.hero-hearts span:nth-child(3){ animation-delay:.4s; }
-.hero-hearts span:nth-child(4){ animation-delay:.6s; }
-@keyframes heartPulse { from{transform:scale(1)} to{transform:scale(1.25)} }
-
-/* ── TIMER ── */
-.timer-box {
-    background:var(--card);
-    backdrop-filter:blur(16px);
-    border:2px solid rgba(196,181,253,.3);
-    border-radius:28px; padding:28px;
-    margin-bottom:42px;
-    box-shadow:0 0 30px rgba(124,58,237,.2);
+.c-item .c-val {
+  font-family: 'Pacifico', cursive;
+  font-size: 2.2rem; color: var(--pink); line-height: 1;
+  text-shadow: 0 0 12px rgba(244,114,182,.5);
 }
-.timer-label {
-    text-align:center; margin-bottom:20px;
-    font-family:'Pacifico',cursive;
-    font-size:1.15rem; color:var(--lilas);
+.c-item .c-lbl {
+  font-size: .8rem; color: rgba(255,255,255,.6);
+  margin-top: 4px; text-transform: uppercase; letter-spacing: .06em;
 }
-.timer {
-    display:flex; justify-content:center;
-    gap:14px; flex-wrap:wrap;
-}
-.time {
-    background:rgba(124,58,237,.2);
-    border:2px solid rgba(244,114,182,.4);
-    border-radius:18px; width:120px; padding:16px 10px;
-    text-align:center;
-    box-shadow:0 0 14px rgba(244,114,182,.15);
-    transition:transform .2s;
-}
-.time:hover { transform:translateY(-3px); }
-.time h2 { font-size:3.4rem; color:var(--rosa); line-height:1; }
-.time p  { font-size:.82rem; color:var(--lilas); margin-top:5px; letter-spacing:.1em; }
-
-/* ── GLASS CARD (base) ── */
-.glass-card {
-    background:var(--card);
-    backdrop-filter:blur(16px);
-    border:2px solid rgba(196,181,253,.25);
-    border-radius:28px; padding:38px 40px;
-    margin-bottom:38px;
-    box-shadow:0 8px 36px rgba(124,58,237,.18);
-    position:relative; overflow:hidden;
-}
-.glass-card::before {
-    content:""; position:absolute; inset:0;
-    background:linear-gradient(135deg,rgba(255,255,255,.06),transparent 60%);
-    pointer-events:none; border-radius:inherit;
+.kuromi-main {
+  width: 150px; max-width: 50vw;
+  animation: floatAnim 3.2s ease-in-out infinite;
+  filter: drop-shadow(0 0 12px rgba(244,114,182,.4));
+  margin-top: 8px;
 }
 
-/* ── SECTION TITLE ── */
-.sec-title {
-    display:flex; align-items:center; justify-content:center;
-    gap:10px; margin-bottom:24px;
-    font-size:1.4rem;
+/* CARDS SECTION */
+.cards-section {
+  padding: 10px 16px 20px;
+  position: relative; z-index: 1;
+  max-width: 700px; margin: 0 auto;
 }
-.sec-title img {
-    width:38px;
-    filter:drop-shadow(0 2px 8px rgba(196,181,253,.5));
+.cards-title {
+  font-size: 1.3rem; color: rgba(255,255,255,.8);
+  text-align: center; margin-bottom: 16px;
+  font-weight: 500;
+}
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+@media (min-width: 768px) {
+  .cards-grid { grid-template-columns: repeat(4, 1fr); gap: 14px; }
+}
+.card {
+  background: rgba(255,255,255,.06);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 20px; padding: 18px 12px;
+  text-align: center; cursor: pointer;
+  transition: transform .2s, box-shadow .2s;
+  display: flex; flex-direction: column;
+  align-items: center; gap: 8px;
+}
+.card:hover {
+  transform: translateY(-4px) scale(1.04);
+  box-shadow: 0 0 24px rgba(244,114,182,.4);
+}
+.card-emoji { font-size: 1.8rem; line-height: 1; }
+.card-label {
+  font-size: .82rem; color: rgba(255,255,255,.75);
+  font-weight: 500; line-height: 1.2;
 }
 
-/* ── ÁREA DE TEXTO GRANDE (diário) ── */
-.text-area-wrap {
-    background:rgba(124,58,237,.14);
-    border:2px dashed rgba(196,181,253,.4);
-    border-radius:18px; padding:26px 28px;
-    position:relative;
+/* ── MODAIS ── */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 500;
+  background: rgba(0,0,0,.65);
+  display: none; align-items: center; justify-content: center;
+  padding: 20px;
 }
-.text-area-wrap::before {
-    content:"✏️  seu texto vai aqui — edite o arquivo e substitua este trecho";
-    position:absolute; top:-15px; left:50%; transform:translateX(-50%);
-    background:var(--roxo-mid); color:#fff;
-    font-size:.78rem; font-family:'Fredoka',sans-serif;
-    padding:3px 14px; border-radius:20px; white-space:nowrap;
+.modal-overlay.open { display: flex; }
+.modal-card {
+  background: rgba(30,10,50,.92);
+  backdrop-filter: blur(20px);
+  border: 1.5px solid rgba(244,114,182,.35);
+  border-radius: 24px; padding: 28px;
+  max-width: min(520px, 94vw);
+  width: 100%;
+  max-height: 88vh; overflow-y: auto;
+  position: relative;
+  animation: modalIn .35s cubic-bezier(.34,1.56,.64,1);
+  box-shadow: 0 0 60px rgba(168,85,247,.3), 0 0 120px rgba(244,114,182,.15);
 }
-.big-text {
-    font-size:1.1rem; line-height:2.2;
-    color:var(--texto); white-space:pre-wrap;
+@keyframes modalIn {
+  from { transform: scale(.8); opacity: 0; }
+  to   { transform: scale(1);  opacity: 1; }
+}
+.modal-title {
+  font-family: 'Pacifico', cursive; font-size: 1.3rem;
+  color: var(--pink); margin-bottom: 18px; padding-right: 36px;
+  text-shadow: 0 0 12px rgba(244,114,182,.5);
+}
+.modal-body {
+  font-family: 'Fredoka', sans-serif; font-size: 1rem;
+  color: rgba(255,255,255,.88); line-height: 1.8;
+}
+.modal-close {
+  position: absolute; top: 14px; right: 14px;
+  background: rgba(255,255,255,.1); border: none; border-radius: 50%;
+  width: 32px; height: 32px; color: rgba(255,255,255,.7);
+  cursor: pointer; font-size: 1rem;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .2s;
+}
+.modal-close:hover { background: rgba(244,114,182,.3); color: #fff; }
+
+/* chat prints */
+.chat-wrap { display: flex; flex-direction: column; gap: 8px; padding: 8px 0; }
+.msg-received {
+  align-self: flex-start; background: rgba(255,255,255,.12);
+  border-radius: 16px 16px 16px 4px; padding: 10px 14px;
+  font-size: .95rem; max-width: 80%;
+}
+.msg-sent {
+  align-self: flex-end; background: linear-gradient(135deg, #7c3aed, #a855f7);
+  border-radius: 16px 16px 4px 16px; padding: 10px 14px;
+  font-size: .95rem; max-width: 80%;
 }
 
-/* ── VÍDEO ── */
-.video-area-wrap {
-    background:rgba(124,58,237,.14);
-    border:2px dashed rgba(196,181,253,.4);
-    border-radius:18px; padding:16px;
-    position:relative;
+/* lista amor */
+.love-list { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
+.love-list li {
+  padding: 10px 14px; border-radius: 12px;
+  background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.1);
+  font-size: .98rem;
+  animation: listIn .4s ease both;
 }
-.video-area-wrap::before {
-    content:"🎬  cole o link do YouTube — veja o comentário no código";
-    position:absolute; top:-15px; left:50%; transform:translateX(-50%);
-    background:var(--roxo-mid); color:#fff;
-    font-size:.78rem; font-family:'Fredoka',sans-serif;
-    padding:3px 14px; border-radius:20px; white-space:nowrap;
+@keyframes listIn {
+  from { opacity: 0; transform: translateX(-16px); }
+  to   { opacity: 1; transform: translateX(0); }
 }
-.video-wrap { border-radius:14px; overflow:hidden; background:#000; }
-.video-wrap iframe {
-    width:100%; aspect-ratio:16/9; border:none; display:block;
+
+/* timer modal */
+.timer-modal-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 10px; margin-top: 12px;
 }
+.tunit {
+  background: rgba(255,255,255,.08); border-radius: 14px;
+  padding: 14px 8px; text-align: center;
+  border: 1px solid rgba(244,114,182,.2);
+}
+.tunit span { display: block; font-family: 'Pacifico', cursive; font-size: 1.8rem; color: var(--pink); line-height: 1; }
+.tunit p   { font-size: .75rem; color: rgba(255,255,255,.55); margin-top: 4px; }
+
+/* video modal */
+.video-wrap { border-radius: 14px; overflow: hidden; background: #000; }
+.video-wrap iframe { width: 100%; aspect-ratio: 16/9; border: none; display: block; }
 .video-placeholder {
-    aspect-ratio:16/9;
-    background:linear-gradient(135deg,rgba(124,58,237,.3),rgba(196,181,253,.15));
-    display:flex; flex-direction:column;
-    align-items:center; justify-content:center;
-    gap:12px; color:var(--lilas);
-    font-size:1.05rem; text-align:center; padding:30px;
-    border-radius:14px;
-}
-.video-placeholder .play { font-size:3.2rem; opacity:.5; }
-
-/* ── CARTINHA ── */
-.letter-wrap {
-    background:rgba(244,114,182,.1);
-    border:2px dashed rgba(244,114,182,.45);
-    border-radius:18px; padding:26px 28px;
-    position:relative;
-}
-.letter-wrap::before {
-    content:"💌  sua mensagem especial — edite o arquivo";
-    position:absolute; top:-15px; left:50%; transform:translateX(-50%);
-    background:var(--rosa); color:#fff;
-    font-size:.78rem; font-family:'Fredoka',sans-serif;
-    padding:3px 14px; border-radius:20px; white-space:nowrap;
-}
-.letter-text {
-    font-size:1.08rem; line-height:2;
-    color:var(--texto); white-space:pre-wrap;
-    font-style:italic;
+  aspect-ratio: 16/9; background: rgba(255,255,255,.06);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 10px; color: rgba(255,255,255,.5);
+  font-size: 1rem; text-align: center; padding: 20px; border-radius: 14px;
 }
 
-/* ── FRASE FINAL ── */
-.quote-card { text-align:center; }
-.quote-text {
-    font-family:'Pacifico',cursive;
-    font-size:1.3rem; line-height:1.9;
-    color:var(--lilas); padding:8px 0;
+/* botão voltar */
+#btnVoltar {
+  position: fixed; top: 14px; left: 14px; z-index: 9998;
+  background: rgba(44,16,80,.85); border: 1.5px solid #7c3aed; border-radius: 30px;
+  padding: 7px 17px; font-family: 'Fredoka', sans-serif;
+  font-size: .9rem; color: #c4b5fd; text-decoration: none;
+  backdrop-filter: blur(8px);
+  transition: background .2s;
 }
-.quote-author { margin-top:16px; font-size:.95rem; color:var(--texto-soft); }
-.quote-kuromi {
-    display:block; width:80px; margin:18px auto 0;
-    filter:drop-shadow(0 4px 12px rgba(196,181,253,.5));
-    animation:floatY 4s ease-in-out infinite alternate;
-}
-
-/* ── FOOTER ── */
-footer {
-    text-align:center; padding:50px 20px 90px;
-    position:relative; z-index:1;
-    font-size:1.1rem; color:var(--texto-soft);
-    line-height:2;
-}
-
-/* ── RESPONSIVO ── */
-@media(max-width:760px){
-    .page { padding:70px 0 100px; }
-    .hero h1 { font-size:2.2rem; }
-    .glass-card { padding:26px 18px; }
-    .time { width:calc(50% - 8px); }
-    .time h2 { font-size:2.4rem; }
-    .text-area-wrap::before,
-    .video-area-wrap::before,
-    .letter-wrap::before {
-        font-size:.7rem; white-space:normal;
-        text-align:center; width:80%; top:-20px;
-    }
-}
+#btnVoltar:hover { background: rgba(124,58,237,.5); }
 </style>
 </head>
 <body>
 
-<!-- ESTRELAS / PARTÍCULAS -->
-<div class="stars"     id="stars"></div>
-
-<!-- LOADING SCREEN -->
-<div id="loadingScreen">
-    <img src="kuromi/25a1252f3722c91b41fbf9da11948762.gif" class="load-gif" alt="kuromi"
-         onerror="this.src='kuromi/3817c12e175dd87bd9dd4d52721d35e0.gif'">
-    <div class="load-txt">carregando... ♡</div>
-    <div class="load-dots"><span></span><span></span><span></span></div>
-</div>
+<!-- SPARKLES -->
+<div class="sparkles" id="sparkles"></div>
 
 <!-- BOTÃO VOLTAR -->
-<a class="back-btn" href="../index.html" id="backBtn">← voltar</a>
+<a href="../index.html" id="btnVoltar">← voltar</a>
 
-<!-- KUROMI FLUTUANTE CANTO -->
-<div class="kuromi-corner">
-    <img src="kuromi/dglrk0h-7ba9760c-7366-4e98-b11c-9f31eeb56ace.gif" alt="kuromi"
-         onerror="this.style.display='none'">
+<!-- LOADING -->
+<div id="loading">
+  <img src="kuromi/25a1252f3722c91b41fbf9da11948762.gif" alt="Kuromi" onerror="this.style.display='none'">
+  <p>carregando... ♡ <span class="dots"><span>.</span><span>.</span><span>.</span></span></p>
 </div>
 
-<!-- CONTEÚDO PRINCIPAL -->
-<div class="page">
-
-    <!-- HERO -->
-    <section class="hero">
-        <img src="kuromi/3817c12e175dd87bd9dd4d52721d35e0.gif" class="kuromi-hero" alt="kuromi"
-             onerror="this.src='kuromi/5ba8f7d3b2ca558403f4584c2d124351.png'">
-        <h1>3 meses com você ♡</h1>
-        <p>três meses que parecem uma vida inteira e ao mesmo tempo passaram rápido demais<br>— mas cada segundo foi especial</p>
-        <div class="hero-hearts">
-            <span>🖤</span><span>💜</span><span>🖤</span><span>💜</span>
-        </div>
-    </section>
-
-    <!-- TIMER -->
-    <div class="glass-card timer-box">
-        <div class="timer-label">nosso tempo juntos ✦</div>
-        <div class="timer">
-            <div class="time"><h2 id="tDays">0</h2><p>DIAS</p></div>
-            <div class="time"><h2 id="tHours">0</h2><p>HORAS</p></div>
-            <div class="time"><h2 id="tMins">0</h2><p>MINUTOS</p></div>
-            <div class="time"><h2 id="tSecs">0</h2><p>SEGUNDOS</p></div>
-        </div>
-    </div>
-
-    <!-- TEXTO GRANDE -->
-    <div class="glass-card">
-        <div class="sec-title">
-            <img src="kuromi/5ba8f7d3b2ca558403f4584c2d124351.png" alt="" onerror="this.style.display='none'">
-            uma carta pra você ♡
-        </div>
-        <!-- ╔══════════════════════════════════════════════╗
-             ║  ✏️  SUBSTITUA O TEXTO ABAIXO PELA SUA CARTA ║
-             ║  Use &lt;br&gt;&lt;br&gt; para pular parágrafo              ║
-             ╚══════════════════════════════════════════════╝ -->
-        <div class="text-area-wrap">
-            <div class="big-text">escreva sua carta aqui ♡<br><br>esse espaço foi criado especialmente para as suas palavras para a nayara.<br><br>você pode substituir esse texto pelo que quiser dizer pra ela nesse terceiro mês juntos.</div>
-        </div>
-    </div>
-
-    <!-- VÍDEO -->
-    <div class="glass-card">
-        <div class="sec-title">
-            <img src="kuromi/5ba8f7d3b2ca558403f4584c2d124351.png" alt="" onerror="this.style.display='none'">
-            um vídeo especial ♡
-        </div>
-        <!-- ╔═══════════════════════════════════════════════════════╗
-             ║  🎬  PARA ADICIONAR SEU VÍDEO:                        ║
-             ║  1. Apague o bloco video-placeholder abaixo           ║
-             ║  2. Descomente o iframe                               ║
-             ║  3. Troque SEU_ID pelo ID do vídeo no YouTube         ║
-             ║     Ex: youtube.com/watch?v=abc123 → ID = abc123      ║
-             ╚═══════════════════════════════════════════════════════╝ -->
-        <div class="video-area-wrap">
-            <div class="video-wrap">
-                <!-- ↓↓ DESCOMENTE E COLOQUE SEU ID AQUI ↓↓
-                <iframe
-                    src="https://www.youtube.com/embed/SEU_ID_AQUI"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen>
-                </iframe>
-                -->
-                <div class="video-placeholder">
-                    <span class="play">▶</span>
-                    <span>seu vídeo especial vai aparecer aqui 🎬</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- CARTINHA -->
-    <div class="glass-card">
-        <div class="sec-title">
-            💌 mensagem especial
-        </div>
-        <!-- ╔══════════════════════════════════════════════════╗
-             ║  💌  ESCREVA SUA MENSAGEM CURTA AQUI            ║
-             ║  Substitua o texto dentro de .letter-text       ║
-             ╚══════════════════════════════════════════════════╝ -->
-        <div class="letter-wrap">
-            <div class="letter-text">escreva aqui uma mensagem curta e especial pra ela ♡<br><br>pode ser uma frase, um segredo, um motivo pelo qual você ama ela...</div>
-        </div>
-    </div>
-
-    <!-- FRASE FINAL -->
-    <div class="glass-card quote-card">
-        <div class="sec-title">🖤</div>
-        <div class="quote-text">
-            "três meses sendo a melhor parte dos meus dias —<br>
-            e eu não troco isso por nada nesse mundo."
-        </div>
-        <p class="quote-author">— com todo amor, sempre ♡</p>
-        <img src="kuromi/25a1252f3722c91b41fbf9da11948762.gif" class="quote-kuromi" alt="kuromi"
-             onerror="this.style.display='none'">
-    </div>
-
+<!-- LANDING -->
+<div id="landing">
+  <div class="landing-title">3 MESES</div>
+  <div class="landing-subtitle">AO SEU LADO</div>
+  <div class="landing-name">Nayara</div>
+  <img class="kuromi-landing"
+    src="kuromi/25a1252f3722c91b41fbf9da11948762.gif"
+    alt="Kuromi"
+    onerror="this.style.display='none'">
+  <p class="landing-text">Três meses de amor, cumplicidade e muitas lembranças inesquecíveis.</p>
+  <button class="btn-enter" onclick="enterMain()">Entrar no nosso mundo ✨</button>
 </div>
 
-<!-- FOOTER -->
-<footer>
-    três meses sendo a melhor parte dos meus dias 🖤<br>
-    eu te amo mais do que consigo colocar em palavras ♡
-</footer>
+<!-- MAIN -->
+<div id="main">
+  <!-- HERO COUNTER -->
+  <div class="hero">
+    <p class="hero-label">Estamos juntos há</p>
+    <div class="hero-number">3</div>
+    <div class="hero-unit">Meses</div>
+
+    <div class="counter-grid">
+      <div class="c-item">
+        <div class="c-val" id="cDias">0</div>
+        <div class="c-lbl">Dias</div>
+      </div>
+      <div class="c-item">
+        <div class="c-val" id="cHoras">0</div>
+        <div class="c-lbl">Horas</div>
+      </div>
+      <div class="c-item">
+        <div class="c-val" id="cMins">0</div>
+        <div class="c-lbl">Minutos</div>
+      </div>
+      <div class="c-item">
+        <div class="c-val" id="cSecs">0</div>
+        <div class="c-lbl">Segundos</div>
+      </div>
+    </div>
+
+    <img class="kuromi-main"
+      src="kuromi/3817c12e175dd87bd9dd4d52721d35e0.gif"
+      alt="Kuromi"
+      onerror="this.style.display='none'">
+  </div>
+
+  <!-- CARDS -->
+  <div class="cards-section">
+    <p class="cards-title">Nossas lembranças ✨</p>
+    <div class="cards-grid">
+      <div class="card" onclick="openModal('m1')">
+        <div class="card-emoji">✉️</div>
+        <div class="card-label">Carta</div>
+      </div>
+      <div class="card" onclick="openModal('m2')">
+        <div class="card-emoji">▶️</div>
+        <div class="card-label">Vídeo</div>
+      </div>
+      <div class="card" onclick="openModal('m3')">
+        <div class="card-emoji">❓</div>
+        <div class="card-label">Momento favorito</div>
+      </div>
+      <div class="card" onclick="openModal('m4')">
+        <div class="card-emoji">🎵</div>
+        <div class="card-label">Nossa música</div>
+      </div>
+      <div class="card" onclick="openModal('m5')">
+        <div class="card-emoji">😂</div>
+        <div class="card-label">Momento engraçado</div>
+      </div>
+      <div class="card" onclick="openModal('m6')">
+        <div class="card-emoji">❤️</div>
+        <div class="card-label">Nossas fotos</div>
+      </div>
+      <div class="card" onclick="openModal('m7')">
+        <div class="card-emoji">💬</div>
+        <div class="card-label">Prints</div>
+      </div>
+      <div class="card" onclick="openModal('m8')">
+        <div class="card-emoji">🌍</div>
+        <div class="card-label">Mapa</div>
+      </div>
+      <div class="card" onclick="openModal('m9')">
+        <div class="card-emoji">⏳</div>
+        <div class="card-label">Contador</div>
+      </div>
+      <div class="card" onclick="openModal('m10')">
+        <div class="card-emoji">💍</div>
+        <div class="card-label">Promessa</div>
+      </div>
+      <div class="card" onclick="openModal('m11')">
+        <div class="card-emoji">🎁</div>
+        <div class="card-label">Surpresa</div>
+      </div>
+      <div class="card" onclick="openModal('m12')">
+        <div class="card-emoji">💜</div>
+        <div class="card-label">Coisas que amo</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ MODAIS ══════════ -->
+
+<!-- 1 CARTA -->
+<div class="modal-overlay" id="m1" onclick="closeOnBg(event,'m1')">
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeModal('m1')">✕</button>
+    <div class="modal-title">💌 Uma carta pra você, Nayara</div>
+    <div class="modal-body">
+      Meu amor,<br><br>
+      Esses três meses ao seu lado foram os melhores da minha vida. Você me faz sorrir quando tudo parece difícil, me acolhe quando eu mais preciso e me mostra um amor tão verdadeiro que eu mal sabia que era possível sentir.<br><br>
+      Obrigado por cada momento, por cada palavra, por cada gesto.<br><br>
+      Eu te amo mais do que posso explicar.<br><br>
+      Para todo sempre,<br>
+      Sou Jack 💜
+    </div>
+  </div>
+</div>
+
+<!-- 2 VÍDEO -->
+<div class="modal-overlay" id="m2" onclick="closeOnBg(event,'m2')">
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeModal('m2')">✕</button>
+    <div class="modal-title">🎬 Nosso vídeo especial</div>
+    <div class="video-wrap">
+      <!-- DESCOMENTE e substitua ID_AQUI pelo id do YouTube:
+      <iframe src="https://www.youtube.com/embed/ID_AQUI" allowfullscreen></iframe>
+      -->
+      <div class="video-placeholder">▶ seu vídeo aparece aqui 🎬<br><small>adicione o link quando estiver pronto</small></div>
+    </div>
+  </div>
+</div>
+
+<!-- 3 MOMENTO FAVORITO -->
+<div class="modal-overlay" id="m3" onclick="closeOnBg(event,'m3')">
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeModal('m3')">✕</button>
+    <div class="modal-title">📸 Momento favorito</div>
+    <div class="modal-body">
+      Aquele dia em que a gente ficou horas conversando sem perceber o tempo passar... esse foi meu momento favorito. Quando percebi que você era especial de um jeito diferente de tudo que já senti antes. 💜
+    </div>
+  </div>
+</div>
+
+<!-- 4 NOSSA MÚSICA -->
+<div class="modal-overlay" id="m4" onclick="closeOnBg(event,'m4')">
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeModal('m4')">✕</button>
+    <div class="modal-title">🎵 Nossa música</div>
+    <div class="modal-body">
+      <p style="font-size:1.2rem;margin-bottom:8px;color:#f472b6;">Nossa música especial</p>
+      <p style="opacity:.7;margin-bottom:16px;">a música que me lembra de você toda vez que toca</p>
+      <!-- COLE AQUI O EMBED DO SPOTIFY SE QUISER -->
+    </div>
+  </div>
+</div>
+
+<!-- 5 MOMENTO ENGRAÇADO -->
+<div class="modal-overlay" id="m5" onclick="closeOnBg(event,'m5')">
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeModal('m5')">✕</button>
+    <div class="modal-title">😂 Momento engraçado</div>
+    <div class="modal-body">
+      Sabe quando a gente fica tentando se despedir mas a conversa nunca termina? E aí fica "tá, vou dormir" e continua mais uma hora? Esse sou eu com você — não consigo parar de conversar 😂💜
+    </div>
+  </div>
+</div>
+
+<!-- 6 NOSSAS FOTOS -->
+<div class="modal-overlay" id="m6" onclick="closeOnBg(event,'m6')">
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeModal('m6')">✕</button>
+    <div class="modal-title">❤️ Nossas fotos</div>
+    <div class="modal-body" style="text-align:center;opacity:.75;">
+      Em breve... nossas melhores fotos juntos 📸💜
+    </div>
+  </div>
+</div>
+
+<!-- 7 PRINTS -->
+<div class="modal-overlay" id="m7" onclick="closeOnBg(event,'m7')">
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeModal('m7')">✕</button>
+    <div class="modal-title">💬 Prints</div>
+    <div class="chat-wrap">
+      <div class="msg-received">Oi amor! 🥺</div>
+      <div class="msg-sent">oi meu bem 💜</div>
+      <div class="msg-received">tô com saudade sua</div>
+      <div class="msg-sent">eu também, muito 🖤</div>
+      <div class="msg-received">te amo demais sabe</div>
+      <div class="msg-sent">te amo mais ainda 💜✨</div>
+    </div>
+    <p style="font-size:.82rem;opacity:.5;text-align:center;margin-top:12px;">✏️ edite as mensagens acima</p>
+  </div>
+</div>
+
+<!-- 8 MAPA -->
+<div class="modal-overlay" id="m8" onclick="closeOnBg(event,'m8')">
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeModal('m8')">✕</button>
+    <div class="modal-title">🌍 Nossa distância</div>
+    <div class="modal-body" style="text-align:center;">
+      <p style="font-size:1.1rem;margin-bottom:8px;">✏️ CIDADE DELE &amp; ✏️ CIDADE DELA</p>
+      <p style="opacity:.7;font-size:.95rem;">mesmo longe, sempre perto do coração 💜</p>
+      <div style="margin:20px 0;font-size:2.5rem;">📍 — — — 💜 — — — 📍</div>
+      <p style="color:#f472b6;font-size:1rem;">a distância não importa quando o amor é real 🖤</p>
+    </div>
+  </div>
+</div>
+
+<!-- 9 CONTADOR -->
+<div class="modal-overlay" id="m9" onclick="closeOnBg(event,'m9')">
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeModal('m9')">✕</button>
+    <div class="modal-title">⏳ Nosso contador</div>
+    <div class="timer-modal-grid">
+      <div class="tunit"><span id="mDias">0</span><p>dias</p></div>
+      <div class="tunit"><span id="mHoras">0</span><p>horas</p></div>
+      <div class="tunit"><span id="mMins">0</span><p>minutos</p></div>
+      <div class="tunit"><span id="mSecs">0</span><p>segundos</p></div>
+      <div class="tunit"><span id="mWeeks">0</span><p>semanas</p></div>
+      <div class="tunit"><span id="mTotal">0</span><p>min totais</p></div>
+    </div>
+    <p style="text-align:center;margin-top:14px;opacity:.7;font-size:.9rem;">desde 26 de abril de 2026 às 21:28 ♡</p>
+  </div>
+</div>
+
+<!-- 10 PROMESSA -->
+<div class="modal-overlay" id="m10" onclick="closeOnBg(event,'m10')">
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeModal('m10')">✕</button>
+    <div class="modal-title">💍 Minha promessa</div>
+    <div class="modal-body">
+      Eu prometo estar aqui. Prometo te escolher todos os dias. Prometo te fazer sorrir mais do que chorar. Prometo ser seu porto seguro, sua paz, seu lar. Prometo crescer com você, aprender com você e amar você de um jeito que faça sentido pra nós dois. 💜🖤
+    </div>
+  </div>
+</div>
+
+<!-- 11 SURPRESA -->
+<div class="modal-overlay" id="m11" onclick="closeOnBg(event,'m11')">
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeModal('m11')">✕</button>
+    <div class="modal-title">🎁 Uma surpresa especial</div>
+    <div class="modal-body" style="text-align:center;">
+      <div style="font-size:3rem;margin-bottom:16px;">🎀</div>
+      <p style="font-size:1.15rem;line-height:1.85;color:#f472b6;">
+        "Se eu pudesse escolher alguém em qualquer lugar do mundo, ainda escolheria você."
+      </p>
+      <p style="margin-top:16px;opacity:.7;">para sempre nós dois. 💜</p>
+    </div>
+  </div>
+</div>
+
+<!-- 12 COISAS QUE AMO -->
+<div class="modal-overlay" id="m12" onclick="closeOnBg(event,'m12')">
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeModal('m12')">✕</button>
+    <div class="modal-title">💜 Coisas que amo em você</div>
+    <ul class="love-list">
+      <li>💜 seu sorriso que ilumina qualquer ambiente</li>
+      <li>🖤 seu jeitinho de ser única</li>
+      <li>💜 como você me faz sentir em paz</li>
+      <li>🖤 sua voz que eu poderia ouvir para sempre</li>
+      <li>💜 o cuidado que você tem com tudo</li>
+      <li>🖤 como você ri de verdade</li>
+      <li>💜 cada detalhe seu que aprendo todo dia</li>
+    </ul>
+  </div>
+</div>
 
 <script>
-/* ── ESTRELAS E PARTÍCULAS ── */
-(function(){
-    const s = document.getElementById('stars');
-    const cols = ['#c4b5fd','#f9a8d4','#ffffff','#a78bfa','#f472b6','#ddd6fe'];
-
-    for(let i=0;i<90;i++){
-        const el = document.createElement('div');
-        el.className = 'star';
-        const sz = Math.random()*2.5+.8;
-        el.style.cssText = `
-            width:${sz}px; height:${sz}px;
-            left:${Math.random()*100}%;
-            top:${Math.random()*100}%;
-            background:${cols[Math.floor(Math.random()*cols.length)]};
-            --d:${(Math.random()*4+1.5).toFixed(1)}s;
-            animation-delay:${(Math.random()*6).toFixed(1)}s;
-        `;
-        s.appendChild(el);
-    }
-
-    const emojis = ['🖤','💜','✦','✧','♡','💫','⭐','🌙','✿'];
-    for(let i=0;i<22;i++){
-        const el = document.createElement('span');
-        el.className = 'particle';
-        el.textContent = emojis[Math.floor(Math.random()*emojis.length)];
-        el.style.cssText = `
-            left:${Math.random()*100}%;
-            top:${100+Math.random()*15}%;
-            font-size:${(.7+Math.random()*.9).toFixed(1)}rem;
-            --d:${(9+Math.random()*12).toFixed(1)}s;
-            animation-delay:${(Math.random()*14).toFixed(1)}s;
-        `;
-        s.appendChild(el);
-    }
+// ── SPARKLES ──
+(function() {
+  const container = document.getElementById('sparkles');
+  const chars = ['✦','✧','+','✦','✧'];
+  const colors = ['#ffffff','#f472b6','#ffffff','#c4b5fd'];
+  for (let i = 0; i < 60; i++) {
+    const el = document.createElement('span');
+    el.className = 'sparkle';
+    el.textContent = chars[Math.floor(Math.random() * chars.length)];
+    const size = (.8 + Math.random() * .8).toFixed(2);
+    const dur  = (1.5 + Math.random() * 2.5).toFixed(2);
+    const delay = (Math.random() * 4).toFixed(2);
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    el.style.cssText = `
+      left:${Math.random()*100}%;
+      top:${Math.random()*100}%;
+      font-size:${size}rem;
+      color:${color};
+      --d:${dur}s;
+      animation-delay:${delay}s;
+    `;
+    container.appendChild(el);
+  }
 })();
 
-/* ── LOADING ── */
-window.addEventListener('load', () => {
-    const ls = document.getElementById('loadingScreen');
-    setTimeout(() => {
-        ls.classList.add('hide');
-        setTimeout(() => ls.remove(), 520);
-    }, 1400);
+// ── LOADING ──
+window.addEventListener('load', function() {
+  setTimeout(function() {
+    const loader = document.getElementById('loading');
+    loader.style.transition = 'opacity .5s';
+    loader.style.opacity = '0';
+    setTimeout(function() { loader.style.display = 'none'; }, 500);
+  }, 1500);
 });
 
-/* ── TIMER ── */
-const startDate = new Date(2026, 3, 26, 21, 28, 0); // 26/04/2026 21:28
-function updateTimer() {
-    const now  = new Date();
-    const diff = Math.max(0, now - startDate);
-    const s    = Math.floor(diff / 1000);
-    document.getElementById('tDays').textContent  = Math.floor(s / 86400);
-    document.getElementById('tHours').textContent = Math.floor((s % 86400) / 3600);
-    document.getElementById('tMins').textContent  = Math.floor((s % 3600) / 60);
-    document.getElementById('tSecs').textContent  = s % 60;
+// ── ENTER MAIN ──
+function enterMain() {
+  const landing = document.getElementById('landing');
+  const main    = document.getElementById('main');
+  landing.classList.add('fade-out');
+  setTimeout(function() {
+    landing.style.display = 'none';
+    main.style.display    = 'block';
+    startTimer();
+  }, 600);
 }
-setInterval(updateTimer, 1000);
-updateTimer();
 
-/* ── VOLTAR COM LOADING ── */
-document.getElementById('backBtn').addEventListener('click', function(e){
-    e.preventDefault();
-    const div = document.createElement('div');
-    div.style.cssText = 'position:fixed;inset:0;z-index:9999;background:#0f0a1e;display:flex;align-items:center;justify-content:center;';
-    div.innerHTML = '<span style="font-family:Pacifico,cursive;color:#c4b5fd;font-size:1.3rem;">voltando ♡</span>';
-    document.body.appendChild(div);
-    setTimeout(() => { window.location.href = '../index.html'; }, 700);
-});
+// ── TIMER ──
+const START_DATE = new Date(2026, 3, 26, 21, 28, 0); // 26/04/2026 21:28
 
-/* imagens quebradas → esconde */
-document.querySelectorAll('img').forEach(img => {
-    img.addEventListener('error', function(){ this.style.display='none'; });
+function pad(n) { return String(n).padStart(2, '0'); }
+
+function updateTimer() {
+  const now  = new Date();
+  const diff = Math.max(0, now - START_DATE);
+
+  const totalSecs  = Math.floor(diff / 1000);
+  const totalMins  = Math.floor(diff / 60000);
+  const totalWeeks = Math.floor(diff / (7 * 24 * 3600 * 1000));
+
+  const secs  = totalSecs % 60;
+  const mins  = Math.floor(totalSecs / 60) % 60;
+  const hours = Math.floor(totalSecs / 3600) % 24;
+  const days  = Math.floor(totalSecs / 86400);
+
+  // hero counter
+  const cDias  = document.getElementById('cDias');
+  const cHoras = document.getElementById('cHoras');
+  const cMins  = document.getElementById('cMins');
+  const cSecs  = document.getElementById('cSecs');
+  if (cDias)  cDias.textContent  = days;
+  if (cHoras) cHoras.textContent = pad(hours);
+  if (cMins)  cMins.textContent  = pad(mins);
+  if (cSecs)  cSecs.textContent  = pad(secs);
+
+  // modal counter
+  const mDias  = document.getElementById('mDias');
+  const mHoras = document.getElementById('mHoras');
+  const mMins  = document.getElementById('mMins');
+  const mSecs  = document.getElementById('mSecs');
+  const mWeeks = document.getElementById('mWeeks');
+  const mTotal = document.getElementById('mTotal');
+  if (mDias)  mDias.textContent  = days;
+  if (mHoras) mHoras.textContent = pad(hours);
+  if (mMins)  mMins.textContent  = pad(mins);
+  if (mSecs)  mSecs.textContent  = pad(secs);
+  if (mWeeks) mWeeks.textContent = totalWeeks;
+  if (mTotal) mTotal.textContent = totalMins.toLocaleString('pt-BR');
+}
+
+function startTimer() {
+  updateTimer();
+  setInterval(updateTimer, 1000);
+}
+
+// ── MODAIS ──
+function openModal(id) {
+  const el = document.getElementById(id);
+  if (el) el.classList.add('open');
+}
+function closeModal(id) {
+  const el = document.getElementById(id);
+  if (el) el.classList.remove('open');
+}
+function closeOnBg(e, id) {
+  if (e.target === e.currentTarget) closeModal(id);
+}
+
+// Fechar modal com ESC
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.modal-overlay.open').forEach(function(el) {
+      el.classList.remove('open');
+    });
+  }
 });
 </script>
 </body>

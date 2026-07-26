@@ -3,7 +3,7 @@ os.chdir(r"c:\Users\mattq\Downloads\hl do cara\mbb")
 subprocess.run(["git","config","core.longpaths","true"], capture_output=True)
 for c in [
     ["git","add","-A"],
-    ["git","commit","-m","3messes: site kuromi completo - video texto cartinha timer"],
+    ["git","commit","-m","3messes: site completo kuromi - landing contador 12 cards modais"],
     ["git","pull","--rebase","--autostash"],
     ["git","push"]
 ]:
