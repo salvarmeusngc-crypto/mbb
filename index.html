@@ -9,7 +9,7 @@
 <style>
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 
-/* ── FUNDO DIVIDIDO: 3 partes — amarelo | azul | roxo ── */
+/* ── FUNDO DIVIDIDO: 4 partes — amarelo | azul | roxo escuro | lilás ── */
 body {
     font-family:'Fredoka', sans-serif;
     min-height:100vh;
@@ -20,7 +20,7 @@ body {
     justify-content:center;
     padding:50px 20px 60px;
     position:relative;
-    background:linear-gradient(to right, #fff8e8 33.33%, #d6eef9 33.33%, #d6eef9 66.66%, #2d1b4e 66.66%);
+    background:linear-gradient(to right, #fff8e8 25%, #d6eef9 25%, #d6eef9 50%, #2d1b4e 50%, #2d1b4e 75%, #7c3aed 75%);
 }
 
 /* pontilhado lado amarelo */
@@ -78,8 +78,8 @@ body::after { display: none; }
 .title-area h1 {
     font-size:3.4rem;
     line-height:1.18;
-    /* gradiente 3 cores: amarelo | azul | roxo */
-    background:linear-gradient(to right, #6f4425 33%, #1a5a8a 33%, #1a5a8a 66%, #c4b5fd 66%);
+    /* gradiente 4 cores: amarelo | azul | roxo escuro | lilás */
+    background:linear-gradient(to right, #6f4425 25%, #1a5a8a 25%, #1a5a8a 50%, #c4b5fd 50%, #c4b5fd 75%, #ede9fe 75%);
     -webkit-background-clip:text;
     -webkit-text-fill-color:transparent;
     background-clip:text;
@@ -235,12 +235,37 @@ body::after { display: none; }
 .card-valentines .divider { background:#6db8e0; }
 .card-2meses    .divider { background:#a855f7; }
 
+/* ── CARD 3 MESES — roxo/lilás/kuromi ── */
+.card-3meses {
+    background:linear-gradient(160deg,#2e1065 0%,#4c1d95 50%,#6d28d9 100%);
+    border:4px dashed #c4b5fd;
+    border-radius:28px;
+    box-shadow: 0 8px 30px rgba(124,58,237,.3),
+                0 0 50px rgba(196,181,253,.2);
+    color:#ede9fe;
+}
+.card-3meses:hover {
+    box-shadow: 0 18px 50px rgba(124,58,237,.55),
+                0 0 70px rgba(196,181,253,.4);
+}
+.card-3meses .badge { background:linear-gradient(135deg,#c4b5fd,#f9a8d4); color:#3b0764; }
+.card-3meses .divider { background:linear-gradient(90deg,#c4b5fd,#f9a8d4); }
+.card-3meses .card-btn { background:linear-gradient(135deg,#7c3aed,#c4b5fd); color:#fff; }
+.card-3meses p { color:#ddd6fe; }
+
 /* loading tipo 2meses */
 .tipo-2meses {
     background:radial-gradient(ellipse at center,#2d1b4e 0%,#1a0a2e 100%);
 }
 .tipo-2meses .loading-text { color:#c4b5fd; }
 .tipo-2meses .loading-dots span { background:#c4b5fd; }
+
+/* loading tipo 3meses */
+.tipo-3meses {
+    background:radial-gradient(ellipse at center,#4c1d95 0%,#7c3aed 45%,#c4b5fd 100%);
+}
+.tipo-3meses .loading-text { color:#f5f3ff; }
+.tipo-3meses .loading-dots span { background:#f9a8d4; }
 
 /* ── FOOTER ── */
 .selector-footer {
@@ -319,8 +344,8 @@ body::after { display: none; }
 
 /* ── RESPONSIVO ── */
 @media(max-width:720px){
-    /* mobile: 3 fundos empilhados */
-    body { background:linear-gradient(to bottom, #fff8e8 33%, #d6eef9 33%, #d6eef9 66%, #2d1b4e 66%); }
+    /* mobile: 4 fundos empilhados */
+    body { background:linear-gradient(to bottom, #fff8e8 25%, #d6eef9 25%, #d6eef9 50%, #2d1b4e 50%, #2d1b4e 75%, #7c3aed 75%); }
     body::after { display:none; }
     body::before { display:none; }
 
@@ -369,6 +394,11 @@ body::after { display: none; }
         border-color:#a855f7 !important;
         color:#e9d5ff !important;
     }
+    .card-3meses {
+        background:rgba(76,29,149,.96) !important;
+        border-color:#c4b5fd !important;
+        color:#ede9fe !important;
+    }
 }
 </style>
 </head>
@@ -391,6 +421,14 @@ body::after { display: none; }
 <!-- ── LOADING 2 MESES ── -->
 <div class="loading-screen tipo-2meses" id="load2meses">
     <img src="2messes/sanrio STICKER.gif" class="loading-gif" alt="my melody" onerror="this.style.display='none'">
+    <div class="loading-text">carregando...</div>
+    <div class="loading-dots"><span></span><span></span><span></span></div>
+</div>
+
+<!-- ── LOADING 3 MESES ── -->
+<div class="loading-screen tipo-3meses" id="load3meses">
+    <img src="3messes/imagens/kuromi/SHb77oXsOAngrPR5p2TW2HdLnxnl50KqVwx_InWRnGx3h6PKkocfI6PBvKFFSNHyQNj68Zi3vydq_Vc73vU-MrGwoTArLxrPeP3ftevzCPuh9K9nJzYfYE2RFyZP5WcIme5CAsDF_0hkxPdt7-Q4XxYpAee0KBxNI7of5Ic0-cS0MnZPNz9u-cc6EjfhHJ-removebg-.png"
+         class="loading-gif" alt="kuromi" onerror="this.style.display='none'">
     <div class="loading-text">carregando...</div>
     <div class="loading-dots"><span></span><span></span><span></span></div>
 </div>
@@ -435,6 +473,17 @@ body::after { display: none; }
             <div class="divider"></div>
             <p>nosso cantinho - especial my melody</p>
             <button class="card-btn">entrar no cantinho</button>
+        </a>
+
+        <!-- CARD 3 MESES -->
+        <a class="version-card card-3meses" href="#" data-dest="3messes/index.html" data-load="load3meses">
+            <span class="badge">🩵 NOVA EXPERIÊNCIA</span>
+            <img src="3messes/imagens/kuromi/SHb77oXsOAngrPR5p2TW2HdLnxnl50KqVwx_InWRnGx3h6PKkocfI6PBvKFFSNHyQNj68Zi3vydq_Vc73vU-MrGwoTArLxrPeP3ftevzCPuh9K9nJzYfYE2RFyZP5WcIme5CAsDF_0hkxPdt7-Q4XxYpAee0KBxNI7of5Ic0-cS0MnZPNz9u-cc6EjfhHJ-removebg-.png"
+                 class="card-gif" alt="kuromi" onerror="this.style.display='none'">
+            <h2>3 meses de namoro</h2>
+            <div class="divider"></div>
+            <p>nossa história • kuromi &amp; você 💜</p>
+            <button class="card-btn">entrar na experiência</button>
         </a>
 
     </div>
