@@ -331,11 +331,38 @@ body {
 </head>
 <body>
 
+<!-- MÚSICA DE FUNDO -->
+<audio id="bgMusic" loop>
+  <source src="musica/salvia palth - (dream) (SPOTISAVER).mp3" type="audio/mpeg">
+</audio>
+
+<!-- LIGHTBOX -->
+<div id="lightbox" onclick="closeLightbox()"
+     style="position:fixed;inset:0;z-index:600;background:rgba(0,0,0,.9);
+            display:none;align-items:center;justify-content:center;padding:20px;">
+  <img id="lightbox-img" src="" alt=""
+       style="max-width:92vw;max-height:90vh;border-radius:12px;object-fit:contain;">
+  <button onclick="closeLightbox()"
+          style="position:fixed;top:18px;right:22px;background:none;border:none;
+                 color:#fff;font-size:2rem;cursor:pointer;">✕</button>
+</div>
+
 <!-- SPARKLES -->
 <div class="sparkles" id="sparkles"></div>
 
 <!-- BOTÃO VOLTAR -->
 <a href="../index.html" id="btnVoltar">← voltar</a>
+
+<!-- BOTÃO MÚSICA -->
+<button id="btnMusic" onclick="toggleMusic()"
+  style="position:fixed;top:14px;right:14px;z-index:9998;
+         background:rgba(44,16,80,.85);border:1.5px solid #a855f7;
+         border-radius:30px;padding:7px 16px;
+         font-family:'Fredoka',sans-serif;font-size:.9rem;
+         color:#c4b5fd;cursor:pointer;backdrop-filter:blur(8px);
+         transition:background .2s;display:flex;align-items:center;gap:6px;">
+  🎵 música
+</button>
 
 <!-- LOADING -->
 <div id="loading">
@@ -453,12 +480,12 @@ body {
     <button class="modal-close" onclick="closeModal('m1')">✕</button>
     <div class="modal-title">💌 Uma carta pra você, Nayara</div>
     <div class="modal-body">
-      Meu amor,<br><br>
-      Esses três meses ao seu lado foram os melhores da minha vida. Você me faz sorrir quando tudo parece difícil, me acolhe quando eu mais preciso e me mostra um amor tão verdadeiro que eu mal sabia que era possível sentir.<br><br>
-      Obrigado por cada momento, por cada palavra, por cada gesto.<br><br>
-      Eu te amo mais do que posso explicar.<br><br>
-      Para todo sempre,<br>
-      Sou Jack 💜
+      enfim 3 messes meu amor, eu fiquei pensando no que escrever hoje e percebi que é muito difícil colocar em palavras tudo que eu gostaria, nao porque seja pouco, mas porque parece que nenhuma frase consegue passar exatamente o que eu queria.<br><br>
+      eu gosto do que criamos juntos, mesmo estando tao longe um do outro, gosto de saber que nas noites vou call com voce, jogar qualquer coisa, ouvir sua voz ou simplesmente ficar ali sem fazer nada, voce fez isso virar parte da minha rotina, e hoje eu nem consigo imaginar como era antes.<br><br>
+      tem dias que eu olho pra gente e penso o quanto foi improvavel tudo isso acontecer, nosso relacionamento acontecer de forma tao natural pros dois, me impressiona.<br><br>
+      voce me faz rir, me irrita bastante as vezes, me da um sentimento diferente, as vezes nem estamos tanto tempo sem se falar, mas bate uma saudade.<br><br>
+      nunca duvide do quanto eu admiro voce, seja quando ta criando seus designers, quando ta focada em alguma coisa, ou ate quando so ta sendo voce. eu gosto de quem voce é, e acho que esse é um dos motivos de eu gostar tanto da gente.<br><br>
+      obrigado por esses tres meses, meu bem. amo muito voce meu amor ❤
     </div>
   </div>
 </div>
@@ -469,10 +496,9 @@ body {
     <button class="modal-close" onclick="closeModal('m2')">✕</button>
     <div class="modal-title">🎬 Nosso vídeo especial</div>
     <div class="video-wrap">
-      <!-- DESCOMENTE e substitua ID_AQUI pelo id do YouTube:
-      <iframe src="https://www.youtube.com/embed/ID_AQUI" allowfullscreen></iframe>
-      -->
-      <div class="video-placeholder">▶ seu vídeo aparece aqui 🎬<br><small>adicione o link quando estiver pronto</small></div>
+      <iframe src="https://www.youtube.com/embed/q7jXEDL_0Aw"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen></iframe>
     </div>
   </div>
 </div>
@@ -482,8 +508,10 @@ body {
   <div class="modal-card">
     <button class="modal-close" onclick="closeModal('m3')">✕</button>
     <div class="modal-title">📸 Momento favorito</div>
-    <div class="modal-body">
-      Aquele dia em que a gente ficou horas conversando sem perceber o tempo passar... esse foi meu momento favorito. Quando percebi que você era especial de um jeito diferente de tudo que já senti antes. 💜
+    <div style="margin-top:8px;">
+      <img src="cards/momento favorito/image.png" alt="momento favorito"
+           style="width:100%;border-radius:14px;object-fit:cover;"
+           onerror="this.style.display='none'">
     </div>
   </div>
 </div>
@@ -494,9 +522,11 @@ body {
     <button class="modal-close" onclick="closeModal('m4')">✕</button>
     <div class="modal-title">🎵 Nossa música</div>
     <div class="modal-body">
-      <p style="font-size:1.2rem;margin-bottom:8px;color:#f472b6;">Nossa música especial</p>
-      <p style="opacity:.7;margin-bottom:16px;">a música que me lembra de você toda vez que toca</p>
-      <!-- COLE AQUI O EMBED DO SPOTIFY SE QUISER -->
+      <p style="font-size:1.1rem;margin-bottom:4px;color:#f472b6;">Almir Guineto — Caxambú</p>
+      <p style="opacity:.65;font-size:.9rem;margin-bottom:16px;">a música que me lembra de você ♡</p>
+      <audio controls style="width:100%;border-radius:10px;accent-color:#f472b6;">
+        <source src="cards/nossa musica favorita/Almir Guineto - Caxambú (SPOTISAVER).mp3" type="audio/mpeg">
+      </audio>
     </div>
   </div>
 </div>
@@ -506,8 +536,10 @@ body {
   <div class="modal-card">
     <button class="modal-close" onclick="closeModal('m5')">✕</button>
     <div class="modal-title">😂 Momento engraçado</div>
-    <div class="modal-body">
-      Sabe quando a gente fica tentando se despedir mas a conversa nunca termina? E aí fica "tá, vou dormir" e continua mais uma hora? Esse sou eu com você — não consigo parar de conversar 😂💜
+    <div style="margin-top:8px;">
+      <img src="cards/momento engraçado/image.png" alt="momento engraçado"
+           style="width:100%;border-radius:14px;object-fit:cover;"
+           onerror="this.style.display='none'">
     </div>
   </div>
 </div>
@@ -517,9 +549,15 @@ body {
   <div class="modal-card">
     <button class="modal-close" onclick="closeModal('m6')">✕</button>
     <div class="modal-title">❤️ Nossas fotos</div>
-    <div class="modal-body" style="text-align:center;opacity:.75;">
-      Em breve... nossas melhores fotos juntos 📸💜
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px;">
+      <img src="cards/nossas fotos/image.png"  alt="foto 1"
+           style="width:100%;border-radius:12px;object-fit:cover;aspect-ratio:1;cursor:zoom-in;"
+           onclick="openLightbox(this.src)" onerror="this.style.display='none'">
+      <img src="cards/nossas fotos/imagee.png" alt="foto 2"
+           style="width:100%;border-radius:12px;object-fit:cover;aspect-ratio:1;cursor:zoom-in;"
+           onclick="openLightbox(this.src)" onerror="this.style.display='none'">
     </div>
+    <p style="text-align:center;font-size:.8rem;opacity:.5;margin-top:8px;">toque para ampliar ✨</p>
   </div>
 </div>
 
@@ -528,15 +566,14 @@ body {
   <div class="modal-card">
     <button class="modal-close" onclick="closeModal('m7')">✕</button>
     <div class="modal-title">💬 Prints</div>
-    <div class="chat-wrap">
-      <div class="msg-received">Oi amor! 🥺</div>
-      <div class="msg-sent">oi meu bem 💜</div>
-      <div class="msg-received">tô com saudade sua</div>
-      <div class="msg-sent">eu também, muito 🖤</div>
-      <div class="msg-received">te amo demais sabe</div>
-      <div class="msg-sent">te amo mais ainda 💜✨</div>
+    <div style="display:flex;flex-direction:column;gap:10px;margin-top:8px;">
+      <img src="cards/prints/imag1.png"  alt="print" style="width:100%;border-radius:12px;" onerror="this.style.display='none'">
+      <img src="cards/prints/image.png"  alt="print" style="width:100%;border-radius:12px;" onerror="this.style.display='none'">
+      <img src="cards/prints/image2.png" alt="print" style="width:100%;border-radius:12px;" onerror="this.style.display='none'">
+      <img src="cards/prints/image3.png" alt="print" style="width:100%;border-radius:12px;" onerror="this.style.display='none'">
+      <img src="cards/prints/image4.png" alt="print" style="width:100%;border-radius:12px;" onerror="this.style.display='none'">
+      <img src="cards/prints/image5.png" alt="print" style="width:100%;border-radius:12px;" onerror="this.style.display='none'">
     </div>
-    <p style="font-size:.82rem;opacity:.5;text-align:center;margin-top:12px;">✏️ edite as mensagens acima</p>
   </div>
 </div>
 
@@ -545,12 +582,12 @@ body {
   <div class="modal-card">
     <button class="modal-close" onclick="closeModal('m8')">✕</button>
     <div class="modal-title">🌍 Nossa distância</div>
-    <div class="modal-body" style="text-align:center;">
-      <p style="font-size:1.1rem;margin-bottom:8px;">✏️ CIDADE DELE &amp; ✏️ CIDADE DELA</p>
-      <p style="opacity:.7;font-size:.95rem;">mesmo longe, sempre perto do coração 💜</p>
-      <div style="margin:20px 0;font-size:2.5rem;">📍 — — — 💜 — — — 📍</div>
-      <p style="color:#f472b6;font-size:1rem;">a distância não importa quando o amor é real 🖤</p>
+    <div style="margin-top:8px;">
+      <img src="cards/mapa/image.png" alt="mapa"
+           style="width:100%;border-radius:14px;object-fit:cover;"
+           onerror="this.style.display='none'">
     </div>
+    <p style="text-align:center;color:#f472b6;margin-top:12px;font-size:.95rem;">a distância não importa quando o amor é real 🖤</p>
   </div>
 </div>
 
@@ -576,8 +613,8 @@ body {
   <div class="modal-card">
     <button class="modal-close" onclick="closeModal('m10')">✕</button>
     <div class="modal-title">💍 Minha promessa</div>
-    <div class="modal-body">
-      Eu prometo estar aqui. Prometo te escolher todos os dias. Prometo te fazer sorrir mais do que chorar. Prometo ser seu porto seguro, sua paz, seu lar. Prometo crescer com você, aprender com você e amar você de um jeito que faça sentido pra nós dois. 💜🖤
+    <div class="modal-body" style="text-align:center;font-size:1.15rem;line-height:1.9;">
+      comermos jussara com farinha juntos 🥰
     </div>
   </div>
 </div>
@@ -721,6 +758,49 @@ function closeModal(id) {
 }
 function closeOnBg(e, id) {
   if (e.target === e.currentTarget) closeModal(id);
+}
+
+// ── BOTÃO MÚSICA ──
+function toggleMusic() {
+  const audio = document.getElementById('bgMusic');
+  const btn   = document.getElementById('btnMusic');
+  if (!audio) return;
+  if (audio.paused) {
+    audio.play().catch(()=>{});
+    btn.innerHTML = '🎵 música';
+    btn.style.borderColor = '#a855f7';
+  } else {
+    audio.pause();
+    btn.innerHTML = '🔇 música';
+    btn.style.borderColor = 'rgba(255,255,255,.3)';
+  }
+}
+
+// ── MÚSICA AUTOPLAY (toca na 1ª interação) ──
+(function(){
+  const audio = document.getElementById('bgMusic');
+  if(!audio) return;
+  audio.volume = 0.3;
+  function tryPlay(){
+    audio.play().catch(()=>{});
+    document.removeEventListener('click',     tryPlay);
+    document.removeEventListener('touchstart',tryPlay);
+  }
+  // tenta direto (alguns browsers permitem)
+  audio.play().catch(()=>{
+    document.addEventListener('click',      tryPlay, {once:true});
+    document.addEventListener('touchstart', tryPlay, {once:true});
+  });
+})();
+
+// ── LIGHTBOX ──
+function openLightbox(src){
+  const lb = document.getElementById('lightbox');
+  document.getElementById('lightbox-img').src = src;
+  lb.style.display = 'flex';
+}
+function closeLightbox(){
+  document.getElementById('lightbox').style.display = 'none';
 }
 
 // Fechar modal com ESC
